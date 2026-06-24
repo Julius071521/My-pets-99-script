@@ -1300,7 +1300,8 @@ input:focus, select:focus, textarea:focus {
   transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
 }
 
-.reveal-on-scroll.is-visible {
+.reveal-on-scroll.is-visible,
+.reveal-on-scroll.revealed {
   opacity: 1;
   transform: translateY(0);
 }
