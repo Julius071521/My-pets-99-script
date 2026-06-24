@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | ApexBoost</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080b10;
+      --primary: #14b8a6;
+      --accent: #38bdf8;
+      --secondary: #f97316;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --panel: rgba(15,23,42,0.80);
+      --border: rgba(20,184,166,0.15);
+      --prose-border: rgba(255,255,255,0.07);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(20,184,166,0.10) 0%, transparent 40%),
+        radial-gradient(ellipse at 85% 90%, rgba(249,115,22,0.07) 0%, transparent 38%),
+        linear-gradient(160deg, #080b10 0%, #0d1117 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px clamp(20px, 5vw, 56px);
+      background: rgba(8,11,16,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid; place-items: center;
+      font-weight: 900; font-size: 0.85rem; color: #fff;
+    }
+    .nav-back {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--primary); }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: clamp(32px,6vw,64px) clamp(20px,5vw,40px);
+    }
+
+    /* ── Header ── */
+    .page-header {
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--prose-border);
+    }
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(20,184,166,0.10);
+      border: 1px solid rgba(20,184,166,0.25);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--text) 40%, var(--muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .effective-date {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 36px; }
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--prose-border);
+    }
+    p { color: var(--muted); margin-bottom: 12px; font-size: 0.97rem; }
+    ul, ol { padding-left: 20px; color: var(--muted); font-size: 0.97rem; }
+    li { margin-bottom: 6px; }
+    strong { color: var(--text); }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Callout ── */
+    .callout {
+      padding: 16px 20px;
+      border-left: 3px solid var(--primary);
+      background: rgba(20,184,166,0.06);
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid var(--prose-border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 520px) {
+      h2 { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo">AB</div>
+    ApexBoost
+  </a>
+  <a href="/" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="container">
+  <header class="page-header">
+    <div class="page-tag">Legal</div>
+    <h1>Terms of Service</h1>
+    <p class="effective-date">Effective date: June 24, 2026 &nbsp;·&nbsp; ApexSMM Boosting</p>
+  </header>
+
+  <div class="callout">
+    By registering an account or using any ApexBoost service, you agree to be bound by these Terms of Service. Please read them carefully before proceeding.
+  </div>
+
+  <div class="section">
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using <strong>ApexBoost</strong> (apexsmmboosting.com), you agree to these Terms of Service and our Privacy Policy. If you do not agree, you may not use our services.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Eligibility</h2>
+    <p>You must be at least <strong>18 years old</strong> to use ApexBoost. By using the service, you confirm that you meet this requirement. ApexBoost reserves the right to suspend accounts suspected of being created by minors.</p>
+  </div>
+
+  <div class="section">
+    <h2>3. Account Responsibilities</h2>
+    <ul>
+      <li>You are responsible for maintaining the confidentiality of your password.</li>
+      <li>You must not share your account with other users.</li>
+      <li>You must provide accurate and truthful information during registration.</li>
+      <li>You must verify your email address to activate your account.</li>
+      <li>Accounts found to be fake, fraudulent, or bot-generated will be permanently banned without refund.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Service Usage</h2>
+    <p>ApexBoost provides social media marketing (SMM) services including followers, likes, views, and engagement for platforms such as Instagram, TikTok, YouTube, Facebook, and others.</p>
+    <ul>
+      <li>Services are delivered through our provider partners and may vary in delivery speed.</li>
+      <li>You are responsible for ensuring your use of our services complies with the terms of each social media platform.</li>
+      <li>ApexBoost is not responsible for account bans, restrictions, or penalties imposed by third-party platforms.</li>
+      <li>Orders once placed and in progress <strong>cannot be cancelled</strong> unless explicitly supported by the service.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>5. Payments and Wallet</h2>
+    <ul>
+      <li>All payments are made in Philippine Peso (₱) via GCash, Maya, or BPI.</li>
+      <li>Wallet funds are non-refundable except as outlined in our <a href="/refund.html">Refund Policy</a>.</li>
+      <li>Deposits must be verified by our team before credits are added to your account.</li>
+      <li>You must provide the correct reference number when submitting a deposit. Incorrect submissions may cause delays.</li>
+      <li>ApexBoost is not responsible for funds sent to incorrect payment accounts.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6. Prohibited Conduct</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Attempt to hack, reverse-engineer, or exploit any part of our platform.</li>
+      <li>Use automated scripts, bots, or tools to abuse the ordering system.</li>
+      <li>Submit fraudulent payment claims or chargebacks.</li>
+      <li>Create multiple accounts to abuse promotions or referral programs.</li>
+      <li>Harass, threaten, or intimidate our support staff.</li>
+    </ul>
+    <p>Violations will result in immediate account suspension and forfeiture of all wallet funds.</p>
+  </div>
+
+  <div class="section">
+    <h2>7. Service Availability</h2>
+    <p>ApexBoost strives to maintain 99% uptime but does not guarantee uninterrupted service. Scheduled maintenance, provider issues, or force majeure events may cause temporary downtime. We are not liable for losses resulting from service interruptions.</p>
+  </div>
+
+  <div class="section">
+    <h2>8. Limitation of Liability</h2>
+    <p>ApexBoost shall not be liable for any indirect, incidental, or consequential damages arising from the use or inability to use our services, including but not limited to loss of business, revenue, or data.</p>
+  </div>
+
+  <div class="section">
+    <h2>9. Modification of Terms</h2>
+    <p>ApexBoost reserves the right to update these Terms at any time. Changes will be posted on this page with the updated effective date. Continued use of the service after changes constitutes acceptance of the new Terms.</p>
+  </div>
+
+  <div class="section">
+    <h2>10. Contact Us</h2>
+    <p>For questions about these Terms, please contact us at <a href="mailto:admin@apexsmmboosting.com">admin@apexsmmboosting.com</a> or via our WhatsApp support.</p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 ApexBoost · ApexSMM Boosting · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/refund.html">Refund Policy</a></p>
+</footer>
+
+</body>
+</html>

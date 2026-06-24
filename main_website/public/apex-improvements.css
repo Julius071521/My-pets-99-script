@@ -1,0 +1,3721 @@
+﻿/* ==========================================================================
+   ApexBoost - Improvements & Bug Fixes Stylesheet
+   v20260621 — All 10 Bug Fixes + 16 Improvements
+   ========================================================================== */
+
+/* ==========================================================================
+   IMP #1: Widget Dock System
+   Ensure proper stacking with no overlap using controlled positioning.
+   ========================================================================== */
+
+/* Ensure compare-dock (Imp #10) has proper z-index above mobile bottom nav */
+#services-compare-dock,
+.services-compare-dock {
+  z-index: 2105 !important;
+  position: fixed !important;
+}
+
+/* ==========================================================================
+   IMP #2: WhatsApp Double-Pulse Animation
+   Enhanced from single ring to inner + outer concurrent pulse.
+   ========================================================================== */
+
+#messenger-fab .messenger-pulse,
+.messenger-fab .messenger-pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#messenger-fab .messenger-pulse::before,
+.messenger-fab .messenger-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.7);
+  animation: waPulseOuter 2s ease-out infinite;
+}
+
+#messenger-fab .messenger-pulse::after,
+.messenger-fab .messenger-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(37, 211, 102, 0.45);
+  animation: waPulseInner 2s ease-out infinite 0.4s;
+}
+
+@keyframes waPulseOuter {
+  0%   { transform: scale(1);    opacity: 0.9; }
+  60%  { transform: scale(1.65); opacity: 0;   }
+  100% { transform: scale(1.65); opacity: 0;   }
+}
+
+@keyframes waPulseInner {
+  0%   { transform: scale(1);    opacity: 0.6; }
+  60%  { transform: scale(1.35); opacity: 0;   }
+  100% { transform: scale(1.35); opacity: 0;   }
+}
+
+/* ==========================================================================
+   IMP #3: OpenClaw FAB + WhatsApp + Hermes Entrance Animations
+   slideInRight + popIn when widgets first become visible.
+   ========================================================================== */
+
+#ai-chat-widget:not(.hidden) .ai-chat-fab,
+.ai-chat-widget:not(.hidden) .ai-chat-fab {
+  animation: openclaw-entrance 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes openclaw-entrance {
+  0%   { transform: translateX(80px) scale(0.82); opacity: 0; }
+  60%  { transform: translateX(-6px) scale(1.03); opacity: 1; }
+  80%  { transform: translateX(3px)  scale(0.99); opacity: 1; }
+  100% { transform: translateX(0)    scale(1);    opacity: 1; }
+}
+
+#messenger-fab:not(.hidden),
+.messenger-fab:not(.hidden) {
+  animation: fabPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.15s;
+}
+
+#apexbot-top-widget:not(.hidden) .apexbot-top-fab,
+.apexbot-top-widget:not(.hidden) .apexbot-top-fab {
+  animation: fabPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.3s;
+}
+
+@keyframes fabPopIn {
+  0%   { transform: scale(0.5) translateY(20px); opacity: 0; }
+  70%  { transform: scale(1.08) translateY(-3px); opacity: 1; }
+  100% { transform: scale(1) translateY(0);       opacity: 1; }
+}
+
+/* ==========================================================================
+   IMP #4: Hero Cursor-Tracking Spotlight
+   Uses CSS custom properties set by JS mousemove in index.html.
+   ========================================================================== */
+
+.hero-section .spotlight-glow,
+#landing-spotlight {
+  position: absolute;
+  left: var(--spotlight-x, 50%);
+  top: var(--spotlight-y, 40%);
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at center,
+    rgba(20, 184, 166, 0.18) 0%,
+    rgba(56, 189, 248, 0.10) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  transition: left 0.12s ease-out, top 0.12s ease-out, opacity 0.4s ease;
+  opacity: 0;
+  z-index: 0;
+  filter: blur(8px);
+}
+
+.hero-section {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   IMP #5: Service Card Hover Lift + Border Glow
+   ========================================================================== */
+
+.feature-card {
+  transition:
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease !important;
+  will-change: transform;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(56, 189, 248, 0.28),
+    0 0 28px rgba(56, 189, 248, 0.12) !important;
+}
+
+/* Analytics preview hover */
+.analytics-preview.premium-tilt {
+  transition:
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.28s ease !important;
+}
+
+.analytics-preview.premium-tilt:hover {
+  transform: translateY(-4px) scale(1.01) !important;
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.5), 0 0 30px rgba(20, 184, 166, 0.15) !important;
+}
+
+/* ==========================================================================
+   IMP #6: Toast / Receipt Modal Glassmorphic Backdrop Blur
+   ========================================================================== */
+
+.custom-alert-overlay:not(.hidden) {
+  backdrop-filter: blur(14px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.4) !important;
+  background: rgba(4, 7, 13, 0.72) !important;
+}
+
+.receipt-card {
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+}
+
+.toast-alert-card:not(.hidden) {
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+/* ==========================================================================
+   IMP #7: Mobile Bottom Nav Sliding Active Indicator
+   ========================================================================== */
+
+.mobile-bottom-nav .bottom-nav-item {
+  position: relative;
+  overflow: visible;
+  transition: color 0.22s ease !important;
+}
+
+.mobile-bottom-nav .bottom-nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, #14b8a6, #38bdf8);
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.75), 0 0 4px rgba(56, 189, 248, 0.5);
+  animation: navIndicatorIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes navIndicatorIn {
+  from { width: 0;    opacity: 0; }
+  to   { width: 32px; opacity: 1; }
+}
+
+.mobile-bottom-nav .bottom-nav-item.active .nav-icon svg {
+  filter: drop-shadow(0 0 6px rgba(20, 184, 166, 0.65));
+}
+
+/* ==========================================================================
+   IMP #8: Footer Social Links — SVG Icon Styles
+   ========================================================================== */
+
+.footer-social-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    color 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    transform 0.22s ease;
+  text-decoration: none !important;
+  color: var(--text-secondary, #9ca3af) !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.footer-social-link:hover {
+  color: var(--primary, #14b8a6) !important;
+  border-color: rgba(20, 184, 166, 0.35) !important;
+  background: rgba(20, 184, 166, 0.07) !important;
+  transform: translateY(-2px);
+}
+
+.footer-social-link svg {
+  flex-shrink: 0;
+  transition: color 0.22s ease;
+}
+
+.footer-social-label {
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.footer-socials {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 8px !important;
+  align-items: center;
+}
+
+/* ==========================================================================
+   IMP #9: Scroll Progress Bar
+   ========================================================================== */
+
+.apex-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #14b8a6, #38bdf8 50%, #f97316);
+  z-index: 99999;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 10px rgba(20, 184, 166, 0.6), 0 0 4px rgba(56, 189, 248, 0.4);
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+body[data-current-view="dashboard"] .apex-scroll-progress {
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.08s linear;
+}
+
+/* ==========================================================================
+   IMP #11+12+13: Widget Base Display Normalization
+   Clean, conflict-free visibility states without !important wars.
+   ========================================================================== */
+
+/* .hidden is authoritative for all widget states */
+.ai-chat-widget.hidden,
+#ai-chat-widget.hidden,
+#ai-chat-widget[aria-hidden="true"],
+.apexbot-top-widget.hidden,
+#apexbot-top-widget.hidden,
+#apexbot-top-widget[aria-hidden="true"],
+.messenger-fab.hidden,
+#messenger-fab.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Visible state — explicit display rules */
+.ai-chat-widget:not(.hidden):not([aria-hidden="true"]),
+#ai-chat-widget:not(.hidden):not([aria-hidden="true"]) {
+  display: flex !important;
+}
+
+.messenger-fab:not(.hidden):not([aria-hidden="true"]),
+#messenger-fab:not(.hidden):not([aria-hidden="true"]) {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.apexbot-top-widget:not(.hidden):not([aria-hidden="true"]),
+#apexbot-top-widget:not(.hidden):not([aria-hidden="true"]) {
+  display: block !important;
+}
+
+/* ==========================================================================
+   IMP #14: aria-hidden="true" prevents pointer interaction
+   ========================================================================== */
+
+[aria-hidden="true"].messenger-fab,
+[aria-hidden="true"]#messenger-fab {
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+/* ==========================================================================
+   IMP #16: Enhanced Toast alert animation + polish
+   ========================================================================== */
+
+#toast-modal-card:not(.hidden),
+.toast-alert-card:not(.hidden) {
+  animation: toastReveal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  border: 1px solid rgba(20, 184, 166, 0.22) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+@keyframes toastReveal {
+  from { transform: translateY(14px) scale(0.95); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* ==========================================================================
+   Comparison Bar Slide-Up Animation
+   ========================================================================== */
+
+.comparison-bar:not(.hidden) {
+  animation: compareBarSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+@keyframes compareBarSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .apex-scroll-progress {
+    height: 2px;
+  }
+
+  .footer-social-label {
+    display: none;
+  }
+
+  .footer-social-link {
+    padding: 7px;
+    gap: 0;
+  }
+
+  .footer-socials {
+    gap: 6px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .mobile-bottom-nav .bottom-nav-item.active::before {
+    width: 24px;
+  }
+
+  @keyframes navIndicatorIn {
+    from { width: 0;    opacity: 0; }
+    to   { width: 24px; opacity: 1; }
+  }
+}
+
+
+/* ==========================================================================
+   PROMO ANNOUNCEMENT BANNER
+   Themes: teal | orange | violet | red | gold
+   ========================================================================== */
+
+.apex-promo-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10500;
+  min-height: 44px;
+  overflow: hidden;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+.apex-promo-banner.apex-promo-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+.apex-promo-banner.apex-promo-hiding {
+  transform: translateY(-105%);
+  opacity: 0;
+  transition: transform 0.36s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+}
+
+/* Teal theme (default) */
+.apex-promo-banner[data-promo-theme='teal'],
+.apex-promo-banner:not([data-promo-theme]) {
+  background: linear-gradient(90deg,#050f14 0%,#0a2018 20%,#0d2b20 50%,#0a1e28 80%,#050f14 100%);
+  border-bottom: 1px solid rgba(20,184,166,0.28);
+  box-shadow: 0 2px 24px rgba(20,184,166,0.15), inset 0 -1px 0 rgba(20,184,166,0.1);
+}
+.apex-promo-banner[data-promo-theme='orange'] {
+  background: linear-gradient(90deg,#0f0a04 0%,#1f1005 50%,#0f0a04 100%);
+  border-bottom: 1px solid rgba(249,115,22,0.28);
+  box-shadow: 0 2px 24px rgba(249,115,22,0.15);
+}
+.apex-promo-banner[data-promo-theme='violet'] {
+  background: linear-gradient(90deg,#090512 0%,#140a28 50%,#090512 100%);
+  border-bottom: 1px solid rgba(139,92,246,0.3);
+  box-shadow: 0 2px 24px rgba(139,92,246,0.16);
+}
+.apex-promo-banner[data-promo-theme='red'] {
+  background: linear-gradient(90deg,#0f0404 0%,#200808 50%,#0f0404 100%);
+  border-bottom: 1px solid rgba(239,68,68,0.28);
+  box-shadow: 0 2px 24px rgba(239,68,68,0.15);
+}
+.apex-promo-banner[data-promo-theme='gold'] {
+  background: linear-gradient(90deg,#0f0d03 0%,#1f1a04 50%,#0f0d03 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.3);
+  box-shadow: 0 2px 24px rgba(245,158,11,0.16);
+}
+
+.apex-promo-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 16px 8px 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.apex-promo-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: promoBadgePulse 2.8s ease-in-out infinite;
+}
+.apex-promo-banner[data-promo-theme='teal'] .apex-promo-badge,
+.apex-promo-banner:not([data-promo-theme]) .apex-promo-badge {
+  background: rgba(20,184,166,0.18); border: 1px solid rgba(20,184,166,0.35);
+}
+.apex-promo-banner[data-promo-theme='orange'] .apex-promo-badge {
+  background: rgba(249,115,22,0.18); border: 1px solid rgba(249,115,22,0.35);
+}
+.apex-promo-banner[data-promo-theme='violet'] .apex-promo-badge {
+  background: rgba(139,92,246,0.18); border: 1px solid rgba(139,92,246,0.35);
+}
+.apex-promo-banner[data-promo-theme='red'] .apex-promo-badge {
+  background: rgba(239,68,68,0.18); border: 1px solid rgba(239,68,68,0.35);
+}
+.apex-promo-banner[data-promo-theme='gold'] .apex-promo-badge {
+  background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.35);
+}
+.apex-promo-badge-icon { font-size: 14px; line-height: 1; }
+@keyframes promoBadgePulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+
+.apex-promo-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.apex-promo-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.apex-promo-banner[data-promo-theme='teal'] .apex-promo-tag,
+.apex-promo-banner:not([data-promo-theme]) .apex-promo-tag {
+  background: rgba(20,184,166,0.2); color: #2dd4bf; border: 1px solid rgba(20,184,166,0.4);
+}
+.apex-promo-banner[data-promo-theme='orange'] .apex-promo-tag {
+  background: rgba(249,115,22,0.18); color: #fb923c; border: 1px solid rgba(249,115,22,0.35);
+}
+.apex-promo-banner[data-promo-theme='violet'] .apex-promo-tag {
+  background: rgba(139,92,246,0.18); color: #a78bfa; border: 1px solid rgba(139,92,246,0.35);
+}
+.apex-promo-banner[data-promo-theme='red'] .apex-promo-tag {
+  background: rgba(239,68,68,0.18); color: #f87171; border: 1px solid rgba(239,68,68,0.35);
+}
+.apex-promo-banner[data-promo-theme='gold'] .apex-promo-tag {
+  background: rgba(245,158,11,0.18); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35);
+}
+
+.apex-promo-text {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(243,244,246,0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 420px;
+}
+.apex-promo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  border: none; outline: none;
+}
+.apex-promo-cta:hover { transform: translateY(-1px) scale(1.04); opacity: 0.92; }
+.apex-promo-banner[data-promo-theme='teal'] .apex-promo-cta,
+.apex-promo-banner:not([data-promo-theme]) .apex-promo-cta {
+  background: linear-gradient(135deg,#14b8a6,#38bdf8); color: #fff !important;
+  box-shadow: 0 4px 16px rgba(20,184,166,0.35);
+}
+.apex-promo-banner[data-promo-theme='orange'] .apex-promo-cta {
+  background: linear-gradient(135deg,#f97316,#fb923c); color: #fff !important;
+  box-shadow: 0 4px 16px rgba(249,115,22,0.35);
+}
+.apex-promo-banner[data-promo-theme='violet'] .apex-promo-cta {
+  background: linear-gradient(135deg,#7c3aed,#a78bfa); color: #fff !important;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.35);
+}
+.apex-promo-banner[data-promo-theme='red'] .apex-promo-cta {
+  background: linear-gradient(135deg,#dc2626,#f87171); color: #fff !important;
+  box-shadow: 0 4px 16px rgba(220,38,38,0.35);
+}
+.apex-promo-banner[data-promo-theme='gold'] .apex-promo-cta {
+  background: linear-gradient(135deg,#d97706,#fbbf24); color: #fff !important;
+  box-shadow: 0 4px 16px rgba(217,119,6,0.35);
+}
+
+.apex-promo-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.apex-promo-countdown {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: 'Outfit','Inter',monospace;
+}
+.apex-promo-clock-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 28px;
+}
+.apex-promo-clock-num {
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #f3f4f6;
+  font-variant-numeric: tabular-nums;
+}
+.apex-promo-clock-num.apex-cd-tick {
+  animation: cdTick 0.18s ease-out;
+}
+@keyframes cdTick {
+  0%   { transform: translateY(-3px); opacity: 0.5; }
+  100% { transform: translateY(0);    opacity: 1;   }
+}
+.apex-promo-clock-lbl {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: rgba(156,163,175,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+.apex-promo-clock-sep {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: rgba(156,163,175,0.5);
+  margin-bottom: 8px;
+  animation: colonBlink 1s ease-in-out infinite;
+}
+@keyframes colonBlink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+.apex-promo-dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.apex-promo-dismiss:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border-color: rgba(255,255,255,0.25);
+  transform: scale(1.12) rotate(90deg);
+}
+
+.apex-promo-shimmer {
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg,transparent 0%,rgba(20,184,166,0.6) 40%,rgba(56,189,248,0.8) 60%,transparent 100%);
+  animation: promoShimmer 3s ease-in-out infinite;
+}
+@keyframes promoShimmer {
+  0%   { left: -60%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .apex-promo-inner { gap: 8px; padding: 7px 10px; }
+  .apex-promo-text  { display: none; }
+  .apex-promo-body  { gap: 7px; }
+  .apex-promo-badge { width: 26px; height: 26px; }
+  .apex-promo-clock-num { font-size: 0.78rem; }
+  .apex-promo-clock-unit { min-width: 22px; }
+}
+@media (max-width: 380px) {
+  .apex-promo-countdown { display: none !important; }
+}
+
+/* ==========================================================================
+   ANIMATED STATS COUNTER SECTION
+   ========================================================================== */
+
+.apex-stats-section {
+  position: relative;
+  padding: 80px 24px;
+  overflow: hidden;
+}
+
+.apex-stats-bg-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(20,184,166,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.apex-stats-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.apex-stats-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.apex-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.apex-stat-card {
+  background: rgba(18,24,33,0.75);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 28px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), border-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+  backdrop-filter: blur(10px);
+}
+
+.apex-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #14b8a6, #38bdf8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 20px 20px 0 0;
+}
+
+.apex-stat-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(20,184,166,0.3);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.4), 0 0 24px rgba(20,184,166,0.1);
+}
+
+.apex-stat-card:hover::before {
+  opacity: 1;
+}
+
+.apex-stat-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(20,184,166,0.4));
+  transition: transform 0.3s ease;
+}
+
+.apex-stat-card:hover .apex-stat-icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.apex-stat-number {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.apex-stat-count {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #f3f4f6;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, #f3f4f6, #14b8a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.apex-stat-unit {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #14b8a6;
+  background: linear-gradient(135deg, #14b8a6, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.apex-stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary, #9ca3af);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+.apex-stat-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.apex-stat-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #14b8a6, #38bdf8);
+  border-radius: 2px;
+  transition: width 1.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Trigger bar animation when stat card is visible */
+.apex-stat-card.counted .apex-stat-bar-fill {
+  width: var(--bar-w, 75%);
+}
+
+@media (max-width: 900px) {
+  .apex-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .apex-stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .apex-stat-count { font-size: 2rem; }
+  .apex-stats-section { padding: 60px 16px; }
+}
+
+
+/* ==========================================================================
+   FAQ ACCORDION SECTION
+   ========================================================================== */
+
+.apex-faq-section {
+  padding: 80px 24px 90px;
+}
+
+.apex-faq-inner {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.apex-faq-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.apex-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.apex-faq-item {
+  background: rgba(18,24,33,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+
+.apex-faq-item:has(.apex-faq-q[aria-expanded="true"]) {
+  border-color: rgba(20,184,166,0.28);
+  box-shadow: 0 0 20px rgba(20,184,166,0.07);
+}
+
+.apex-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary, #f3f4f6);
+  transition: color 0.2s ease;
+}
+
+.apex-faq-q:hover {
+  color: #14b8a6;
+}
+
+.apex-faq-q[aria-expanded="true"] {
+  color: #14b8a6;
+}
+
+.apex-faq-chevron {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary, #9ca3af);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), color 0.2s ease;
+}
+
+.apex-faq-q[aria-expanded="true"] .apex-faq-chevron {
+  transform: rotate(180deg);
+  color: #14b8a6;
+}
+
+/* Smooth slide-down animation for answer */
+.apex-faq-a {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+  padding: 0 22px;
+}
+
+.apex-faq-a:not([hidden]) {
+  max-height: 400px;
+  padding: 0 22px 18px;
+}
+
+.apex-faq-a[hidden] {
+  display: block !important; /* Override hidden so CSS transition works */
+  max-height: 0;
+  padding: 0 22px;
+  visibility: hidden;
+}
+
+.apex-faq-a p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--text-secondary, #9ca3af);
+  margin: 0;
+}
+
+.apex-faq-a strong {
+  color: var(--text-primary, #f3f4f6);
+}
+
+/* CTA row below FAQ */
+.apex-faq-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 24px;
+  background: rgba(18,24,33,0.5);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.apex-faq-cta p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #9ca3af);
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .apex-faq-section { padding: 60px 16px 70px; }
+  .apex-faq-q { padding: 15px 16px; font-size: 0.88rem; }
+  .apex-faq-a:not([hidden]) { padding: 0 16px 15px; }
+  .apex-faq-a[hidden] { padding: 0 16px; }
+  .apex-faq-cta { flex-direction: column; gap: 10px; text-align: center; }
+}
+
+
+/* ==========================================================================
+   BACK TO TOP BUTTON
+   ========================================================================== */
+
+.apex-back-to-top {
+  position: fixed;
+  bottom: 160px; /* above floating widgets */
+  right: var(--float-edge, 28px);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(18,24,33,0.85);
+  border: 1px solid rgba(20,184,166,0.3);
+  color: #14b8a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 12px rgba(20,184,166,0.12);
+  transition:
+    transform 0.28s cubic-bezier(0.34,1.56,0.64,1),
+    opacity 0.28s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+  opacity: 0;
+  transform: translateY(12px) scale(0.88);
+}
+
+.apex-back-to-top:not([hidden]) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.apex-back-to-top[hidden] {
+  display: flex !important; /* keep flex for animation */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.88);
+}
+
+.apex-back-to-top:hover {
+  transform: translateY(-3px) scale(1.06) !important;
+  border-color: rgba(20,184,166,0.6);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5), 0 0 18px rgba(20,184,166,0.22);
+  background: rgba(20,184,166,0.15);
+}
+
+.apex-back-to-top svg {
+  transition: transform 0.22s ease;
+}
+
+.apex-back-to-top:hover svg {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .apex-back-to-top {
+    bottom: 130px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+}
+
+/* ==========================================================================
+   HOW IT WORKS — 3-Step Section
+   ========================================================================== */
+.apex-hiw-section { padding: 80px 24px; }
+.apex-hiw-inner   { max-width: 1100px; margin: 0 auto; }
+.apex-hiw-header  { text-align: center; margin-bottom: 56px; }
+
+.apex-hiw-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.apex-hiw-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 32px;
+}
+
+.apex-hiw-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #14b8a6;
+  background: rgba(20,184,166,0.12);
+  border: 1px solid rgba(20,184,166,0.3);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-bottom: 18px;
+}
+
+.apex-hiw-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: rgba(18,24,33,0.9);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #14b8a6;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 4px rgba(20,184,166,0.06);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.apex-hiw-step:hover .apex-hiw-icon {
+  transform: translateY(-4px) scale(1.06);
+  border-color: rgba(20,184,166,0.3);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 0 4px rgba(20,184,166,0.12), 0 0 20px rgba(20,184,166,0.12);
+}
+
+.apex-hiw-step h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary, #f3f4f6);
+  margin: 0 0 10px;
+}
+
+.apex-hiw-step p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-secondary, #9ca3af);
+  margin: 0;
+}
+
+/* Horizontal connector line between steps */
+.apex-hiw-connector {
+  position: absolute;
+  top: 92px; /* aligned with center of icon */
+  right: -16px;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(20,184,166,0.4), rgba(56,189,248,0.4));
+  z-index: 1;
+}
+
+.apex-hiw-connector::before,
+.apex-hiw-connector::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(56,189,248,0.6);
+  border-top: 2px solid rgba(56,189,248,0.6);
+  transform: rotate(45deg);
+}
+
+.apex-hiw-cta {
+  text-align: center;
+  margin-top: 52px;
+}
+
+@media (max-width: 768px) {
+  .apex-hiw-steps { grid-template-columns: 1fr; gap: 40px; }
+  .apex-hiw-connector { display: none; }
+  .apex-hiw-step { padding: 0 16px; }
+}
+
+
+/* ==========================================================================
+   PLATFORMS STRIP — Auto-scrolling logo ticker
+   ========================================================================== */
+.apex-platforms-section {
+  padding: 36px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.apex-platforms-inner { max-width: 100%; }
+
+.apex-platforms-label {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(156,163,175,0.5);
+  margin: 0 0 20px;
+}
+
+.apex-platforms-track {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.apex-platforms-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: platformsScroll 20s linear infinite;
+}
+
+.apex-platforms-scroll:hover { animation-play-state: paused; }
+
+@keyframes platformsScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.apex-platform-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  transition: opacity 0.2s ease;
+}
+
+.apex-platform-item:hover { opacity: 0.85; }
+
+.apex-platform-item img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 6px;
+  filter: brightness(0.9);
+}
+
+.apex-platform-item span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(156,163,175,0.8);
+}
+
+
+/* ==========================================================================
+   PAYMENT METHODS SECTION
+   ========================================================================== */
+.apex-payment-section {
+  padding: 80px 24px;
+  background: linear-gradient(180deg, transparent, rgba(20,184,166,0.03), transparent);
+}
+.apex-payment-inner  { max-width: 1000px; margin: 0 auto; }
+.apex-payment-header { text-align: center; margin-bottom: 48px; }
+
+.apex-payment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.apex-payment-card {
+  background: rgba(18,24,33,0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 28px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), border-color 0.25s, box-shadow 0.25s;
+  backdrop-filter: blur(10px);
+}
+
+.apex-payment-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(20,184,166,0.25);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px rgba(20,184,166,0.08);
+}
+
+.apex-payment-card:first-child {
+  border-color: rgba(20,184,166,0.2);
+  background: rgba(18,24,33,0.9);
+}
+
+.apex-payment-logo {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.apex-payment-logo img {
+  max-height: 40px;
+  max-width: 100px;
+  object-fit: contain;
+  filter: brightness(1.1);
+}
+
+.apex-payment-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #f3f4f6);
+  margin: 0 0 10px;
+}
+
+.apex-payment-card p {
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #9ca3af);
+  margin: 0 0 16px;
+}
+
+.apex-payment-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(20,184,166,0.15);
+  color: #14b8a6;
+  border: 1px solid rgba(20,184,166,0.3);
+  letter-spacing: 0.04em;
+}
+
+.apex-payment-badge-blue {
+  background: rgba(56,189,248,0.12);
+  color: #38bdf8;
+  border-color: rgba(56,189,248,0.25);
+}
+
+.apex-payment-badge-gray {
+  background: rgba(156,163,175,0.1);
+  color: #9ca3af;
+  border-color: rgba(156,163,175,0.2);
+}
+
+.apex-payment-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 20px;
+  background: rgba(18,24,33,0.6);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  font-size: 0.83rem;
+  color: var(--text-secondary, #9ca3af);
+  line-height: 1.55;
+}
+
+.apex-payment-note svg { flex-shrink: 0; margin-top: 1px; color: #14b8a6; }
+.apex-payment-note strong { color: var(--text-primary, #f3f4f6); }
+
+@media (max-width: 700px) {
+  .apex-payment-grid { grid-template-columns: 1fr; }
+  .apex-payment-section { padding: 60px 16px; }
+}
+
+
+/* ==========================================================================
+   GLOBAL ORDER FEED
+   ========================================================================== */
+.apex-feed-section { padding: 80px 24px; }
+.apex-feed-inner   { max-width: 1000px; margin: 0 auto; }
+
+.apex-feed-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.apex-feed-live-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: rgba(18,24,33,0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary, #9ca3af);
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.apex-feed-live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #14b8a6;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(20,184,166,0.5); }
+  50%      { box-shadow: 0 0 0 5px rgba(20,184,166,0); }
+}
+
+.apex-feed-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background: rgba(18,24,33,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+
+.apex-feed-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.apex-feed-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+
+.apex-feed-dot-done    { background: #10b981; }
+.apex-feed-dot-ok      { background: #38bdf8; }
+.apex-feed-dot-delayed { background: #f59e0b; }
+.apex-feed-dot-stuck   { background: #ef4444; }
+
+.apex-feed-table-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(18,24,33,0.7);
+  backdrop-filter: blur(10px);
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.apex-feed-table-wrap::-webkit-scrollbar { width: 5px; }
+.apex-feed-table-wrap::-webkit-scrollbar-track { background: transparent; }
+.apex-feed-table-wrap::-webkit-scrollbar-thumb { background: rgba(20,184,166,0.3); border-radius: 3px; }
+
+.apex-feed-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.apex-feed-table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(8,11,16,0.95);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(156,163,175,0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+.apex-feed-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s ease;
+}
+
+.apex-feed-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+.apex-feed-table tbody tr:last-child { border-bottom: none; }
+
+.apex-feed-table td {
+  padding: 11px 16px;
+  color: var(--text-primary, #f3f4f6);
+  vertical-align: middle;
+}
+
+.apex-feed-platform {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.apex-feed-platform img {
+  width: 20px; height: 20px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.apex-feed-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.apex-feed-status-done    { background: rgba(16,185,129,0.12); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+.apex-feed-status-ok      { background: rgba(56,189,248,0.1);  color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+.apex-feed-status-delayed { background: rgba(245,158,11,0.1);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
+.apex-feed-status-stuck   { background: rgba(239,68,68,0.1);   color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+
+.apex-feed-time { color: var(--text-secondary, #9ca3af); font-size: 0.78rem; white-space: nowrap; }
+
+.apex-feed-loading-row td {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.apex-feed-spinner {
+  width: 28px; height: 28px;
+  border: 2px solid rgba(20,184,166,0.15);
+  border-top-color: #14b8a6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.apex-feed-privacy-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  color: rgba(156,163,175,0.55);
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .apex-feed-section { padding: 60px 12px; }
+  .apex-feed-table thead th:nth-child(3),
+  .apex-feed-table tbody td:nth-child(3) { display: none; }
+}
+
+
+/* ==========================================================================
+   QUICK GUIDE — Tabbed
+   ========================================================================== */
+.apex-guide-section { padding: 80px 24px 100px; }
+.apex-guide-inner   { max-width: 860px; margin: 0 auto; }
+.apex-guide-header  { text-align: center; margin-bottom: 40px; }
+
+.apex-guide-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 28px;
+  background: rgba(18,24,33,0.6);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 8px;
+}
+
+.apex-guide-tab {
+  padding: 9px 16px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.apex-guide-tab:hover { color: var(--text-primary, #f3f4f6); background: rgba(255,255,255,0.05); }
+
+.apex-guide-tab.active {
+  background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(56,189,248,0.15));
+  color: #2dd4bf;
+  border: 1px solid rgba(20,184,166,0.25);
+  box-shadow: 0 2px 10px rgba(20,184,166,0.12);
+}
+
+.apex-guide-panels {
+  background: rgba(18,24,33,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+  min-height: 280px;
+}
+
+.apex-guide-panel { display: none; animation: guideFadeIn 0.3s ease; }
+.apex-guide-panel.active { display: block; }
+.apex-guide-panel[hidden] { display: none !important; }
+
+@keyframes guideFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.apex-guide-steps {
+  padding-left: 20px;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.apex-guide-steps li {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-secondary, #9ca3af);
+  padding-left: 4px;
+}
+
+.apex-guide-steps li strong { color: var(--text-primary, #f3f4f6); }
+
+.apex-guide-tip {
+  background: rgba(20,184,166,0.08);
+  border: 1px solid rgba(20,184,166,0.18);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 0.83rem;
+  color: rgba(243,244,246,0.8);
+  line-height: 1.55;
+}
+
+.apex-guide-payment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.apex-guide-payment-method h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary, #f3f4f6);
+  margin: 0 0 12px;
+}
+
+@media (max-width: 640px) {
+  .apex-guide-section  { padding: 60px 12px 80px; }
+  .apex-guide-panels   { padding: 20px 16px; }
+  .apex-guide-tab      { font-size: 0.74rem; padding: 7px 11px; }
+  .apex-guide-payment-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   VISUAL POLISH v2 — Fixes based on screenshot review
+   ========================================================================== */
+
+/* ── 1. NAVBAR "GO TO DASHBOARD" BUTTON — Fix yellow-green gradient ─────── */
+/* Override the existing gradient to proper teal-cyan brand colors */
+.nav-link.special-dash,
+a.nav-link.special-dash,
+.nav-menu .special-dash,
+#nav-dashboard-trigger,
+.btn-glow-span {
+  background: linear-gradient(135deg, #0d9488 0%, #0ea5e9 100%) !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  padding: 8px 18px !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(14,165,233,0.25), 0 0 0 1px rgba(255,255,255,0.08) !important;
+  transition: box-shadow 0.25s ease, transform 0.2s ease, opacity 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+}
+
+.nav-link.special-dash:hover,
+#nav-dashboard-trigger:hover {
+  box-shadow: 0 6px 28px rgba(14,165,233,0.4), 0 0 0 1px rgba(255,255,255,0.12) !important;
+  transform: translateY(-1px) !important;
+  opacity: 1 !important;
+}
+
+/* ── 2. NAVBAR OVERALL — More premium glassmorphism ─────────────────────── */
+.navbar,
+#main-nav {
+  background: rgba(8, 11, 16, 0.82) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3) !important;
+}
+
+/* ── 3. APEXBOT ROBOT WIDGET — More premium look ────────────────────────── */
+.apexbot-top-fab,
+#apexbot-top-fab {
+  background: linear-gradient(135deg, #0f2744 0%, #0d1a2e 100%) !important;
+  border: 1px solid rgba(20,184,166,0.3) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 2px rgba(20,184,166,0.15), 0 0 20px rgba(20,184,166,0.12) !important;
+  border-radius: 16px !important;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease !important;
+  width: 52px !important;
+  height: 52px !important;
+}
+
+.apexbot-top-fab:hover,
+#apexbot-top-fab:hover {
+  transform: scale(1.08) translateY(-2px) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6), 0 0 0 2px rgba(20,184,166,0.25), 0 0 30px rgba(20,184,166,0.2) !important;
+}
+
+/* ── 4. AI CHAT WIDGET — More premium ───────────────────────────────────── */
+#ai-chat-fab,
+.ai-chat-fab {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+  box-shadow: 0 8px 24px rgba(124,58,237,0.4), 0 0 20px rgba(79,70,229,0.2) !important;
+  border: 1px solid rgba(124,58,237,0.3) !important;
+  border-radius: 16px !important;
+}
+
+/* ── 5. SIDEBAR PREMIUM LOOK ─────────────────────────────────────────────── */
+.sidebar,
+.dash-sidebar,
+#dash-sidebar {
+  background: rgba(10, 14, 20, 0.95) !important;
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.3) !important;
+}
+
+/* ── 6. HERO SECTION — More dramatic gradient background ─────────────────── */
+.hero-section,
+#hero,
+.landing-hero {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(14,165,233,0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 40% at 80% 30%, rgba(20,184,166,0.05) 0%, transparent 60%),
+              var(--bg-primary, #080b10) !important;
+}
+
+/* ── 7. SECTION DIVIDERS — Subtle gradient separators ───────────────────── */
+.apex-hiw-section,
+.apex-platforms-section,
+.apex-payment-section,
+.apex-feed-section,
+.apex-guide-section,
+.apex-stats-section,
+.apex-faq-section,
+.advantages-section,
+.dashboard-preview-section,
+.services-promo-section {
+  position: relative;
+}
+
+/* Glow accent line at top of key sections */
+.apex-hiw-section::before,
+.apex-payment-section::before,
+.apex-feed-section::before,
+.apex-guide-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(600px, 80%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(20,184,166,0.3), rgba(56,189,248,0.3), transparent);
+  pointer-events: none;
+}
+
+/* ── 8. SERVICE CARDS / STAT CARDS — Hover glow upgrade ─────────────────── */
+.apex-stat-card:hover,
+.apex-payment-card:hover,
+.apex-hiw-step:hover {
+  background: rgba(20,24,33,0.95) !important;
+}
+
+/* ── 9. RECEIPT MODAL / SUCCESS MODAL — Premium glow ───────────────────── */
+.receipt-card {
+  background: rgba(10,14,20,0.97) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 40px rgba(20,184,166,0.08), 0 0 0 1px rgba(255,255,255,0.04) !important;
+  border-radius: 24px !important;
+}
+
+/* ── 10. SCROLLBAR — Global premium dark scrollbar ──────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20,184,166,0.2) transparent;
+}
+*::-webkit-scrollbar { width: 5px; height: 5px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(20,184,166,0.2); border-radius: 99px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(20,184,166,0.4); }
+
+/* ── 11. TYPOGRAPHY ENHANCEMENT — Headers sharper ───────────────────────── */
+.section-title,
+h1, h2 {
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 12. INPUT FIELDS — More premium look ────────────────────────────────── */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+select,
+textarea {
+  border-radius: 10px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(18,24,33,0.8) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(20,184,166,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.1) !important;
+  outline: none !important;
+}
+
+/* ── 13. PLATFORM CARDS IN DASHBOARD — Platform filter buttons ───────────── */
+.platform-filter-btn,
+.platform-btn,
+[data-platform] button,
+.service-platform-item {
+  border-radius: 12px !important;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease !important;
+}
+
+.platform-filter-btn:hover,
+[data-platform] button:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+}
+
+/* ── 14. DASHBOARD CARD GLASSMORPHISM ────────────────────────────────────── */
+.dash-card,
+.service-card,
+.order-card,
+.wallet-card {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* ── 15. PROMO BANNER — Shimmer animation enhancement ───────────────────── */
+.apex-promo-shimmer {
+  position: absolute !important;
+  bottom: 0 !important; left: 0 !important;
+  right: 0 !important; height: 1px !important;
+  background: linear-gradient(90deg, transparent 0%, rgba(20,184,166,0.5) 30%, rgba(56,189,248,0.5) 50%, rgba(20,184,166,0.5) 70%, transparent 100%) !important;
+  background-size: 200% 100% !important;
+  animation: shimmerSlide 3s ease infinite !important;
+}
+
+@keyframes shimmerSlide {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── 16. LANDING SECTION BACKGROUNDS — Alternating subtle patterns ────────── */
+.advantages-section {
+  background: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(20,184,166,0.04) 0%, transparent 70%) !important;
+}
+
+.apex-stats-section {
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(56,189,248,0.05) 0%, transparent 70%) !important;
+}
+
+/* ── 17. MOBILE BOTTOM NAV — Premium glass effect ───────────────────────── */
+.mobile-bottom-nav,
+.bottom-nav,
+#mobile-bottom-nav {
+  background: rgba(8,11,16,0.92) !important;
+  backdrop-filter: blur(20px) saturate(200%) !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.4) !important;
+}
+
+/* ── 18. PAGE LOAD FADE-IN ───────────────────────────────────────────────── */
+@keyframes apexPageFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.landing-section,
+#landing-page-view {
+  animation: apexPageFadeIn 0.5s ease both;
+}
+
+/* ==========================================================================
+   MOBILE FIXES v1 — Fixes from mobile screenshots
+   All rules inside @media (max-width: 767px) unless noted
+   ========================================================================== */
+
+/* ── 1. PROMO BANNER — Mobile compact layout ─────────────────────────────── */
+@media (max-width: 767px) {
+  /* Banner itself — slimmer on mobile */
+  .apex-promo-banner,
+  .apex-promo-banner.apex-promo-visible {
+    padding: 7px 12px !important;
+  }
+
+  .apex-promo-inner {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+
+  /* Hide large badge icon on mobile */
+  .apex-promo-badge { display: none !important; }
+
+  /* Shorten text — ellipsis on overflow */
+  .apex-promo-text {
+    font-size: 0.72rem !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    max-width: 140px !important;
+  }
+
+  /* Tag stays small */
+  .apex-promo-tag {
+    font-size: 0.58rem !important;
+    padding: 1px 5px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* CTA button — compact */
+  .apex-promo-cta {
+    padding: 4px 9px !important;
+    font-size: 0.7rem !important;
+    flex-shrink: 0 !important;
+  }
+  .apex-promo-cta svg { display: none !important; }
+
+  /* Right side: show only dismiss, hide countdown numbers */
+  .apex-promo-right { gap: 6px !important; }
+}
+
+/* Tiny screens < 480px — hide even more */
+@media (max-width: 479px) {
+  .apex-promo-text { max-width: 100px !important; }
+  .apex-promo-tag  { display: none !important; }
+  .apex-promo-countdown { display: none !important; }
+}
+
+
+/* ── 2. FLOATING WIDGETS — Hide when mobile nav is open ─────────────────── */
+/* When mobile hamburger/sidebar drawer is open (body gets nav-open or
+   the nav-menu gets .is-open / .active class via JS) — hide floating FABs
+   so they don't overlap the sidebar */
+@media (max-width: 767px) {
+  /* Method A: body class — add this class in JS when nav opens */
+  body.nav-open #messenger-fab,
+  body.nav-open .messenger-fab,
+  body.nav-open #apexbot-top-widget,
+  body.nav-open .apexbot-top-widget,
+  body.nav-open #ai-chat-widget,
+  body.nav-open .ai-chat-widget {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: scale(0.8) !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+  }
+
+  /* Method B: When nav-menu is active/open */
+  .nav-menu.is-open ~ * #messenger-fab,
+  .nav-menu.active  ~ * #messenger-fab {
+    display: none !important;
+  }
+
+  /* General: push floating widgets further right on mobile so they don't
+     clip into content — move them to absolute edge with safe area */
+  #messenger-fab,
+  .messenger-fab {
+    right: 12px !important;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px) + 8px) !important;
+  }
+
+  #apexbot-top-widget,
+  .apexbot-top-widget {
+    right: 12px !important;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px) + 72px) !important;
+  }
+
+  #ai-chat-widget,
+  .ai-chat-widget {
+    right: 12px !important;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px) + 136px) !important;
+  }
+}
+
+
+/* ── 3. NAVBAR — Mobile layout polish ────────────────────────────────────── */
+@media (max-width: 767px) {
+  .navbar,
+  #main-nav {
+    padding: 0 12px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+  }
+
+  .nav-container {
+    height: 56px !important;
+    padding: 0 !important;
+  }
+
+  /* Logo — slightly smaller on mobile */
+  .nav-logo .logo-text { font-size: 1rem !important; }
+  .nav-logo .logo-icon img { width: 32px !important; height: 32px !important; }
+
+  /* Hamburger button — larger tap target, cleaner design */
+  .hamburger-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+  }
+
+  .hamburger-bar {
+    display: block !important;
+    width: 18px !important;
+    height: 2px !important;
+    background: rgba(255,255,255,0.85) !important;
+    border-radius: 2px !important;
+    transition: transform 0.25s ease, opacity 0.2s ease !important;
+  }
+}
+
+
+/* ── 4. MOBILE SIDEBAR DRAWER — Premium design ───────────────────────────── */
+@media (max-width: 767px) {
+  /* The nav-menu when shown as drawer */
+  .nav-menu {
+    background: rgba(8, 11, 16, 0.97) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    box-shadow: 8px 0 32px rgba(0,0,0,0.6) !important;
+  }
+
+  /* Nav links in mobile drawer */
+  .nav-menu .nav-link {
+    padding: 14px 20px !important;
+    font-size: 0.95rem !important;
+    border-radius: 10px !important;
+    margin: 2px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .nav-menu .nav-link.active {
+    background: rgba(20,184,166,0.12) !important;
+    color: #14b8a6 !important;
+  }
+
+  .nav-menu .nav-link:hover {
+    background: rgba(255,255,255,0.05) !important;
+  }
+
+  /* Dashboard button in drawer */
+  .nav-menu .special-dash,
+  .nav-menu #nav-dashboard-trigger {
+    margin: 8px 8px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    border-radius: 12px !important;
+  }
+}
+
+
+/* ── 5. MOBILE DASHBOARD SIDEBAR — Slide-in drawer quality ──────────────── */
+@media (max-width: 767px) {
+  .sidebar,
+  .dash-sidebar,
+  #dash-sidebar,
+  .dash-sidebar-inner {
+    background: rgba(8, 11, 16, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.7), 1px 0 0 rgba(255,255,255,0.06) !important;
+  }
+
+  /* User profile section in sidebar */
+  .sidebar-user,
+  .dash-user-card {
+    padding: 20px 16px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  /* Sidebar nav items */
+  .sidebar-nav-item,
+  .dash-nav-item {
+    border-radius: 10px !important;
+    margin: 2px 8px !important;
+    transition: background 0.15s ease !important;
+  }
+
+  .sidebar-nav-item:hover,
+  .dash-nav-item:hover {
+    background: rgba(255,255,255,0.04) !important;
+  }
+
+  .sidebar-nav-item.active,
+  .dash-nav-item.active {
+    background: rgba(20,184,166,0.12) !important;
+    border-left: 2px solid #14b8a6 !important;
+  }
+}
+
+
+/* ── 6. MOBILE HERO — Better proportions ────────────────────────────────── */
+@media (max-width: 767px) {
+  .hero-section,
+  #hero,
+  .landing-hero,
+  .hero-content {
+    padding: 60px 20px 40px !important;
+    text-align: center !important;
+  }
+
+  .hero-section h1,
+  #hero h1 {
+    font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  /* Dashboard preview card — scale down */
+  .hero-visual,
+  .hero-dashboard-preview,
+  .hero-mockup {
+    margin-top: 32px !important;
+    transform: scale(0.92) !important;
+    transform-origin: top center !important;
+    border-radius: 16px !important;
+  }
+
+  /* CTA buttons */
+  .hero-cta-group,
+  .hero-buttons {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .hero-cta-group .btn,
+  .hero-buttons .btn {
+    min-width: 140px !important;
+  }
+}
+
+
+/* ── 7. MOBILE — Stats section ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .apex-stats-grid,
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .apex-stat-card {
+    padding: 14px 10px !important;
+    border-radius: 12px !important;
+  }
+
+  .apex-stat-num { font-size: 1.3rem !important; }
+  .apex-stat-label { font-size: 0.65rem !important; }
+}
+
+
+/* ── 8. MOBILE — New sections responsive ─────────────────────────────────── */
+@media (max-width: 640px) {
+  /* How It Works */
+  .apex-hiw-section { padding: 52px 16px !important; }
+  .apex-hiw-steps   { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .apex-hiw-connector { display: none !important; }
+
+  /* Payment section */
+  .apex-payment-section { padding: 52px 16px !important; }
+  .apex-payment-grid    { grid-template-columns: 1fr !important; gap: 12px !important; }
+
+  /* Global Feed */
+  .apex-feed-section { padding: 52px 12px !important; }
+  .apex-feed-header  { flex-direction: column !important; gap: 12px !important; }
+  .apex-feed-table thead th:nth-child(3),
+  .apex-feed-table tbody td:nth-child(3),
+  .apex-feed-table thead th:nth-child(5),
+  .apex-feed-table tbody td:nth-child(5) { display: none !important; }
+
+  /* Quick Guide */
+  .apex-guide-section { padding: 52px 12px 72px !important; }
+  .apex-guide-tabs    { padding: 6px !important; gap: 4px !important; }
+  .apex-guide-tab     { font-size: 0.68rem !important; padding: 7px 8px !important; }
+  .apex-guide-panels  { padding: 16px !important; }
+  .apex-guide-payment-grid { grid-template-columns: 1fr !important; }
+}
+
+
+/* ── 9. MOBILE — FAQ ─────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .apex-faq-section { padding: 52px 16px !important; }
+  .apex-faq-question { font-size: 0.88rem !important; padding: 14px 16px !important; }
+  .apex-faq-answer   { font-size: 0.82rem !important; padding: 0 16px 14px !important; }
+}
+
+
+/* ── 10. MOBILE BOTTOM NAV — Safe area + premium glass ──────────────────── */
+@media (max-width: 767px) {
+  .mobile-bottom-nav,
+  #mobile-bottom-nav {
+    background: rgba(6, 8, 13, 0.96) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+    box-shadow: 0 -12px 32px rgba(0,0,0,0.5) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+
+  /* Active nav item glow */
+  .mobile-bottom-nav .nav-item.active .nav-icon,
+  .mobile-bottom-nav [aria-current] .nav-icon {
+    color: #14b8a6 !important;
+    filter: drop-shadow(0 0 6px rgba(20,184,166,0.5)) !important;
+  }
+}
+
+
+/* ── 11. LANDING SECTIONS — Proper body margin when promo visible ─────────── */
+body.apex-promo-open {
+  padding-top: 40px !important;
+}
+
+@media (max-width: 767px) {
+  body.apex-promo-open {
+    padding-top: 36px !important;
+  }
+}
+
+
+/* ── 12. MOBILE — Prevent horizontal overflow ────────────────────────────── */
+@media (max-width: 767px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Platforms auto-scroll — adjust speed on mobile */
+  .apex-platforms-scroll {
+    animation-duration: 14s !important;
+  }
+
+  .apex-platforms-section {
+    padding: 28px 0 !important;
+  }
+}
+
+/* ==========================================================================
+   TESTIMONIALS / TRUST SECTION
+   ========================================================================== */
+.apex-trust-section {
+  padding: 80px 24px;
+  background: linear-gradient(180deg, transparent, rgba(14,165,233,0.025), transparent);
+}
+.apex-trust-inner  { max-width: 1100px; margin: 0 auto; }
+.apex-trust-header { text-align: center; margin-bottom: 52px; }
+
+.apex-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.apex-trust-card {
+  background: rgba(18,24,33,0.75);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), border-color 0.25s, box-shadow 0.25s;
+  backdrop-filter: blur(10px);
+}
+
+.apex-trust-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(20,184,166,0.2);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px rgba(20,184,166,0.06);
+}
+
+.apex-trust-card-featured {
+  border-color: rgba(20,184,166,0.25);
+  background: rgba(18,24,33,0.9);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(20,184,166,0.15);
+}
+
+.apex-trust-featured-badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: linear-gradient(135deg, #0d9488, #0ea5e9);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+}
+
+.apex-trust-stars {
+  color: #f59e0b;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.apex-trust-quote {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(209,213,219,0.9);
+  margin: 0;
+  flex: 1;
+  font-style: italic;
+}
+
+.apex-trust-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.apex-trust-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d9488, #0ea5e9);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 800;
+  color: #fff; flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.apex-trust-author strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-primary, #f3f4f6);
+  margin-bottom: 2px;
+}
+
+.apex-trust-author span {
+  font-size: 0.72rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.apex-trust-platform {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.apex-trust-platform-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+.apex-trust-ig { background: rgba(225,48,108,0.15); color: #e1306c; border: 1px solid rgba(225,48,108,0.25); }
+.apex-trust-tt { background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+.apex-trust-yt { background: rgba(255,0,0,0.12); color: #ff4444; border: 1px solid rgba(255,0,0,0.2); }
+
+.apex-trust-stat {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #14b8a6;
+}
+
+/* Trust badges row */
+.apex-trust-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  padding: 20px 24px;
+  background: rgba(18,24,33,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+}
+
+.apex-trust-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(209,213,219,0.8);
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+.apex-trust-badge-item:last-child { border-right: none; }
+
+@media (max-width: 900px) {
+  .apex-trust-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .apex-trust-section { padding: 52px 16px; }
+  .apex-trust-grid { grid-template-columns: 1fr; }
+  .apex-trust-badges { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .apex-trust-badge-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 10px 16px; width: 100%; }
+  .apex-trust-badge-item:last-child { border-bottom: none; }
+}
+
+
+/* ==========================================================================
+   FINAL CTA BANNER
+   ========================================================================== */
+.apex-cta-banner {
+  padding: 0 24px 80px;
+}
+
+.apex-cta-banner-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  background: rgba(18,24,33,0.8);
+  border: 1px solid rgba(20,184,166,0.2);
+  border-radius: 28px;
+  padding: 60px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(20,184,166,0.1);
+}
+
+.apex-cta-banner-glow {
+  position: absolute;
+  top: -40px; left: 50%;
+  transform: translateX(-50%);
+  width: 400px; height: 200px;
+  background: radial-gradient(ellipse, rgba(20,184,166,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.apex-cta-banner-content { position: relative; z-index: 1; }
+.apex-cta-banner-content .section-title { margin-bottom: 12px; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+.apex-cta-banner-content .section-subtitle { max-width: 500px; margin: 0 auto 32px; }
+
+.apex-cta-banner-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.apex-cta-main-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 1rem !important;
+  padding: 13px 28px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #0d9488, #0ea5e9) !important;
+  box-shadow: 0 8px 24px rgba(14,165,233,0.3) !important;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s !important;
+}
+
+.apex-cta-main-btn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 12px 32px rgba(14,165,233,0.45) !important;
+}
+
+.apex-cta-note {
+  font-size: 0.75rem;
+  color: rgba(156,163,175,0.6);
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 640px) {
+  .apex-cta-banner { padding: 0 16px 60px; }
+  .apex-cta-banner-inner { padding: 36px 20px; border-radius: 20px; }
+  .apex-cta-banner-content .section-title { font-size: 1.4rem; }
+  .apex-cta-banner-actions { flex-direction: column; }
+  .apex-cta-main-btn { width: 100% !important; justify-content: center !important; }
+}
+
+
+/* ==========================================================================
+   FOOTER — Premium redesign
+   ========================================================================== */
+.footer {
+  background: rgba(4, 6, 10, 0.98) !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 90%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(20,184,166,0.4), rgba(56,189,248,0.3), transparent);
+}
+
+.footer-pro-brand .footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary, #f3f4f6);
+  margin-bottom: 10px;
+}
+
+.footer-tagline {
+  font-size: 0.83rem;
+  color: var(--text-secondary, #9ca3af);
+  line-height: 1.6;
+  max-width: 260px;
+  margin-bottom: 16px;
+}
+
+.footer-trust-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-trust-badges span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(20,184,166,0.1);
+  color: rgba(20,184,166,0.9);
+  border: 1px solid rgba(20,184,166,0.2);
+  letter-spacing: 0.04em;
+}
+
+.footer-link-col h4 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(156,163,175,0.5);
+  margin-bottom: 14px;
+}
+
+.footer-link-col a {
+  display: block;
+  font-size: 0.83rem;
+  color: rgba(156,163,175,0.75);
+  text-decoration: none;
+  margin-bottom: 8px;
+  transition: color 0.2s ease;
+  padding: 2px 0;
+}
+
+.footer-link-col a:hover { color: #14b8a6; }
+
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba(107,114,128,0.7);
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(107,114,128,0.7);
+  text-decoration: none;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.footer-social-link:hover {
+  color: #14b8a6;
+  border-color: rgba(20,184,166,0.3);
+  background: rgba(20,184,166,0.06);
+}
+
+.footer-social-label {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 640px) {
+  .footer-tagline { max-width: 100%; }
+  .footer-pro-bottom-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .footer-socials { gap: 6px; flex-wrap: wrap; }
+}
+
+
+/* ==========================================================================
+   MOBILE PROMO BANNER — Tighter inline style override
+   ========================================================================== */
+/* Override the inline <style> critical CSS for mobile to be even more compact */
+@media (max-width: 480px) {
+  .apex-promo-inner {
+    gap: 6px !important;
+  }
+  .apex-promo-body {
+    gap: 5px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .apex-promo-text {
+    display: none !important;
+  }
+  .apex-promo-tag {
+    display: none !important;
+  }
+  /* Show only CTA and dismiss on very tiny phones */
+  .apex-promo-cta {
+    font-size: 0.65rem !important;
+    padding: 4px 8px !important;
+  }
+  .apex-promo-countdown {
+    gap: 2px !important;
+  }
+  .apex-promo-clock-num {
+    font-size: 0.85rem !important;
+  }
+}
+
+
+/* ==========================================================================
+   REVEAL-ON-SCROLL ANIMATIONS — Staggered fade-in
+   ========================================================================== */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Children stagger */
+.reveal-on-scroll.revealed .apex-trust-card:nth-child(1) { transition-delay: 0.05s; }
+.reveal-on-scroll.revealed .apex-trust-card:nth-child(2) { transition-delay: 0.12s; }
+.reveal-on-scroll.revealed .apex-trust-card:nth-child(3) { transition-delay: 0.19s; }
+.reveal-on-scroll.revealed .apex-hiw-step:nth-child(1)   { transition-delay: 0.05s; }
+.reveal-on-scroll.revealed .apex-hiw-step:nth-child(2)   { transition-delay: 0.12s; }
+.reveal-on-scroll.revealed .apex-hiw-step:nth-child(3)   { transition-delay: 0.19s; }
+.reveal-on-scroll.revealed .apex-payment-card:nth-child(1) { transition-delay: 0.05s; }
+.reveal-on-scroll.revealed .apex-payment-card:nth-child(2) { transition-delay: 0.12s; }
+.reveal-on-scroll.revealed .apex-payment-card:nth-child(3) { transition-delay: 0.19s; }
+
+/* ==========================================================================
+   COMPREHENSIVE UI/UX FIX — Based on live site PC + Mobile screenshots
+   Fixing: navbar overlap, mobile banner, duplicate hamburger, FAB stack,
+   PC dashboard layout, general spacing and professionalism issues
+   ========================================================================== */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 1 — PROMO BANNER: Mobile layout overhaul
+   Problem: Banner + navbar rows look merged, cramped, confusing on mobile
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile: Banner slimmer, single clean row */
+@media (max-width: 767px) {
+  .apex-promo-banner,
+  .apex-promo-banner.apex-promo-visible {
+    padding: 6px 14px !important;
+    min-height: 0 !important;
+  }
+
+  .apex-promo-inner {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+  }
+
+  /* Badge: hide on small screens */
+  .apex-promo-badge {
+    display: none !important;
+  }
+
+  /* The text body section */
+  .apex-promo-body {
+    flex: 1 !important;
+    min-width: 0 !important;
+    gap: 4px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Tag: very compact */
+  .apex-promo-tag {
+    font-size: 0.58rem !important;
+    padding: 1px 6px !important;
+    flex-shrink: 0 !important;
+    display: none !important;
+  }
+
+  /* Text: truncate + hide on very small */
+  .apex-promo-text {
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 120px !important;
+    flex: 1 !important;
+  }
+
+  /* CTA button */
+  .apex-promo-cta {
+    padding: 4px 10px !important;
+    font-size: 0.68rem !important;
+    flex-shrink: 0 !important;
+    gap: 4px !important;
+  }
+
+  /* Right group: compact */
+  .apex-promo-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Countdown: compact */
+  .apex-promo-countdown {
+    gap: 3px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .apex-promo-clock-unit {
+    min-width: 30px !important;
+    padding: 2px 3px !important;
+  }
+
+  .apex-promo-clock-num {
+    font-size: 0.8rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .apex-promo-clock-lbl {
+    font-size: 0.42rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .apex-promo-clock-sep {
+    font-size: 0.7rem !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* Dismiss button */
+  .apex-promo-dismiss {
+    flex-shrink: 0 !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 4px !important;
+  }
+}
+
+/* Very tiny phones (< 420px) — hide text entirely, just CTA + countdown + dismiss */
+@media (max-width: 420px) {
+  .apex-promo-text { display: none !important; }
+  .apex-promo-cta svg { display: none !important; }
+  .apex-promo-cta { padding: 3px 8px !important; font-size: 0.62rem !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 2 — NAVBAR: Mobile layout & hamburger deduplication
+   Problem: Hamburger appears to show twice, nav bar looks messy
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── MOBILE: Primary hamburger toggle — always on LEFT ─────────────────── */
+@media (max-width: 767px) {
+  /* Navbar container layout on mobile */
+  .nav-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 56px !important;
+    padding: 0 14px !important;
+    gap: 8px !important;
+  }
+
+  /* Hamburger — first item, left side */
+  .hamburger-toggle,
+  #hamburger-toggle {
+    order: -1 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    flex-direction: column !important;
+  }
+
+  .hamburger-bar {
+    display: block !important;
+    width: 16px !important;
+    height: 1.5px !important;
+    background: rgba(255,255,255,0.8) !important;
+    border-radius: 2px !important;
+    margin: 2.5px 0 !important;
+    transition: all 0.25s ease !important;
+  }
+
+  /* Logo — center */
+  .nav-logo {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Nav menu — hide on mobile (shows as drawer when hamburger clicked) */
+  .nav-menu,
+  #nav-links {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 280px !important;
+    height: 100dvh !important;
+    background: rgba(6, 9, 14, 0.98) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    flex-direction: column !important;
+    padding: 80px 16px 24px !important;
+    z-index: 9999 !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.7) !important;
+    overflow-y: auto !important;
+    gap: 4px !important;
+  }
+
+  /* When drawer is open */
+  .nav-menu.is-open,
+  .nav-menu.active,
+  .nav-menu.open,
+  #nav-links.is-open,
+  #nav-links.active {
+    display: flex !important;
+  }
+
+  .nav-menu .nav-link,
+  #nav-links .nav-link {
+    padding: 14px 20px !important;
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: rgba(209,213,219,0.85) !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    text-decoration: none !important;
+    transition: background 0.15s, color 0.15s !important;
+  }
+
+  .nav-menu .nav-link.active,
+  .nav-menu .nav-link:hover {
+    background: rgba(20,184,166,0.1) !important;
+    color: #14b8a6 !important;
+  }
+
+  .nav-menu .special-dash {
+    margin-top: 12px !important;
+    background: linear-gradient(135deg, #0d9488, #0ea5e9) !important;
+    color: #fff !important;
+    justify-content: center !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(14,165,233,0.25) !important;
+  }
+
+  /* Right nav actions — stays on right side of navbar */
+  .nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Sidebar toggle button in dashboard — hide it since we use hamburger */
+  #sidebar-toggle-btn {
+    display: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 3 — MOBILE: Landing Page Hero Improvements
+   Problem: Hero section is cramped, mockup cut off, badge barely visible
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* Hero section — proper top padding accounting for banner + navbar */
+  .hero-section,
+  #hero {
+    padding-top: 100px !important;
+    padding-bottom: 48px !important;
+    overflow: hidden !important;
+  }
+
+  /* Hero content text */
+  .hero-content {
+    text-align: center !important;
+    padding: 0 20px !important;
+  }
+
+  /* Hero kicker / enterprise badge */
+  .hero-kicker,
+  .enterprise-kicker,
+  .hero-badge {
+    justify-content: center !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Hero heading */
+  .hero-section h1,
+  #hero h1 {
+    font-size: clamp(1.6rem, 7.5vw, 2.2rem) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Hero subtext */
+  .hero-section p,
+  #hero .hero-subtitle {
+    font-size: 0.9rem !important;
+    line-height: 1.65 !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* CTA buttons */
+  .hero-cta-group,
+  .hero-buttons,
+  .hero-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 0 10px !important;
+  }
+
+  .hero-cta-group .btn,
+  .hero-buttons .btn {
+    width: 100% !important;
+    max-width: 280px !important;
+    justify-content: center !important;
+  }
+
+  /* Dashboard mockup preview */
+  .hero-visual,
+  .hero-dashboard-preview,
+  .hero-mockup,
+  .dashboard-preview-card,
+  .hero-right,
+  .hero-graphic {
+    margin-top: 36px !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.07) !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 4 — PC DASHBOARD: Floating widget dock improvements
+   Problem: 3 FABs (robot, OpenClaw, WhatsApp) stacked and cluttered on right
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Desktop: Clean vertical stack with proper spacing */
+@media (min-width: 768px) {
+  /* Custom CSS variables for the FAB stack */
+  :root {
+    --fab-edge: 20px;
+    --fab-bottom-base: 24px;
+    --fab-size: 52px;
+    --fab-gap: 12px;
+  }
+
+  /* WhatsApp — bottom of stack */
+  #messenger-fab,
+  .messenger-fab {
+    right: var(--fab-edge) !important;
+    bottom: var(--fab-bottom-base) !important;
+    width: var(--fab-size) !important;
+    height: var(--fab-size) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 20px rgba(37,211,102,0.3) !important;
+  }
+
+  /* OpenClaw — above WhatsApp */
+  #ai-chat-widget,
+  .ai-chat-widget {
+    right: var(--fab-edge) !important;
+    bottom: calc(var(--fab-bottom-base) + var(--fab-size) + var(--fab-gap)) !important;
+  }
+
+  /* ApexBot — above OpenClaw */
+  #apexbot-top-widget,
+  .apexbot-top-widget {
+    right: var(--fab-edge) !important;
+    bottom: calc(var(--fab-bottom-base) + (var(--fab-size) + var(--fab-gap)) * 2) !important;
+  }
+
+  /* OpenClaw chip — more compact, less obtrusive */
+  #ai-chat-fab,
+  .ai-chat-fab {
+    border-radius: 14px !important;
+    height: 44px !important;
+    padding: 0 14px 0 10px !important;
+    font-size: 0.72rem !important;
+    gap: 6px !important;
+    box-shadow: 0 6px 18px rgba(124,58,237,0.35) !important;
+    white-space: nowrap !important;
+    max-width: 160px !important;
+  }
+
+  /* ApexBot — same clean size */
+  #apexbot-top-fab,
+  .apexbot-top-fab {
+    width: var(--fab-size) !important;
+    height: var(--fab-size) !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* Dashboard: When OpenClaw is NOT enabled, stack adjusts automatically */
+@media (min-width: 768px) {
+  body:not(.openclaw-vip-enabled) #apexbot-top-widget,
+  body:not(.openclaw-vip-enabled) .apexbot-top-widget {
+    bottom: calc(var(--fab-bottom-base) + var(--fab-size) + var(--fab-gap)) !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 5 — PC DASHBOARD: Main content area improvements
+   Problem: Dashboard content looks functional but lacks polish
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  /* Dashboard header area */
+  .dash-header,
+  .dashboard-header {
+    padding: 20px 28px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  }
+
+  /* Dashboard cards */
+  .dashboard-card,
+  .dash-card {
+    border-radius: 16px !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    background: rgba(14,20,30,0.7) !important;
+    backdrop-filter: blur(12px) !important;
+    transition: border-color 0.25s, box-shadow 0.25s !important;
+  }
+
+  .dashboard-card:hover,
+  .dash-card:hover {
+    border-color: rgba(20,184,166,0.15) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+  }
+
+  /* Stats row cards */
+  .stat-card,
+  .stats-card,
+  .order-stat {
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    background: rgba(18,24,33,0.8) !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(20,184,166,0.12) !important;
+  }
+
+  /* Quick Order button */
+  .quick-order-btn,
+  button.btn-primary[class*="quick"] {
+    background: linear-gradient(135deg, #0d9488, #0ea5e9) !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 6px 20px rgba(14,165,233,0.25) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+
+  .quick-order-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 10px 28px rgba(14,165,233,0.4) !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 6 — MOBILE DASHBOARD: Internal layout fixes
+   Problem: Dashboard main view on mobile is misaligned
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* Dashboard viewport container */
+  #dash-viewport-container,
+  .dash-viewport,
+  .dash-content {
+    padding: 16px !important;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Service platform buttons */
+  .platform-filter-btn,
+  .platform-btn,
+  [class*="platform-item"] button {
+    border-radius: 10px !important;
+    padding: 8px 10px !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Order form fields */
+  .order-form-field,
+  .form-group {
+    margin-bottom: 14px !important;
+  }
+
+  /* Tabs */
+  .dash-tabs,
+  .tab-list {
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .dash-tabs::-webkit-scrollbar { display: none !important; }
+
+  /* Mobile: bottom nav is proper */
+  .mobile-bottom-nav,
+  #mobile-bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom, 8px) !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 7 — MOBILE FABs: Proper stacking that avoids bottom nav
+   Problem: WhatsApp and robot overlap mobile bottom nav bar
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  :root {
+    --mobile-fab-edge: 14px;
+    --mobile-fab-bottom-base: calc(72px + env(safe-area-inset-bottom, 0px) + 10px);
+    --mobile-fab-size: 50px;
+    --mobile-fab-gap: 10px;
+  }
+
+  /* WhatsApp — stack 1 */
+  #messenger-fab,
+  .messenger-fab {
+    right: var(--mobile-fab-edge) !important;
+    bottom: var(--mobile-fab-bottom-base) !important;
+    width: var(--mobile-fab-size) !important;
+    height: var(--mobile-fab-size) !important;
+    border-radius: 16px !important;
+  }
+
+  /* OpenClaw — stack 2 */
+  #ai-chat-widget,
+  .ai-chat-widget {
+    right: var(--mobile-fab-edge) !important;
+    bottom: calc(var(--mobile-fab-bottom-base) + var(--mobile-fab-size) + var(--mobile-fab-gap)) !important;
+  }
+
+  /* ApexBot — stack 3 */
+  #apexbot-top-widget,
+  .apexbot-top-widget {
+    right: var(--mobile-fab-edge) !important;
+    bottom: calc(var(--mobile-fab-bottom-base) + (var(--mobile-fab-size) + var(--mobile-fab-gap)) * 2) !important;
+  }
+
+  /* When sidebar/menu is open — completely hide ALL FABs */
+  body.nav-open #messenger-fab,
+  body.nav-open .messenger-fab,
+  body.nav-open #apexbot-top-widget,
+  body.nav-open .apexbot-top-widget,
+  body.nav-open #ai-chat-widget,
+  body.nav-open .ai-chat-widget {
+    opacity: 0 !important;
+    transform: scale(0.85) translateY(8px) !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s, transform 0.2s !important;
+  }
+
+  /* OpenClaw chip on mobile — compact icon-only */
+  #ai-chat-fab,
+  .ai-chat-fab {
+    border-radius: 14px !important;
+    width: 50px !important;
+    height: 50px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    font-size: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* Hide text in OpenClaw chip on mobile */
+  #ai-chat-fab .ai-chat-fab-label,
+  .ai-chat-fab .ai-chat-fab-label,
+  #ai-chat-fab span:not([class*="icon"]):not(.fab-icon):not([aria-hidden]),
+  .ai-chat-fab > span:not(:first-child) {
+    display: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 8 — SIDEBAR (PC): Premium improvements
+   Problem: Sidebar looks OK but lacks polish vs rest of the redesign
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  /* Sidebar container */
+  .sidebar,
+  #dash-sidebar,
+  .dash-sidebar {
+    background: rgba(7, 10, 16, 0.97) !important;
+    border-right: 1px solid rgba(255,255,255,0.06) !important;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.25) !important;
+  }
+
+  /* Sidebar nav items */
+  .sidebar-nav-item,
+  .dash-nav-item,
+  .sidebar a[class*="nav"],
+  .sidebar li {
+    border-radius: 10px !important;
+    transition: background 0.15s, color 0.15s !important;
+  }
+
+  /* Active sidebar item */
+  .sidebar-nav-item.active,
+  .dash-nav-item.active,
+  .sidebar a.active,
+  .sidebar li.active {
+    background: rgba(20,184,166,0.1) !important;
+    border-left: 2px solid #14b8a6 !important;
+    color: #14b8a6 !important;
+  }
+
+  /* Sidebar user section — better styling */
+  .sidebar-user,
+  .dash-user-section {
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    padding: 20px 16px 16px !important;
+  }
+
+  /* Username text */
+  .sidebar-username,
+  .dash-username {
+    font-weight: 700 !important;
+    color: var(--text-primary, #f3f4f6) !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Balance display */
+  .sidebar-balance,
+  .dash-balance {
+    color: #14b8a6 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 9 — MOBILE DASHBOARD: Sidebar user section (drawer top)
+   Problem: User section at top of mobile sidebar drawer too cramped
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* The user section visible at top of dashboard on mobile */
+  .dash-user-header,
+  .sidebar-user-mobile,
+  [class*="dash-user"],
+  [class*="user-card"] {
+    padding: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  /* Avatar circle */
+  .user-avatar,
+  .dash-avatar,
+  [class*="avatar"] {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    border: 2px solid rgba(20,184,166,0.4) !important;
+    object-fit: cover !important;
+  }
+
+  /* Mobile: hide "Log Out" label, show icon only */
+  .sidebar-logout-text { display: none !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 10 — GENERAL POLISH: Global improvements for both PC and Mobile
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Focus rings — premium brand color */
+:focus-visible {
+  outline: 2px solid rgba(20,184,166,0.6) !important;
+  outline-offset: 2px !important;
+}
+
+/* Remove browser default blue focus on buttons/inputs */
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+/* Buttons — smoother interaction */
+.btn {
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), 
+              box-shadow 0.2s ease,
+              opacity 0.15s ease !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.btn:active {
+  transform: scale(0.97) !important;
+}
+
+/* Tables — better mobile scrolling */
+.table-wrapper,
+.orders-table-wrapper,
+[class*="table-scroll"] {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  border-radius: 12px !important;
+}
+
+/* Modals — glassmorphism */
+.modal-card,
+.modal-content,
+[class*="modal-card"] {
+  background: rgba(10,15,22,0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 20px !important;
+}
+
+/* Auth modal */
+.auth-card {
+  background: rgba(8,12,18,0.98) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7) !important;
+}
+
+/* Prevent content flash / jumps */
+img {
+  max-width: 100% !important;
+}
+
+/* Forms: consistent styling */
+.form-control,
+.input-field,
+[class*="form-input"] {
+  border-radius: 10px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(14,20,30,0.7) !important;
+  color: var(--text-primary, #f3f4f6) !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+  -webkit-appearance: none !important;
+}
+
+.form-control:focus,
+.input-field:focus {
+  border-color: rgba(20,184,166,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.1) !important;
+}
+
+/* Prevent body scrollbar shift when modal opens */
+body.modal-open,
+body.auth-modal-open {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+}
+
+/* ==========================================================================
+   CRITICAL FIX — v20260621g
+   Root cause: JS toggles .mobile-active (not .is-open/.active/.open)
+   Root cause: hamburger order:3!important in style.min.css overrides our order:-1
+   ========================================================================== */
+
+/* ── FIX 1: Mobile Nav — Use .mobile-active (what JS actually adds) ──────── */
+@media (max-width: 991px) {
+  /* Side-drawer style: override the absolute dropdown with a fixed drawer */
+  .nav-menu {
+    position: fixed !important;
+    top: 0 !important;
+    left: -290px !important;         /* start offscreen to the left */
+    width: 280px !important;
+    height: 100dvh !important;
+    display: flex !important;        /* always flex, but offscreen */
+    flex-direction: column !important;
+    padding: 80px 12px 32px !important;
+    z-index: 99999 !important;
+    background: rgba(6, 9, 14, 0.99) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    box-shadow: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    gap: 2px !important;
+    animation: none !important;
+    /* Slide transition */
+    transition: left 0.32s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.32s ease !important;
+  }
+
+  /* OPEN state — JS adds .mobile-active */
+  .nav-menu.mobile-active {
+    left: 0 !important;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.8) !important;
+  }
+
+  /* Nav links inside drawer */
+  .nav-menu .nav-link {
+    padding: 13px 18px !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: rgba(200,210,220,0.85) !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    transition: background 0.15s, color 0.15s !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-menu .nav-link:hover,
+  .nav-menu .nav-link.active {
+    background: rgba(20,184,166,0.1) !important;
+    color: #14b8a6 !important;
+  }
+
+  /* Dashboard CTA link in drawer */
+  .nav-menu .special-dash,
+  .nav-menu #nav-dashboard-trigger {
+    background: linear-gradient(135deg, #0d9488, #0ea5e9) !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    justify-content: center !important;
+    margin-top: 8px !important;
+    box-shadow: 0 4px 16px rgba(14,165,233,0.2) !important;
+  }
+
+  .nav-menu .special-dash:hover {
+    box-shadow: 0 8px 24px rgba(14,165,233,0.35) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Backdrop overlay when drawer is open */
+  body.nav-open::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.55) !important;
+    z-index: 99998 !important;
+    backdrop-filter: blur(3px) !important;
+    animation: apexFadeIn 0.25s ease forwards !important;
+  }
+
+  @keyframes apexFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+
+/* ── FIX 2: Hamburger button — put it on LEFT with !important ────────────── */
+@media (max-width: 991px) {
+  /* Force hamburger to left */
+  .hamburger-toggle,
+  #hamburger-toggle {
+    order: -2 !important;           /* override order:3 !important from style.min.css */
+    flex-shrink: 0 !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.09) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: background 0.15s, border-color 0.15s !important;
+  }
+
+  .hamburger-toggle:hover,
+  #hamburger-toggle:hover {
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.15) !important;
+  }
+
+  /* Hamburger bars — exact 3-bar design */
+  .hamburger-bar {
+    display: block !important;
+    width: 17px !important;
+    height: 1.8px !important;
+    background: rgba(255,255,255,0.82) !important;
+    border-radius: 2px !important;
+    margin: 2.5px auto !important;
+    transition: transform 0.25s ease, opacity 0.2s ease, width 0.2s ease !important;
+    pointer-events: none !important;
+  }
+
+  /* Active state animation when drawer is open */
+  .hamburger-toggle.mobile-active .hamburger-bar:nth-child(1) {
+    transform: translateY(7.3px) rotate(45deg) !important;
+  }
+  .hamburger-toggle.mobile-active .hamburger-bar:nth-child(2) {
+    opacity: 0 !important;
+    width: 0 !important;
+  }
+  .hamburger-toggle.mobile-active .hamburger-bar:nth-child(3) {
+    transform: translateY(-7.3px) rotate(-45deg) !important;
+  }
+
+  /* Nav container layout on mobile */
+  .nav-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    padding: 0 14px !important;
+  }
+
+  /* Logo: auto margin to center between hamburger and actions */
+  .nav-logo,
+  .apex-brand-logo {
+    flex: 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  /* Nav actions stay on right */
+  .nav-actions {
+    order: 10 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  /* Dashboard sidebar toggle — hide on landing page */
+  #sidebar-toggle-btn {
+    display: none !important;
+  }
+}
+
+
+/* ── FIX 3: Overlay click closes drawer — JS-side (via body.nav-open) ────── */
+/* Also: hide floating FABs when drawer is open */
+@media (max-width: 991px) {
+  body.nav-open #messenger-fab,
+  body.nav-open .messenger-fab,
+  body.nav-open #apexbot-top-widget,
+  body.nav-open .apexbot-top-widget,
+  body.nav-open #ai-chat-widget,
+  body.nav-open .ai-chat-widget {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s !important;
+  }
+}
+
+
+/* ── FIX 4: Mobile navbar correct height accounting for promo banner ─────── */
+@media (max-width: 767px) {
+  /* The navbar itself */
+  .navbar,
+  #main-nav {
+    height: 56px !important;
+    min-height: 56px !important;
+    padding: 0 !important;
+  }
+
+  .nav-container {
+    height: 56px !important;
+    min-height: 56px !important;
+  }
+
+  /* When promo banner visible, body needs top padding for sticky navbar */
+  body.apex-promo-open .navbar,
+  body.apex-promo-open #main-nav {
+    /* The JS already sets top via style.top on the navbar element */
+    /* We just ensure the height is consistent */
+    height: 56px !important;
+  }
+}
+
+
+/* ── FIX 5: PC Dashboard — Better "Quick Order" button appearance ─────────── */
+@media (min-width: 768px) {
+  /* The Quick Order button — make it stand out more */
+  .btn-quick-order,
+  button[class*="quick-order"],
+  .quick-order-trigger,
+  [id*="quick-order"] {
+    background: linear-gradient(135deg, #0d9488 0%, #0ea5e9 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    padding: 10px 20px !important;
+    box-shadow: 0 4px 16px rgba(14,165,233,0.25) !important;
+    transition: box-shadow 0.2s, transform 0.2s !important;
+  }
+
+  [id*="quick-order"]:hover,
+  .btn-quick-order:hover {
+    box-shadow: 0 8px 24px rgba(14,165,233,0.4) !important;
+    transform: translateY(-1px) !important;
+  }
+}
+
+
+/* ── FIX 6: Update the JS nav-open observer to also watch .mobile-active ─── */
+/* (This is handled in the JS patch below — CSS-side just needs the classes) */
+
+
+/* ── FIX 7: Mobile — promo banner height compensation on body ────────────── */
+/* Override the incorrect 40px/36px with auto-calculation */
+@media (max-width: 767px) {
+  /* Reduce body padding since banner is now more compact (~34px) */
+  body.apex-promo-open {
+    padding-top: 34px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  body.apex-promo-open {
+    padding-top: 44px !important;
+  }
+}
+
+
+/* ── FIX 8: FABs stacking on PC — precise grid ───────────────────────────── */
+@media (min-width: 768px) {
+  /* Use a more precise manual stack to avoid any base CSS conflicts */
+  #messenger-fab,
+  .messenger-fab {
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+
+  #ai-chat-widget,
+  .ai-chat-widget {
+    right: 20px !important;
+    bottom: 82px !important;   /* 20 + 50 + 12 */
+  }
+
+  #apexbot-top-widget,
+  .apexbot-top-widget {
+    right: 20px !important;
+    bottom: 156px !important;  /* 82 + 50 + 24 ... adjusted per widget height */
+  }
+}
+
+
+/* ── FIX 9: Mobile FABs — proper safe-area-aware stacking ───────────────── */
+@media (max-width: 767px) {
+  #messenger-fab,
+  .messenger-fab {
+    right: 14px !important;
+    bottom: max(80px, calc(68px + env(safe-area-inset-bottom, 0px) + 12px)) !important;
+  }
+
+  #ai-chat-widget,
+  .ai-chat-widget {
+    right: 14px !important;
+    bottom: max(140px, calc(68px + env(safe-area-inset-bottom, 0px) + 74px)) !important;
+  }
+
+  #apexbot-top-widget,
+  .apexbot-top-widget {
+    right: 14px !important;
+    bottom: max(200px, calc(68px + env(safe-area-inset-bottom, 0px) + 138px)) !important;
+  }
+}
+/* Deployment mirror: source of truth is public/apex-improvements.css. */

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+logs/
+*.zip
+.env
+config.json
+temp_unzip/
+temp_unzip2/
+temp_unzip3/
+chrome-profile/
+chrome-profile-cdp/
+chrome-profile-dump/
+chrome-profile-dump3/
+qa-screens/
+.system_generated/

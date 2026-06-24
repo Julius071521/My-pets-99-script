@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>ApexBoost System Status</title>
+  <style>
+    :root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#070b12;color:#eef6ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 20% 0,#0b3038 0,transparent 36%),#070b12}.shell{width:min(720px,100%)}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}a{color:#55e6e1;text-decoration:none}.panel{border:1px solid #223142;background:#0c121d;border-radius:18px;padding:24px;box-shadow:0 24px 70px #0008}h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 8px}.lead{color:#9cacc0;margin:0 0 22px}.overall{display:flex;align-items:center;gap:10px;font-weight:800;padding:13px 15px;border-radius:12px;background:#14202d}.dot{width:10px;height:10px;border-radius:50%;background:#f59e0b}.healthy .dot{background:#10b981}.grid{display:grid;gap:10px;margin-top:16px}.row{display:flex;justify-content:space-between;gap:14px;padding:14px 2px;border-bottom:1px solid #1d2937}.state{font-weight:750;color:#fbbf24}.healthy .state{color:#34d399}.meta{margin-top:18px;color:#73849a;font-size:.8rem}@media(max-width:520px){.panel{padding:18px}.row{align-items:flex-start;flex-direction:column;gap:5px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header><strong>Apex<span style="color:#36d9df">Boost</span></strong><a href="/">Back to website</a></header>
+    <section class="panel">
+      <h1>System status</h1>
+      <p class="lead">Live availability of core ApexBoost services.</p>
+      <div class="overall" id="overall"><span class="dot"></span><span>Checking systems...</span></div>
+      <div class="grid" id="systems"></div>
+      <p class="meta" id="updated">Waiting for health response…</p>
+    </section>
+  </main>
+  <script>
+    const label = value => value === true || value === 'healthy' || value === 'connected' || value === 'configured' ? 'Operational' : value ? String(value) : 'Unavailable';
+    fetch('/api/health',{headers:{Accept:'application/json'}}).then(async response=>({ok:response.ok,data:await response.json(),requestId:response.headers.get('x-request-id')})).then(({ok,data,requestId})=>{
+      const healthy=ok&&data.status==='healthy'; const overall=document.querySelector('#overall'); overall.classList.toggle('healthy',healthy); overall.querySelector('span:last-child').textContent=healthy?'All systems operational':'Some systems are degraded';
+      const items=[['Website','Operational'],['Database',label(data.database?.status||data.database?.connected)],['Provider API',label(data.providerApi?.status||data.providerApi?.connected)],['Email delivery',label(data.email?.status||data.smtp?.status||'Monitored')]];
+      document.querySelector('#systems').innerHTML=items.map(([name,state])=>`<div class="row ${state==='Operational'?'healthy':''}"><span>${name}</span><span class="state">${state}</span></div>`).join('');
+      document.querySelector('#updated').textContent=`Last checked ${new Date().toLocaleString()} - Request ${requestId||'completed'}`;
+    }).catch(()=>{document.querySelector('#overall span:last-child').textContent='Status service unavailable';document.querySelector('#updated').textContent='Refresh this page to try again.'});
+  </script>
+</body>
+</html>

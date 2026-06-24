@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">ApexBoost logo</title>
+  <desc id="desc">Neon ApexBoost A mark with arrow and growth bars.</desc>
+  <defs>
+    <linearGradient id="apexGrad" x1="36" y1="36" x2="284" y2="284" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22e7ff"/>
+      <stop offset=".48" stop-color="#1466ff"/>
+      <stop offset="1" stop-color="#b329ff"/>
+    </linearGradient>
+    <radialGradient id="ringGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0" stop-color="#0f1b45"/>
+      <stop offset=".64" stop-color="#050817"/>
+      <stop offset="1" stop-color="#02030a"/>
+    </radialGradient>
+    <filter id="neon" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.02 0 0 0 0 0.62 0 0 0 0 1 0 0 0 .85 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="160" cy="160" r="142" fill="url(#ringGlow)" stroke="url(#apexGrad)" stroke-width="8"/>
+  <circle cx="160" cy="160" r="123" fill="none" stroke="#1b2d74" stroke-width="3" opacity=".8"/>
+  <g filter="url(#neon)">
+    <path d="M82 218 151 76 206 188h-42l-17-38-34 68H82Z" fill="url(#apexGrad)"/>
+    <path d="M95 146h36l-10 20H70c-8 0-12-10-6-16 2-3 6-4 10-4h21Zm-16 38h32l-9 18H52c-8 0-12-10-6-16 2-2 5-2 9-2h24Zm31-74h38l-9 18H89c-8 0-12-10-6-16 2-2 6-2 10-2h17Z" fill="url(#apexGrad)"/>
+    <path d="M113 211 263 91l-18 56-32-12-92 91-8-15Z" fill="url(#apexGrad)"/>
+    <path d="M187 226h16v-47h-16v47Zm28 0h16v-66h-16v66Zm28 0h16v-88h-16v88Z" fill="url(#apexGrad)"/>
+  </g>
+</svg>

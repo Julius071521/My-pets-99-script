@@ -1,0 +1,43 @@
+# ----------------------------------------------------------------------
+# SMM Panel Hardening: Block Public Access to Sensitive Files
+# ----------------------------------------------------------------------
+
+# Disable Directory Browsing
+Options -Indexes
+
+# Serve text assets as UTF-8 so emoji/peso symbols do not become mojibake.
+AddDefaultCharset UTF-8
+AddType "text/html; charset=UTF-8" .html
+AddType "text/css; charset=UTF-8" .css
+AddType "application/javascript; charset=UTF-8" .js
+
+# Block access to environment files, database dumps, backups, and app config files
+<FilesMatch "(?i)(^\.|config\.json|config\.php|wp-config\.php|server\.js|database\.sql|db\.sql|package\.json|package-lock\.json|composer\.json|composer\.lock|webpack\.config\.js|.*\.(sql|sqlite|sqlite3|bak|backup|old|orig|zip|tar|tgz|gz|7z|rar|log)$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://www.facebook.com; connect-src 'self' https://challenges.cloudflare.com https://www.facebook.com; frame-src https://challenges.cloudflare.com https://www.google.com"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Enforce HTTPS if supported
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    # Exempt typical health checks or local testing if necessary
+    RewriteCond %{REQUEST_URI} !^/api/health
+    RewriteRule ^(phpmyadmin|server-status|graphql|swagger\.json|openapi\.json)(/.*)?$ - [F,L,NC]
+    # Redirect to HTTPS
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>

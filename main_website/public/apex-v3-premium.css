@@ -1,0 +1,1722 @@
+/* ==========================================================================
+   ApexBoost v3 — Premium Design System
+   Professional Animations & Elegant UI
+   ========================================================================== */
+
+/* ── 1. GLOBAL RESET & BASE ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --v3-primary:      #14b8a6;
+  --v3-primary-dim:  rgba(20,184,166,0.12);
+  --v3-accent:       #6366f1;
+  --v3-accent-dim:   rgba(99,102,241,0.12);
+  --v3-orange:       #f97316;
+  --v3-orange-dim:   rgba(249,115,22,0.12);
+  --v3-sky:          #38bdf8;
+  --v3-sky-dim:      rgba(56,189,248,0.12);
+  --v3-bg:           #020b12;
+  --v3-surface:      #0a1628;
+  --v3-surface2:     #0f1f36;
+  --v3-glass:        rgba(10,22,40,0.72);
+  --v3-glass2:       rgba(15,31,54,0.88);
+  --v3-border:       rgba(99,102,241,0.14);
+  --v3-border2:      rgba(20,184,166,0.18);
+  --v3-text:         #f0f4ff;
+  --v3-text2:        #8ba3c7;
+  --v3-text3:        #4a6080;
+  --v3-radius:       14px;
+  --v3-radius-lg:    20px;
+  --v3-radius-xl:    28px;
+  --v3-shadow:       0 4px 24px rgba(0,0,0,0.45);
+  --v3-shadow-glow:  0 0 40px rgba(20,184,166,0.18);
+  --v3-shadow-indigo: 0 0 40px rgba(99,102,241,0.16);
+  --v3-transition:   0.28s cubic-bezier(0.4,0,0.2,1);
+  --v3-transition-fast: 0.15s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── 2. BACKGROUND STARS & PARTICLES ───────────────────────────────────── */
+body.apex-pro-v34 {
+  background-color: var(--v3-bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(99,102,241,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 5%,  rgba(20,184,166,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 95%, rgba(56,189,248,0.06) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Animated star field */
+.landing-section::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 8%,  rgba(255,255,255,0.4)  0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 38% 22%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 5%,  rgba(255,255,255,0.5)  0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,0.4)  0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 82% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 6%,  rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 48% 55%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 42%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 38%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5%  75%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 32% 80%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 70%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 95% 85%, rgba(255,255,255,0.4) 0%, transparent 100%);
+  animation: starfield-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes starfield-pulse {
+  0%   { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* ── 3. AURORA / AMBIENT GLOW ───────────────────────────────────────────── */
+.luxury-ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  animation: aurora-drift 14s ease-in-out infinite alternate;
+}
+
+.aurora-cyan {
+  width: 700px; height: 400px;
+  top: -100px; left: -100px;
+  background: radial-gradient(ellipse, rgba(20,184,166,0.2) 0%, transparent 70%);
+  animation-duration: 16s;
+}
+
+.aurora-gold {
+  width: 500px; height: 350px;
+  top: 60px; right: -80px;
+  background: radial-gradient(ellipse, rgba(249,115,22,0.12) 0%, transparent 70%);
+  animation-duration: 18s;
+  animation-delay: -5s;
+}
+
+.aurora-violet {
+  width: 600px; height: 300px;
+  bottom: 0; left: 30%;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.14) 0%, transparent 70%);
+  animation-duration: 20s;
+  animation-delay: -8s;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(40px, -30px) scale(1.05); }
+  66%  { transform: translate(-20px, 20px) scale(0.97); }
+  100% { transform: translate(30px, 15px) scale(1.08); }
+}
+
+/* ── 4. NAVIGATION — REDESIGNED ─────────────────────────────────────────── */
+.navbar {
+  background: rgba(2,11,18,0.85) !important;
+  backdrop-filter: blur(20px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.6) !important;
+  border-bottom: 1px solid rgba(99,102,241,0.12) !important;
+  box-shadow: 0 2px 32px rgba(0,0,0,0.5) !important;
+  transition: background var(--v3-transition), box-shadow var(--v3-transition) !important;
+}
+
+.navbar.scrolled {
+  background: rgba(2,11,18,0.97) !important;
+  border-bottom-color: rgba(20,184,166,0.18) !important;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.7) !important;
+}
+
+.nav-logo {
+  position: relative;
+}
+
+.nav-logo .logo-text {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  background: linear-gradient(135deg, #fff 20%, var(--v3-primary) 60%, var(--v3-sky)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.nav-logo .logo-text span {
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-sky)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.nav-link {
+  position: relative;
+  color: rgba(240,244,255,0.7) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  padding: 6px 2px !important;
+  transition: color var(--v3-transition-fast) !important;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--v3-primary);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform var(--v3-transition) !important;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #fff !important;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Nav API & Pricing links */
+.nav-link.nav-link-api::after { background: var(--v3-accent); }
+.nav-link.nav-link-api:hover { color: #a5b4fc !important; }
+
+/* ── 5. HERO SECTION — PREMIUM REDESIGN ────────────────────────────────── */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(80px,12vw,140px) 0 clamp(60px,8vw,100px) !important;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% -20%, rgba(99,102,241,0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(20,184,166,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Animated grid lines in hero */
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 80%);
+  pointer-events: none;
+}
+
+/* Promo pill — redesign */
+.promo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px 6px 10px;
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.28);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  letter-spacing: 0.02em;
+  margin-bottom: 22px !important;
+  animation: pill-glow 3s ease-in-out infinite;
+}
+
+.promo-pill-dot {
+  width: 8px; height: 8px;
+  background: #6366f1;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(99,102,241,0.8);
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pill-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(99,102,241,0); }
+  50%       { box-shadow: 0 0 20px rgba(99,102,241,0.2); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* Hero title */
+.hero-title {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(2.4rem, 6vw, 4.2rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.04em !important;
+  color: #fff !important;
+  margin: 0 0 18px !important;
+}
+
+.hero-title span {
+  display: block;
+  background: linear-gradient(135deg, var(--v3-primary) 0%, var(--v3-sky) 50%, var(--v3-accent) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: gradient-shift 6s ease-in-out infinite alternate;
+  background-size: 200% auto;
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.12rem) !important;
+  color: var(--v3-text2) !important;
+  line-height: 1.7 !important;
+  max-width: 540px;
+  margin-bottom: 32px !important;
+}
+
+/* Hero CTA buttons */
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 36px !important;
+}
+
+/* ── 6. BUTTONS — PREMIUM REDESIGN ─────────────────────────────────────── */
+.btn.btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, var(--v3-primary) 0%, var(--v3-sky) 55%, var(--v3-accent) 100%) !important;
+  background-size: 200% auto !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 12px 26px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(20,184,166,0.35), 0 1px 0 rgba(255,255,255,0.1) inset !important;
+  transition: all var(--v3-transition) !important;
+  cursor: pointer;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+.btn.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 50%);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--v3-transition-fast);
+}
+
+.btn.btn-primary:hover {
+  background-position: right center !important;
+  box-shadow: 0 8px 30px rgba(20,184,166,0.5), 0 1px 0 rgba(255,255,255,0.15) inset !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn.btn-primary:hover::before { opacity: 1; }
+
+.btn.btn-primary:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 12px rgba(20,184,166,0.3) !important;
+}
+
+.btn.btn-secondary {
+  background: rgba(99,102,241,0.08) !important;
+  border: 1px solid rgba(99,102,241,0.3) !important;
+  color: #a5b4fc !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  padding: 12px 26px !important;
+  border-radius: 12px !important;
+  transition: all var(--v3-transition) !important;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+
+.btn.btn-secondary:hover {
+  background: rgba(99,102,241,0.15) !important;
+  border-color: rgba(99,102,241,0.5) !important;
+  color: #c7d2fe !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.2) !important;
+}
+
+/* ── 7. SECTION TITLES & KICKERS ────────────────────────────────────────── */
+.section-kicker {
+  display: inline-block;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.08) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  padding: 4px 12px !important;
+  border-radius: 999px !important;
+  margin-bottom: 14px !important;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(1.7rem, 4vw, 2.6rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+  color: var(--v3-text) !important;
+  margin-bottom: 14px !important;
+}
+
+.section-subtitle {
+  color: var(--v3-text2) !important;
+  font-size: clamp(0.9rem, 2vw, 1.05rem) !important;
+  line-height: 1.65 !important;
+  max-width: 580px;
+  margin-bottom: 40px !important;
+}
+
+/* ── 8. CARDS — GLASSMORPHISM V3 ────────────────────────────────────────── */
+.feature-card,
+.apex-payment-card,
+.apex-trust-card,
+.apex-stat-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: var(--v3-shadow) !important;
+  transition: all var(--v3-transition) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before,
+.apex-payment-card::before,
+.apex-trust-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.feature-card:hover,
+.apex-payment-card:hover,
+.apex-trust-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--v3-border2) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--v3-shadow-glow) !important;
+}
+
+/* Card shine effect on hover */
+.feature-card.premium-tilt:hover::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(20,184,166,0.15), transparent 50%, rgba(99,102,241,0.1));
+  pointer-events: none;
+  animation: card-shimmer 0.6s ease forwards;
+}
+
+@keyframes card-shimmer {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Icon wraps */
+.icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(20,184,166,0.1);
+  border: 1px solid rgba(20,184,166,0.2);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--v3-primary);
+  margin-bottom: 18px !important;
+  transition: all var(--v3-transition);
+}
+
+.feature-card:hover .icon-wrap {
+  background: rgba(20,184,166,0.18);
+  box-shadow: 0 0 20px rgba(20,184,166,0.3);
+  transform: scale(1.1);
+}
+
+/* ── 9. HERO DASHBOARD MOCK ─────────────────────────────────────────────── */
+.glass-dashboard-mock {
+  background: rgba(10,22,40,0.9) !important;
+  border: 1px solid rgba(99,102,241,0.22) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 60px rgba(99,102,241,0.1) !important;
+  backdrop-filter: blur(24px) !important;
+  overflow: hidden;
+  position: relative;
+  animation: mock-float 6s ease-in-out infinite;
+}
+
+@keyframes mock-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+.mock-header {
+  background: rgba(5,12,24,0.8) !important;
+  border-bottom: 1px solid rgba(99,102,241,0.12) !important;
+  padding: 12px 16px !important;
+}
+
+.live-chart-line {
+  stroke: url(#chart-line-grad) !important;
+  stroke-width: 2.5 !important;
+  filter: drop-shadow(0 0 6px rgba(20,184,166,0.6));
+  animation: chart-line-draw 2s ease-in-out forwards;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+}
+
+@keyframes chart-line-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.floating-chip {
+  background: rgba(10,22,40,0.9) !important;
+  border: 1px solid rgba(20,184,166,0.3) !important;
+  color: var(--v3-primary) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 12px rgba(20,184,166,0.15) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.chip-top { animation: chip-float-top 4s ease-in-out infinite; }
+.chip-bottom { animation: chip-float-bottom 5s ease-in-out infinite; }
+
+@keyframes chip-float-top {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  50%       { transform: translate(6px, -8px) rotate(1deg); }
+}
+
+@keyframes chip-float-bottom {
+  0%, 100% { transform: translate(0, 0) rotate(1deg); }
+  50%       { transform: translate(-5px, 8px) rotate(-2deg); }
+}
+
+/* ── 10. HOW IT WORKS ───────────────────────────────────────────────────── */
+.apex-hiw-step {
+  position: relative;
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 32px 28px !important;
+  transition: all var(--v3-transition) !important;
+  overflow: hidden;
+}
+
+.apex-hiw-step::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-sky), var(--v3-accent));
+  opacity: 0;
+  transition: opacity var(--v3-transition);
+}
+
+.apex-hiw-step:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--v3-border2) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), var(--v3-shadow-glow) !important;
+}
+
+.apex-hiw-step:hover::before { opacity: 1; }
+
+.apex-hiw-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(99,102,241,0.12);
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 20px;
+  letter-spacing: -0.06em;
+}
+
+.apex-hiw-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(20,184,166,0.12), rgba(99,102,241,0.08));
+  border: 1px solid rgba(20,184,166,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--v3-primary);
+  transition: all var(--v3-transition);
+}
+
+.apex-hiw-step:hover .apex-hiw-icon {
+  background: rgba(20,184,166,0.18);
+  box-shadow: 0 0 20px rgba(20,184,166,0.25);
+  transform: scale(1.08) rotate(-3deg);
+}
+
+/* ── 11. PLATFORMS STRIP ────────────────────────────────────────────────── */
+.apex-platforms-section {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 !important;
+}
+
+.apex-platform-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px !important;
+  background: rgba(10,22,40,0.5) !important;
+  border: 1px solid rgba(99,102,241,0.1) !important;
+  border-radius: 12px !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-platform-item:hover {
+  background: rgba(20,184,166,0.08) !important;
+  border-color: rgba(20,184,166,0.25) !important;
+  transform: translateY(-3px) !important;
+}
+
+.apex-platform-item img {
+  border-radius: 8px;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.1));
+  transition: filter var(--v3-transition);
+}
+
+.apex-platform-item:hover img {
+  filter: drop-shadow(0 0 10px rgba(20,184,166,0.4));
+}
+
+/* ── 12. STATS SECTION ──────────────────────────────────────────────────── */
+.apex-stats-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(60px,8vw,100px) 0 !important;
+}
+
+.apex-stats-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(20,184,166,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.apex-stat-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid rgba(20,184,166,0.14) !important;
+  border-radius: var(--v3-radius-xl) !important;
+  padding: 32px 28px !important;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(20,184,166,0.15), transparent 40%, rgba(99,102,241,0.1) 100%);
+  opacity: 0;
+  transition: opacity var(--v3-transition);
+}
+
+.apex-stat-card:hover {
+  transform: scale(1.04) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), var(--v3-shadow-glow) !important;
+}
+
+.apex-stat-card:hover::before { opacity: 1; }
+
+.apex-stat-icon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  display: block;
+  animation: stat-icon-bounce 3s ease-in-out infinite;
+}
+
+@keyframes stat-icon-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.apex-stat-count {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(2.2rem, 5vw, 3.2rem) !important;
+  font-weight: 900 !important;
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-sky)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  letter-spacing: -0.04em !important;
+}
+
+.apex-stat-bar {
+  margin-top: 16px !important;
+  height: 4px !important;
+  background: rgba(255,255,255,0.07) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+}
+
+.apex-stat-bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-sky));
+  transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 0 8px rgba(20,184,166,0.5);
+}
+
+/* ── 13. TECHNOLOGY SHOWCASE ────────────────────────────────────────────── */
+.technology-showcase {
+  position: relative;
+}
+
+.technology-console {
+  background: rgba(5,12,24,0.9) !important;
+  border: 1px solid rgba(99,102,241,0.18) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset !important;
+  overflow: hidden;
+}
+
+.technology-panel {
+  background: transparent !important;
+}
+
+.technology-control {
+  border: 1px solid rgba(99,102,241,0.12) !important;
+  border-radius: 10px !important;
+  background: rgba(10,22,40,0.5) !important;
+  color: var(--v3-text2) !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.technology-control.is-active {
+  background: rgba(99,102,241,0.15) !important;
+  border-color: rgba(99,102,241,0.35) !important;
+  color: #a5b4fc !important;
+  box-shadow: 0 0 16px rgba(99,102,241,0.2) !important;
+}
+
+.technology-control:hover:not(.is-active) {
+  background: rgba(20,184,166,0.08) !important;
+  border-color: rgba(20,184,166,0.2) !important;
+  color: var(--v3-primary) !important;
+}
+
+/* ── 14. FAQ ACCORDION ──────────────────────────────────────────────────── */
+.apex-faq-item {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius) !important;
+  overflow: hidden;
+  transition: all var(--v3-transition) !important;
+  margin-bottom: 10px !important;
+}
+
+.apex-faq-item:hover {
+  border-color: rgba(99,102,241,0.28) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+}
+
+.apex-faq-q {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 18px 22px !important;
+  color: var(--v3-text) !important;
+  font-weight: 600 !important;
+  font-size: 0.97rem !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: color var(--v3-transition-fast);
+}
+
+.apex-faq-q:hover { color: var(--v3-primary) !important; }
+
+.apex-faq-q[aria-expanded="true"] {
+  color: var(--v3-primary) !important;
+}
+
+.apex-faq-chevron {
+  flex-shrink: 0;
+  color: var(--v3-text3);
+  transition: transform var(--v3-transition);
+}
+
+.apex-faq-q[aria-expanded="true"] .apex-faq-chevron {
+  transform: rotate(180deg);
+  color: var(--v3-primary);
+}
+
+.apex-faq-a {
+  padding: 0 22px 18px !important;
+  color: var(--v3-text2) !important;
+  line-height: 1.7 !important;
+  font-size: 0.92rem !important;
+  animation: faq-open 0.25s ease;
+}
+
+@keyframes faq-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 15. PAYMENT CARDS ──────────────────────────────────────────────────── */
+.apex-payment-card {
+  padding: 32px 28px !important;
+  text-align: center;
+}
+
+.apex-payment-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(20,184,166,0.12);
+  border: 1px solid rgba(20,184,166,0.25);
+  color: var(--v3-primary);
+  margin-top: 12px;
+}
+
+.apex-payment-badge-blue {
+  background: rgba(56,189,248,0.1) !important;
+  border-color: rgba(56,189,248,0.22) !important;
+  color: #7dd3fc !important;
+}
+
+.apex-payment-badge-gray {
+  background: rgba(99,102,241,0.08) !important;
+  border-color: rgba(99,102,241,0.18) !important;
+  color: #a5b4fc !important;
+}
+
+/* ── 16. TESTIMONIALS ───────────────────────────────────────────────────── */
+.apex-trust-card {
+  padding: 28px 26px !important;
+}
+
+.apex-trust-quote {
+  font-style: italic;
+  color: var(--v3-text2) !important;
+  line-height: 1.7 !important;
+  font-size: 0.95rem !important;
+  margin: 12px 0 20px !important;
+}
+
+.apex-trust-stars {
+  color: #fbbf24 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 2px;
+}
+
+.apex-trust-card-featured {
+  border-color: rgba(251,191,36,0.25) !important;
+  background: linear-gradient(135deg, rgba(251,191,36,0.04), rgba(10,22,40,0.8)) !important;
+}
+
+.apex-trust-featured-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(251,191,36,0.1);
+  border: 1px solid rgba(251,191,36,0.25);
+  color: #fbbf24;
+  margin-bottom: 10px;
+}
+
+.apex-trust-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* ── 17. ORDER FEED TABLE ───────────────────────────────────────────────── */
+.apex-feed-table {
+  border-collapse: separate !important;
+  border-spacing: 0 6px !important;
+  width: 100%;
+}
+
+.apex-feed-table thead th {
+  background: rgba(5,12,24,0.8) !important;
+  color: var(--v3-text3) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  padding: 12px 16px !important;
+}
+
+.apex-feed-table tbody tr {
+  background: var(--v3-glass) !important;
+  border-radius: 10px !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-feed-table tbody tr:hover {
+  background: rgba(99,102,241,0.08) !important;
+  transform: translateX(3px);
+}
+
+.apex-feed-table td {
+  padding: 14px 16px !important;
+  font-size: 0.88rem !important;
+  color: var(--v3-text2) !important;
+}
+
+/* ── 18. GUIDE TABS ─────────────────────────────────────────────────────── */
+.apex-guide-tab {
+  background: rgba(10,22,40,0.6) !important;
+  border: 1px solid var(--v3-border) !important;
+  color: var(--v3-text2) !important;
+  border-radius: 10px !important;
+  padding: 10px 18px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-guide-tab:hover {
+  border-color: rgba(20,184,166,0.28) !important;
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.06) !important;
+}
+
+.apex-guide-tab.active {
+  background: rgba(20,184,166,0.12) !important;
+  border-color: rgba(20,184,166,0.35) !important;
+  color: var(--v3-primary) !important;
+  box-shadow: 0 0 16px rgba(20,184,166,0.15) !important;
+}
+
+.apex-guide-panel {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 28px 32px !important;
+  animation: panel-fade 0.3s ease;
+}
+
+@keyframes panel-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.apex-guide-steps {
+  color: var(--v3-text2) !important;
+  line-height: 1.8 !important;
+  font-size: 0.92rem !important;
+  padding-left: 20px !important;
+}
+
+.apex-guide-steps li { margin-bottom: 10px !important; }
+
+.apex-guide-tip {
+  background: rgba(20,184,166,0.07) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  border-left: 3px solid var(--v3-primary) !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  margin-top: 20px !important;
+  font-size: 0.88rem !important;
+  color: var(--v3-text2) !important;
+}
+
+/* ── 19. FOOTER — REDESIGNED ────────────────────────────────────────────── */
+.footer {
+  background: rgba(2,7,16,0.98) !important;
+  border-top: 1px solid rgba(99,102,241,0.1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--v3-primary), var(--v3-accent), transparent);
+}
+
+.footer-brand { font-size: 1.4rem !important; }
+
+.footer-tagline {
+  color: var(--v3-text2) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.6 !important;
+  max-width: 280px;
+}
+
+.footer-trust-badges span {
+  background: rgba(99,102,241,0.08) !important;
+  border: 1px solid rgba(99,102,241,0.15) !important;
+  border-radius: 6px !important;
+  padding: 3px 10px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: #a5b4fc !important;
+}
+
+.footer-link-col a {
+  color: var(--v3-text2) !important;
+  font-size: 0.88rem !important;
+  transition: color var(--v3-transition-fast) !important;
+}
+
+.footer-link-col a:hover {
+  color: var(--v3-primary) !important;
+  padding-left: 4px !important;
+}
+
+.footer-social-link {
+  color: var(--v3-text3) !important;
+  transition: all var(--v3-transition-fast) !important;
+  padding: 8px !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+}
+
+.footer-social-link:hover {
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.08) !important;
+  border-color: rgba(20,184,166,0.2) !important;
+}
+
+/* ── 20. CTA BANNER ─────────────────────────────────────────────────────── */
+.apex-cta-banner {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(60px,8vw,100px) 0 !important;
+}
+
+.apex-cta-banner-inner {
+  background: linear-gradient(135deg, rgba(10,22,40,0.9), rgba(15,31,54,0.8)) !important;
+  border: 1px solid rgba(99,102,241,0.2) !important;
+  border-radius: 24px !important;
+  padding: clamp(40px,6vw,70px) clamp(30px,5vw,60px) !important;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(99,102,241,0.1) !important;
+}
+
+.apex-cta-banner-inner::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(20,184,166,0.3), transparent 40%, rgba(99,102,241,0.2) 100%);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+}
+
+.apex-cta-main-btn {
+  font-size: 1.05rem !important;
+  padding: 16px 36px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px rgba(20,184,166,0.4) !important;
+  animation: cta-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(20,184,166,0.4); }
+  50%       { box-shadow: 0 8px 48px rgba(20,184,166,0.6); }
+}
+
+/* ── 21. AUTH MODAL ─────────────────────────────────────────────────────── */
+.auth-card {
+  background: rgba(5,12,24,0.97) !important;
+  border: 1px solid rgba(99,102,241,0.2) !important;
+  border-radius: 24px !important;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.03) inset !important;
+  backdrop-filter: blur(40px) !important;
+}
+
+.auth-tab {
+  transition: all var(--v3-transition) !important;
+}
+
+.auth-tab.active {
+  background: rgba(20,184,166,0.12) !important;
+  color: var(--v3-primary) !important;
+  border-bottom: 2px solid var(--v3-primary) !important;
+}
+
+/* ── 22. SERVICES PROMO ─────────────────────────────────────────────────── */
+.filter-pill {
+  background: rgba(10,22,40,0.6) !important;
+  border: 1px solid var(--v3-border) !important;
+  color: var(--v3-text2) !important;
+  border-radius: 999px !important;
+  padding: 8px 18px !important;
+  font-size: 0.83rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all var(--v3-transition) !important;
+}
+
+.filter-pill:hover {
+  border-color: rgba(20,184,166,0.3) !important;
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.07) !important;
+}
+
+.filter-pill.active {
+  background: rgba(20,184,166,0.14) !important;
+  border-color: rgba(20,184,166,0.38) !important;
+  color: var(--v3-primary) !important;
+  box-shadow: 0 0 14px rgba(20,184,166,0.18) !important;
+}
+
+/* ── 23. DASHBOARD CARDS ────────────────────────────────────────────────── */
+.dashboard-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  backdrop-filter: blur(16px) !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.dashboard-card:hover {
+  border-color: rgba(20,184,166,0.22) !important;
+}
+
+/* ── 24. SIDEBAR — REDESIGN ─────────────────────────────────────────────── */
+.sidebar {
+  background: rgba(2,7,16,0.95) !important;
+  border-right: 1px solid rgba(99,102,241,0.1) !important;
+}
+
+.sidebar-nav-link {
+  border-radius: 10px !important;
+  transition: all var(--v3-transition-fast) !important;
+}
+
+.sidebar-nav-link:hover {
+  background: rgba(20,184,166,0.07) !important;
+  color: var(--v3-primary) !important;
+  padding-left: 26px !important;
+}
+
+.sidebar-nav-link.active {
+  background: rgba(20,184,166,0.12) !important;
+  border-left: 2px solid var(--v3-primary) !important;
+  color: var(--v3-primary) !important;
+}
+
+/* ── 25. FORM INPUTS — REDESIGN ─────────────────────────────────────────── */
+input, select, textarea {
+  transition: border-color var(--v3-transition), box-shadow var(--v3-transition) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(20,184,166,0.4) !important;
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.1) !important;
+  outline: none !important;
+}
+
+/* ── 26. SCROLL PROGRESS ────────────────────────────────────────────────── */
+.apex-scroll-progress {
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-sky), var(--v3-accent)) !important;
+  height: 3px !important;
+  box-shadow: 0 0 10px rgba(20,184,166,0.5) !important;
+}
+
+/* ── 27. BACK TO TOP ────────────────────────────────────────────────────── */
+.apex-back-to-top {
+  background: rgba(10,22,40,0.9) !important;
+  border: 1px solid rgba(20,184,166,0.3) !important;
+  border-radius: 50% !important;
+  width: 46px !important; height: 46px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 12px rgba(20,184,166,0.2) !important;
+  color: var(--v3-primary) !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-back-to-top:hover {
+  background: rgba(20,184,166,0.15) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(20,184,166,0.35) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ── 28. TOAST NOTIFICATIONS ────────────────────────────────────────────── */
+.toast, .apex-toast {
+  background: rgba(5,12,24,0.97) !important;
+  border: 1px solid rgba(99,102,241,0.22) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset !important;
+  backdrop-filter: blur(20px) !important;
+  animation: toast-slide-in 0.3s cubic-bezier(0.16,1,0.3,1) !important;
+}
+
+@keyframes toast-slide-in {
+  from { transform: translateX(100%) scale(0.9); opacity: 0; }
+  to   { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* ── 29. SKELETON LOADING ───────────────────────────────────────────────── */
+.skeleton-card {
+  background: rgba(10,22,40,0.7) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  overflow: hidden;
+}
+
+.skeleton-line {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%) !important;
+  background-size: 400px 100% !important;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite !important;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ── 30. PROMO BANNER ───────────────────────────────────────────────────── */
+.apex-promo-banner {
+  background: linear-gradient(90deg, rgba(99,102,241,0.15) 0%, rgba(5,12,24,0.95) 50%, rgba(99,102,241,0.1) 100%) !important;
+  border-bottom: 1px solid rgba(99,102,241,0.2) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.apex-promo-cta {
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-accent)) !important;
+  box-shadow: 0 2px 12px rgba(20,184,166,0.3) !important;
+  transition: all var(--v3-transition-fast) !important;
+}
+
+.apex-promo-cta:hover {
+  box-shadow: 0 4px 20px rgba(20,184,166,0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── 31. REVEAL ANIMATIONS ──────────────────────────────────────────────── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal-on-scroll .apex-hiw-step:nth-child(1) { transition-delay: 0s; }
+.reveal-on-scroll .apex-hiw-step:nth-child(2) { transition-delay: 0.1s; }
+.reveal-on-scroll .apex-hiw-step:nth-child(3) { transition-delay: 0.2s; }
+
+.reveal-on-scroll .apex-stat-card:nth-child(1) { transition-delay: 0s; }
+.reveal-on-scroll .apex-stat-card:nth-child(2) { transition-delay: 0.08s; }
+.reveal-on-scroll .apex-stat-card:nth-child(3) { transition-delay: 0.16s; }
+.reveal-on-scroll .apex-stat-card:nth-child(4) { transition-delay: 0.24s; }
+
+.reveal-on-scroll .feature-card:nth-child(1) { transition-delay: 0s; }
+.reveal-on-scroll .feature-card:nth-child(2) { transition-delay: 0.1s; }
+.reveal-on-scroll .feature-card:nth-child(3) { transition-delay: 0.2s; }
+
+/* ── 32. MODE BADGE ─────────────────────────────────────────────────────── */
+.mode-badge {
+  border-radius: 999px !important;
+  padding: 4px 12px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+.mode-badge.live {
+  background: rgba(16,185,129,0.1) !important;
+  border-color: rgba(16,185,129,0.28) !important;
+  color: #34d399 !important;
+}
+
+.mode-badge.demo {
+  background: rgba(245,158,11,0.1) !important;
+  border-color: rgba(245,158,11,0.28) !important;
+  color: #fbbf24 !important;
+}
+
+/* ── 33. NOTIFICATION BELL ──────────────────────────────────────────────── */
+.nav-notification-btn {
+  transition: all var(--v3-transition-fast) !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+}
+
+.nav-notification-btn:hover {
+  background: rgba(20,184,166,0.08) !important;
+  color: var(--v3-primary) !important;
+}
+
+.nav-notification-badge {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  box-shadow: 0 0 8px rgba(239,68,68,0.5) !important;
+}
+
+/* ── 34. HERMES / AI SECTION (NEW) ──────────────────────────────────────── */
+.hermes-ai-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(5,12,24,0.95), rgba(10,22,40,0.9)) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  border-radius: 24px !important;
+  padding: 40px !important;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4), var(--v3-shadow-glow) !important;
+}
+
+.hermes-ai-card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--v3-primary), var(--v3-accent), transparent);
+  pointer-events: none;
+}
+
+.hermes-command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hermes-command-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(10,22,40,0.6);
+  border: 1px solid rgba(20,184,166,0.1);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--v3-text2);
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  transition: all var(--v3-transition-fast);
+}
+
+.hermes-command-item:hover {
+  background: rgba(20,184,166,0.07);
+  border-color: rgba(20,184,166,0.22);
+  color: var(--v3-text);
+}
+
+.hermes-command-item .cmd-prefix {
+  color: var(--v3-primary);
+  font-weight: 700;
+}
+
+/* ── 35. RESELLER API SECTION (NEW) ─────────────────────────────────────── */
+.apex-api-section {
+  position: relative;
+  padding: clamp(70px,8vw,100px) 0;
+  overflow: hidden;
+}
+
+.apex-api-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(99,102,241,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.apex-api-card {
+  background: rgba(5,12,24,0.95);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 22px;
+  padding: 28px;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+.apex-api-card::before {
+  content: "HTTP";
+  position: absolute;
+  top: 12px; right: 14px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--v3-text3);
+  letter-spacing: 0.1em;
+}
+
+.api-method {
+  color: #86efac;
+  font-weight: 700;
+}
+
+.api-url { color: #93c5fd; }
+.api-key { color: #c4b5fd; }
+.api-value { color: #fca5a5; }
+.api-comment { color: var(--v3-text3); font-style: italic; }
+
+.apex-api-feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  background: rgba(10,22,40,0.5);
+  border: 1px solid rgba(99,102,241,0.1);
+  border-radius: 12px;
+  transition: all var(--v3-transition);
+}
+
+.apex-api-feature:hover {
+  border-color: rgba(99,102,241,0.25);
+  background: rgba(99,102,241,0.06);
+}
+
+.apex-api-feature-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── 36. SECURITY BADGES (NEW) ──────────────────────────────────────────── */
+.security-badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: rgba(10,22,40,0.6);
+  border: 1px solid rgba(16,185,129,0.15);
+  border-radius: 12px;
+  color: var(--v3-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--v3-transition);
+}
+
+.security-badge:hover {
+  border-color: rgba(16,185,129,0.3);
+  background: rgba(16,185,129,0.06);
+  transform: translateX(3px);
+}
+
+.security-badge-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.security-badge-green { border-color: rgba(16,185,129,0.2) !important; }
+.security-badge-blue { border-color: rgba(56,189,248,0.18) !important; }
+.security-badge-indigo { border-color: rgba(99,102,241,0.2) !important; }
+
+/* ── 37. GLOBAL TRANSITIONS ─────────────────────────────────────────────── */
+a { transition: color var(--v3-transition-fast); }
+
+/* Smooth page transitions */
+.main-content {
+  animation: page-enter 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 38. RESPONSIVE FIXES ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(2rem, 8vw, 3rem) !important; }
+  .section-title { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+  .btn.btn-primary, .btn.btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-actions { flex-direction: column; }
+  .apex-api-card { font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .security-badge-grid { grid-template-columns: 1fr 1fr; }
+  .hermes-command-item { font-size: 0.78rem; }
+}
+
+/* ── 39. ADMIN DASHBOARD IMPROVEMENTS ──────────────────────────────────── */
+.admin-stat-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 24px !important;
+  transition: all var(--v3-transition) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-stat-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-accent));
+  opacity: 0;
+  transition: opacity var(--v3-transition);
+}
+
+.admin-stat-card:hover::after { opacity: 1; }
+
+.admin-table-row {
+  transition: background var(--v3-transition-fast) !important;
+}
+
+.admin-table-row:hover {
+  background: rgba(99,102,241,0.05) !important;
+}
+
+/* ── 40. MISC UTILITIES ─────────────────────────────────────────────────── */
+.apex-glow-text {
+  text-shadow: 0 0 20px rgba(20,184,166,0.5);
+}
+
+.v3-gradient-text {
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-sky), var(--v3-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Pulse animation for status indicators */
+.apex-live-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.4);
+  animation: live-pulse 2s cubic-bezier(0,0,0.2,1) infinite;
+}
+
+@keyframes live-pulse {
+  0%  { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+/* ── 41. HERMES ENHANCED BOT BADGE ─────────────────────────────────────── */
+.hermes-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(20,184,166,0.12), rgba(99,102,241,0.1));
+  border: 1px solid rgba(20,184,166,0.25);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--v3-primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── 42. SCROLL REVEAL INTERSECTION OBSERVER FIX ───────────────────────── */
+/* Ensure cards inside section reveal properly */
+.advantages-section .feature-card,
+.apex-stats-section .apex-stat-card,
+.apex-hiw-section .apex-hiw-step {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+
+.advantages-section.is-visible .feature-card,
+.apex-stats-section.is-visible .apex-stat-card,
+.apex-hiw-section.is-visible .apex-hiw-step {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 43. RESPONSIVE GRID FIXES FOR NEW SECTIONS ─────────────────────────── */
+@media (max-width: 900px) {
+  .apex-api-grid,
+  .apex-security-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  .apex-api-card pre {
+    font-size: 0.72rem !important;
+  }
+
+  .security-badge-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .security-badge-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hermes-command-item {
+    font-size: 0.75rem !important;
+  }
+
+  .apex-api-card {
+    padding: 18px !important;
+  }
+
+  .apex-hiw-steps {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── 44. STATS BAR ANIMATION ON SCROLL ─────────────────────────────────── */
+.apex-stat-card.is-visible .apex-stat-bar-fill {
+  width: var(--bar-w, 0) !important;
+}
+
+/* ── 45. HERO TRUST RAIL ────────────────────────────────────────────────── */
+.hero-trust-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.83rem;
+  color: var(--v3-text2);
+  margin-bottom: 28px;
+}
+
+.hero-trust-rail span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-trust-rail span svg {
+  color: var(--v3-primary);
+  flex-shrink: 0;
+}
+
+/* ── 46. DASHBOARD PREVIEW ANALYTICS CARD ──────────────────────────────── */
+.analytics-preview {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 24px !important;
+  box-shadow: var(--v3-shadow) !important;
+}
+
+.analytics-live-dot {
+  background: rgba(16,185,129,0.1) !important;
+  border: 1px solid rgba(16,185,129,0.3) !important;
+  color: #34d399 !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.analytics-live-dot::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16,185,129,0.8);
+  animation: live-pulse 2s infinite;
+  display: inline-block;
+}
+
+.analytics-bars span {
+  background: linear-gradient(0deg, rgba(20,184,166,0.7), rgba(56,189,248,0.5)) !important;
+  border-radius: 4px 4px 0 0 !important;
+}
+
+/* ── 47. LIVE ORDER FEED SECTION ────────────────────────────────────────── */
+.apex-feed-table-wrap {
+  border-radius: 14px !important;
+  overflow: hidden;
+  border: 1px solid var(--v3-border) !important;
+}
+
+/* ── 48. PAYMENT LOGOS ──────────────────────────────────────────────────── */
+.apex-payment-logo img {
+  border-radius: 8px;
+  filter: brightness(1.1) contrast(1.05);
+  transition: filter var(--v3-transition-fast);
+}
+
+.apex-payment-card:hover .apex-payment-logo img {
+  filter: brightness(1.2) contrast(1.1);
+}
