@@ -2258,3 +2258,114 @@ a { transition: color var(--v3-transition-fast); }
     margin: 0 auto;
   }
 }
+
+/* ── 56. CUSTOM SCROLLBAR ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.35); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.6); }
+
+/* ── 57. SMOOTH SCROLL ───────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+/* ── 58. SELECTION HIGHLIGHT ─────────────────────────────────────────────── */
+::selection { background: rgba(20,184,166,0.3); color: #f0f4ff; }
+::-moz-selection { background: rgba(20,184,166,0.3); color: #f0f4ff; }
+
+/* ── 59. NAV LINK ACTIVE STATE ───────────────────────────────────────────── */
+.nav-link.active {
+  color: var(--v3-primary) !important;
+  opacity: 1 !important;
+}
+
+.nav-link.active::after {
+  width: 100% !important;
+  opacity: 1 !important;
+}
+
+/* ── 60. SKIP-TO-CONTENT ─────────────────────────────────────────────────── */
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.6rem 1.2rem;
+  background: var(--v3-primary);
+  color: #020b12;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  transition: top 0.2s;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ── 61. SECTION KICKER ENHANCED ─────────────────────────────────────────── */
+.section-kicker {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v3-primary);
+  padding: 4px 12px;
+  background: rgba(20,184,166,0.1);
+  border: 1px solid rgba(20,184,166,0.2);
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+/* ── 62. LOADING SPINNER PULSE ────────────────────────────────────────────── */
+@keyframes apex-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.apex-v3-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(20,184,166,0.2);
+  border-top-color: #14b8a6;
+  border-radius: 50%;
+  animation: apex-spinner 0.7s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ── 63. TOAST NOTIFICATIONS ─────────────────────────────────────────────── */
+.apex-toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+.apex-toast {
+  background: var(--v3-surface2);
+  border: 1px solid var(--v3-border);
+  color: var(--v3-text);
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  max-width: 320px;
+  pointer-events: auto;
+  animation: toastIn 0.3s ease forwards;
+}
+
+.apex-toast.success { border-color: rgba(20,184,166,0.4); color: #14b8a6; }
+.apex-toast.error   { border-color: rgba(239,68,68,0.4);  color: #ef4444; }
+.apex-toast.warning { border-color: rgba(249,115,22,0.4); color: #f97316; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}

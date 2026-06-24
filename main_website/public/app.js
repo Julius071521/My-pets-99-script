@@ -77,6 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: false });
 
+  // Global toast notification utility
+  window.apexToast = function(message, type = 'info', duration = 4000) {
+    const container = document.getElementById('apex-toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `apex-toast ${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(4px)';
+      setTimeout(() => toast.remove(), 320);
+    }, duration);
+  };
+
   // Hoisted DOM element variables to prevent Temporal Dead Zone / lexical scoping issues
   let landingPageView, dashboardPageView, termsPageView, termsBackToHomeBtn, registerTermsLink, registerPrivacyLink, mainNavbar;
   let logoBtn, navHome, navFeatures, navDashboardTrigger, startBoostingBtn, browseServicesPromoBtn, promoEnterDashBtn, logoutToLandingBtn, themeToggleBtn, currentModeBadge, refreshBalanceBtn;
