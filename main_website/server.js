@@ -6611,46 +6611,68 @@ async function getHermesOpsSnapshot() {
     pendingDeposits: null,
     activeTickets: null,
     pendingTickets: null,
-    recentOrders24h: null
+    recentOrders24h: null,
+    totalUsers: null,
+    todayRevenue: null,
+    yesterdayRevenue: null,
+    failedOrders24h: null,
+    stuckOrders: null
   };
 
   if (useDb && dbPool) {
     try {
-      const [depositRows] = await dbPool.query("SELECT COUNT(*) AS count FROM deposits WHERE status = 'Pending'");
-      const [activeTicketRows] = await dbPool.query("SELECT COUNT(*) AS count FROM tickets WHERE status NOT IN ('Done', 'Approved')");
-      const [pendingTicketRows] = await dbPool.query("SELECT COUNT(*) AS count FROM tickets WHERE status = 'Pending'");
-      const [recentOrderRows] = await dbPool.query("SELECT COUNT(*) AS count FROM orders WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 DAY)");
-      snapshot.pendingDeposits = Number(depositRows[0]?.count || 0);
-      snapshot.activeTickets = Number(activeTicketRows[0]?.count || 0);
-      snapshot.pendingTickets = Number(pendingTicketRows[0]?.count || 0);
-      snapshot.recentOrders24h = Number(recentOrderRows[0]?.count || 0);
+      const queries = [
+        dbPool.query("SELECT COUNT(*) AS count FROM deposits WHERE status = 'Pending'"),
+        dbPool.query("SELECT COUNT(*) AS count FROM tickets WHERE status NOT IN ('Done', 'Approved')"),
+        dbPool.query("SELECT COUNT(*) AS count FROM tickets WHERE status = 'Pending'"),
+        dbPool.query("SELECT COUNT(*) AS count FROM orders WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 DAY)"),
+        dbPool.query("SELECT COUNT(*) AS count FROM users"),
+        dbPool.query("SELECT COALESCE(SUM(amount),0) AS total FROM deposits WHERE status = 'Approved' AND created_at >= CURDATE()"),
+        dbPool.query("SELECT COALESCE(SUM(amount),0) AS total FROM deposits WHERE status = 'Approved' AND created_at >= DATE_SUB(CURDATE(), INTERVAL 1 DAY) AND created_at < CURDATE()"),
+        dbPool.query("SELECT COUNT(*) AS count FROM orders WHERE order_status = 'Failed' AND created_at >= DATE_SUB(NOW(), INTERVAL 1 DAY)"),
+        dbPool.query("SELECT COUNT(*) AS count FROM orders WHERE order_status IN ('Pending','Processing') AND created_at <= DATE_SUB(NOW(), INTERVAL 24 HOUR)")
+      ];
+      const results = await Promise.allSettled(queries);
+      const safe = (res, field = 'count') => res.status === 'fulfilled' ? Number(res.value[0][0]?.[field] || 0) : null;
+      snapshot.pendingDeposits = safe(results[0]);
+      snapshot.activeTickets = safe(results[1]);
+      snapshot.pendingTickets = safe(results[2]);
+      snapshot.recentOrders24h = safe(results[3]);
+      snapshot.totalUsers = safe(results[4]);
+      snapshot.todayRevenue = safe(results[5], 'total');
+      snapshot.yesterdayRevenue = safe(results[6], 'total');
+      snapshot.failedOrders24h = safe(results[7]);
+      snapshot.stuckOrders = safe(results[8]);
     } catch (err) {
       snapshot.database = `connected, metrics unavailable: ${err.message}`;
     }
-  } else {
-    snapshot.pendingDeposits = null;
-    snapshot.activeTickets = null;
-    snapshot.pendingTickets = null;
-    snapshot.recentOrders24h = null;
   }
 
   return snapshot;
 }
 
 function formatHermesOpsSnapshot(snapshot) {
-  return [
+  const php = (v) => v !== null ? `₱${Number(v).toFixed(2)}` : 'unknown';
+  const n = (v) => v !== null ? String(v) : 'unknown';
+  const lines = [
     `Site: ${snapshot.siteUrl}`,
     `Mode: ${snapshot.mode}`,
-    `Maintenance: ${snapshot.maintenanceMode ? 'ON' : 'OFF'}`,
+    `Maintenance: ${snapshot.maintenanceMode ? 'ON ⚠️' : 'OFF'}`,
     `Database: ${snapshot.database}`,
-    `DeepSeek: ${snapshot.deepseekConfigured ? 'configured' : 'not configured'}`,
+    `DeepSeek AI: ${snapshot.deepseekConfigured ? 'configured' : 'not configured'}`,
     `Telegram webhook: ${snapshot.telegramConfigured ? 'configured' : 'not fully configured'}`,
-    `Provider connections configured: ${snapshot.providerConnections}`,
-    `Pending deposits: ${snapshot.pendingDeposits ?? 'unknown'}`,
-    `Active tickets: ${snapshot.activeTickets ?? 'unknown'}`,
-    `Pending tickets: ${snapshot.pendingTickets ?? 'unknown'}`,
-    `Orders in last 24h: ${snapshot.recentOrders24h ?? 'unknown'}`
-  ].join('\n');
+    `Provider connections: ${snapshot.providerConnections}`,
+    `Total users: ${n(snapshot.totalUsers)}`,
+    `Pending deposits: ${n(snapshot.pendingDeposits)}${snapshot.pendingDeposits > 0 ? ' ← ACTION NEEDED' : ''}`,
+    `Active tickets: ${n(snapshot.activeTickets)}${snapshot.activeTickets > 3 ? ' ← ELEVATED' : ''}`,
+    `Pending tickets: ${n(snapshot.pendingTickets)}`,
+    `Orders in last 24h: ${n(snapshot.recentOrders24h)}`,
+    `Failed orders 24h: ${n(snapshot.failedOrders24h)}${snapshot.failedOrders24h > 5 ? ' ← ELEVATED FAILURES' : ''}`,
+    `Stuck orders (>24h): ${n(snapshot.stuckOrders)}${snapshot.stuckOrders > 0 ? ' ← CHECK NEEDED' : ''}`,
+    `Today revenue: ${php(snapshot.todayRevenue)}`,
+    `Yesterday revenue: ${php(snapshot.yesterdayRevenue)}`
+  ];
+  return lines.join('\n');
 }
 
 function parseHermesBridgeLimit(value, fallback = 10, max = 50) {
@@ -8800,6 +8822,15 @@ function parseHermesDataIntent(text = '') {
     && /\b(addfunds|add funds|deposit|deposito|payment|bayad)\b/.test(normalized)) {
     return { type: 'recent_deposits' };
   }
+  if (/\b(daily report|report ngayon|today.*report|revenue today|kita ngayon|magkano ngayon|sales today|kumita|kumita ngayon|daily summary|buod ngayon)\b/.test(normalized)) {
+    return { type: 'daily_revenue_report' };
+  }
+  if (/\b(failed orders|nabigo|order na nabigo|failed na orders|broken orders|error orders)\b/.test(normalized)) {
+    return { type: 'failed_orders' };
+  }
+  if (/\b(stuck orders|stuck|naka.?stuck|di nag.?move|hindi gumagalaw|hindi nag.?deliver|pending masyado)\b/.test(normalized)) {
+    return { type: 'stuck_orders' };
+  }
 
   const username = getHermesArg(args, 'username');
   const email = getHermesArg(args, 'email');
@@ -9561,6 +9592,55 @@ async function executeHermesDataIntent(intent) {
         verified: false,
         error: err.message
       });
+    }
+  }
+
+  if (intent.type === 'daily_revenue_report') {
+    const tool = 'hermes_db_daily_revenue_report';
+    const unavailable = requireHermesDb(tool, 'Read daily revenue report');
+    if (unavailable) return unavailable;
+    const timestamp = new Date().toISOString();
+    try {
+      const [[todayRow]] = await dbPool.query("SELECT COALESCE(SUM(amount),0) AS total, COUNT(*) AS count FROM deposits WHERE status='Approved' AND created_at >= CURDATE()");
+      const [[yesterdayRow]] = await dbPool.query("SELECT COALESCE(SUM(amount),0) AS total, COUNT(*) AS count FROM deposits WHERE status='Approved' AND created_at >= DATE_SUB(CURDATE(),INTERVAL 1 DAY) AND created_at < CURDATE()");
+      const [[orderRow]] = await dbPool.query("SELECT COUNT(*) AS count FROM orders WHERE created_at >= CURDATE()");
+      const [[failRow]] = await dbPool.query("SELECT COUNT(*) AS count FROM orders WHERE order_status='Failed' AND created_at >= CURDATE()");
+      const todayTotal = Number(todayRow?.total || 0);
+      const yesterdayTotal = Number(yesterdayRow?.total || 0);
+      const diff = todayTotal - yesterdayTotal;
+      const trend = diff > 0 ? `+₱${diff.toFixed(2)} vs yesterday` : diff < 0 ? `-₱${Math.abs(diff).toFixed(2)} vs yesterday` : 'same as yesterday';
+      const summary = `Today revenue: ₱${todayTotal.toFixed(2)} (${trend}). Deposits today: ${todayRow?.count || 0}. Orders today: ${orderRow?.count || 0}. Failed: ${failRow?.count || 0}.`;
+      return formatHermesDataReport({ action: 'Daily revenue report', result: summary, tool, table: 'deposits,orders', query: 'SUM deposits today/yesterday + order counts', rowsReturned: 4, timestamp, dataSource: 'MySQL deposits+orders', verified: true });
+    } catch (err) {
+      return formatHermesDataReport({ action: 'Daily revenue report', result: 'UNAVAILABLE', tool, table: 'deposits,orders', query: 'SUM deposits today/yesterday', rowsReturned: 'UNAVAILABLE', timestamp, dataSource: 'MySQL', verified: false, error: err.message });
+    }
+  }
+
+  if (intent.type === 'failed_orders') {
+    const tool = 'hermes_db_failed_orders_lookup';
+    const unavailable = requireHermesDb(tool, 'Read failed orders (24h)');
+    if (unavailable) return unavailable;
+    const timestamp = new Date().toISOString();
+    try {
+      const [rows] = await dbPool.query("SELECT order_id, service_name, quantity, charge, created_at FROM orders WHERE order_status='Failed' AND created_at >= DATE_SUB(NOW(),INTERVAL 24 HOUR) ORDER BY created_at DESC LIMIT 10");
+      const summary = rows.length ? rows.map(r => `#${r.order_id} ${r.service_name || 'service'} qty=${r.quantity} ₱${Number(r.charge||0).toFixed(2)}`).join(' | ') : 'No failed orders in last 24h.';
+      return formatHermesDataReport({ action: 'Read failed orders 24h', result: `${rows.length} failed orders: ${summary}`, tool, table: 'orders', query: "WHERE order_status='Failed' last 24h", rowsReturned: rows.length, timestamp, dataSource: 'MySQL orders', verified: true });
+    } catch (err) {
+      return formatHermesDataReport({ action: 'Read failed orders 24h', result: 'UNAVAILABLE', tool, table: 'orders', query: "WHERE order_status='Failed' last 24h", rowsReturned: 'UNAVAILABLE', timestamp, dataSource: 'MySQL', verified: false, error: err.message });
+    }
+  }
+
+  if (intent.type === 'stuck_orders') {
+    const tool = 'hermes_db_stuck_orders_lookup';
+    const unavailable = requireHermesDb(tool, 'Read stuck orders');
+    if (unavailable) return unavailable;
+    const timestamp = new Date().toISOString();
+    try {
+      const [rows] = await dbPool.query("SELECT order_id, service_name, quantity, order_status, created_at FROM orders WHERE order_status IN ('Pending','Processing') AND created_at <= DATE_SUB(NOW(),INTERVAL 24 HOUR) ORDER BY created_at ASC LIMIT 10");
+      const summary = rows.length ? rows.map(r => `#${r.order_id} ${r.service_name || 'service'} qty=${r.quantity} status=${r.order_status}`).join(' | ') : 'No stuck orders detected.';
+      return formatHermesDataReport({ action: 'Read stuck orders (>24h pending/processing)', result: `${rows.length} stuck: ${summary}`, tool, table: 'orders', query: 'WHERE status Pending/Processing AND age > 24h', rowsReturned: rows.length, timestamp, dataSource: 'MySQL orders', verified: true });
+    } catch (err) {
+      return formatHermesDataReport({ action: 'Read stuck orders', result: 'UNAVAILABLE', tool, table: 'orders', query: 'WHERE status Pending/Processing age > 24h', rowsReturned: 'UNAVAILABLE', timestamp, dataSource: 'MySQL', verified: false, error: err.message });
     }
   }
 
