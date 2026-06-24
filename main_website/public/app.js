@@ -5694,9 +5694,10 @@ print("Demo Response:", response.json())`;
       
       const data = await res.json();
       if (!res.ok) {
-        if (data.requiresVerification && data.email) {
-          registerOtpEmail = data.email;
-          if (registerOtpTargetEmail) registerOtpTargetEmail.textContent = data.email;
+        if (data.requiresVerification) {
+          // Use the email the user typed since server only returns a masked version
+          registerOtpEmail = String(usernameOrEmail || '').includes('@') ? usernameOrEmail : (data.maskedEmail || '');
+          if (registerOtpTargetEmail) registerOtpTargetEmail.textContent = data.maskedEmail || registerOtpEmail;
           showAuthError('Your account email is not yet verified. Please check your inbox for the verification code.');
           setTimeout(() => switchAuthTab('register-otp'), 1200);
         } else {
