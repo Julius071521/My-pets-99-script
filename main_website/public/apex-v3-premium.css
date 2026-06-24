@@ -6,6 +6,13 @@
 /* ── 1. GLOBAL RESET & BASE ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Remove 300ms tap delay on ALL interactive elements for mobile */
+a, button, [role="button"], input, select, textarea, label,
+.btn, .nav-link, .hamburger-toggle, .auth-tab, .sidebar-nav-link,
+.top-tab-btn, .subtab-btn, .filter-pill, .promo-service-card {
+  touch-action: manipulation;
+}
+
 :root {
   --v3-primary:      #14b8a6;
   --v3-primary-dim:  rgba(20,184,166,0.12);
