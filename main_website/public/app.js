@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Prevent background touchmove scroll leaking on mobile
   document.addEventListener('touchmove', (e) => {
     if (document.body.classList.contains('body-scroll-locked')) {
-      const scrollable = e.target.closest('.nav-menu, .dash-sidebar, .updates-dropdown-menu');
+      const scrollable = e.target.closest('.nav-menu, .dash-sidebar, .updates-dropdown-menu, .auth-card, .auth-modal-overlay, .auth-form, .captcha-wrap');
       if (!scrollable) {
         e.preventDefault();
       }
@@ -5323,6 +5323,7 @@ print("Demo Response:", response.json())`;
       document.getElementById('auth-title').textContent = "Welcome Back";
       document.getElementById('auth-subtitle').textContent = "Accelerate your social growth with premium SMM tools.";
       setForgotStep('verify');
+      renderLoginTurnstile._retryCount = 0;
       requestAnimationFrame(renderLoginTurnstile);
     } else if (tab === 'register') {
       if (authTabsContainer) authTabsContainer.classList.remove('hidden');
@@ -5363,7 +5364,10 @@ print("Demo Response:", response.json())`;
     if (registerStep1) registerStep1.classList.toggle('hidden', showVerification);
     if (registerStep2) registerStep2.classList.toggle('hidden', !showVerification);
     clearAuthError();
-    if (showVerification) requestAnimationFrame(renderRegisterTurnstile);
+    if (showVerification) {
+      renderRegisterTurnstile._retryCount = 0;
+      requestAnimationFrame(renderRegisterTurnstile);
+    }
   }
 
   function showRegisterVerificationStep() {
@@ -5440,8 +5444,17 @@ print("Demo Response:", response.json())`;
     const target = document.querySelector('#register-turnstile-wrap .cf-turnstile');
     if (!target || !window.turnstile || typeof window.turnstile.render !== 'function') {
       if (registerTurnstileStatus) registerTurnstileStatus.textContent = 'Secure verification is still loading…';
+      // Retry up to 10 times (5s total) for slow mobile connections
+      if (!renderRegisterTurnstile._retryCount) renderRegisterTurnstile._retryCount = 0;
+      if (renderRegisterTurnstile._retryCount < 10) {
+        renderRegisterTurnstile._retryCount++;
+        setTimeout(renderRegisterTurnstile, 500);
+      } else {
+        renderRegisterTurnstile._retryCount = 0;
+      }
       return;
     }
+    renderRegisterTurnstile._retryCount = 0;
     if (registerTurnstileWidgetId !== null) {
       if (registerTurnstileStatus) registerTurnstileStatus.classList.add('hidden');
       return;
@@ -5489,8 +5502,17 @@ print("Demo Response:", response.json())`;
     const target = document.querySelector('#login-turnstile-wrap .cf-turnstile');
     if (!target || !window.turnstile || typeof window.turnstile.render !== 'function') {
       if (loginTurnstileStatus) loginTurnstileStatus.textContent = 'Secure verification is still loading...';
+      // Retry up to 10 times (5s total) for slow mobile connections
+      if (!renderLoginTurnstile._retryCount) renderLoginTurnstile._retryCount = 0;
+      if (renderLoginTurnstile._retryCount < 10) {
+        renderLoginTurnstile._retryCount++;
+        setTimeout(renderLoginTurnstile, 500);
+      } else {
+        renderLoginTurnstile._retryCount = 0;
+      }
       return;
     }
+    renderLoginTurnstile._retryCount = 0;
     if (loginTurnstileWidgetId !== null) {
       if (loginTurnstileStatus) loginTurnstileStatus.classList.add('hidden');
       return;
@@ -5672,14 +5694,21 @@ print("Demo Response:", response.json())`;
       
       const data = await res.json();
       if (!res.ok) {
-        showAuthError(data.error || "Login failed");
+        if (data.requiresVerification && data.email) {
+          registerOtpEmail = data.email;
+          if (registerOtpTargetEmail) registerOtpTargetEmail.textContent = data.email;
+          showAuthError('Your account email is not yet verified. Please check your inbox for the verification code.');
+          setTimeout(() => switchAuthTab('register-otp'), 1200);
+        } else {
+          showAuthError(data.error || "Login failed");
+        }
         if (window.turnstile && loginTurnstileWidgetId !== null) {
           window.turnstile.reset(loginTurnstileWidgetId);
           loginTurnstileToken = '';
         }
         return;
       }
-      
+
       state.user = data.user;
       localStorage.setItem('apexboost_token', data.token || '');
       localStorage.setItem('apexboost_user', JSON.stringify(data.user));

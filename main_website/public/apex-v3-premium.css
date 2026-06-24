@@ -1093,6 +1093,35 @@ body.apex-pro-v34 {
     0 40px 120px rgba(0,0,0,0.7),
     0 0 0 1px rgba(255,255,255,0.03) inset !important;
   backdrop-filter: blur(40px) !important;
+  /* Do not clip Turnstile iframe on narrow screens */
+  overflow-x: visible !important;
+}
+
+/* Prevent overflow-x: hidden on overlay from clipping Turnstile iframe */
+.auth-modal-overlay:not(.hidden) {
+  overflow-x: clip !important;
+}
+
+/* Captcha / Turnstile container must not clip iframe */
+.captcha-wrap,
+#login-turnstile-wrap,
+#register-turnstile-wrap,
+.cf-turnstile {
+  overflow: visible !important;
+}
+
+/* When auth modal is open, keep sidebar behind it */
+body.auth-modal-open .dash-sidebar {
+  z-index: 90000 !important;
+}
+
+/* iOS auto-zoom prevention — inputs <16px font-size trigger zoom on focus */
+@media (max-width: 767px) {
+  .auth-form input,
+  .auth-form textarea,
+  .auth-form select {
+    font-size: 16px !important;
+  }
 }
 
 .auth-tab {
@@ -1267,6 +1296,15 @@ input:focus, select:focus, textarea:focus {
 .reveal-on-scroll.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* On touch/mobile: show immediately — no JS needed, no opacity:0 stuck state */
+@media (pointer: coarse), (max-width: 760px), (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Stagger children */
