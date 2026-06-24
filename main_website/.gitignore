@@ -13,3 +13,17 @@ chrome-profile-dump/
 chrome-profile-dump3/
 qa-screens/
 .system_generated/
+
+# Backup and log files
+*.backup
+*.backup2
+*.backup3
+*.bak.*
+*.codex-backup
+stderr.log
+tmp/
+scratch/
+
+# Test data and live snapshots
+test_live_services.json
+user_services.json

@@ -1,0 +1,19 @@
+UPLOAD TARGET:
+/home/apexilvn/smm-boosting-website-v2
+
+FILES IN THIS ZIP:
+- app.js
+- server.js
+- PRODUCTION_STABILITY_FIX_REPORT.md
+- UPLOAD_INSTRUCTIONS_PRODUCTION_STABILITY_FIX.txt
+
+HOW TO UPLOAD:
+1. Open cPanel File Manager.
+2. Go to /home/apexilvn/smm-boosting-website-v2.
+3. Upload this ZIP there.
+4. Extract it in that same folder.
+5. Confirm app.js is overwritten in /home/apexilvn/smm-boosting-website-v2/app.js.
+6. Confirm server.js is overwritten in /home/apexilvn/smm-boosting-website-v2/server.js.
+7. Restart the Node.js app in cPanel / Setup Node.js App.
+
+DO NOT EXTRACT THIS ZIP INSIDE public_html.

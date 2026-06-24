@@ -1,0 +1,20 @@
+ApexBoost Codex update - 2026-06-21
+
+Upload and extract this ZIP into the Node.js application root (the folder that contains server.js), not blindly into public_html.
+
+Included fixes:
+- Production HTML now loads the current public/app.js instead of the stale app.min.js bundle.
+- Sign-up includes visible Cloudflare Turnstile status and a password-strength meter.
+- Sign-up recovers into the OTP/resend screen when the account was saved but SMTP delivery failed.
+- Google/social auth controls are hidden; email/password + OTP remains the primary flow.
+- Mobile and desktop layout overrides reduce overlap, clutter, inconsistent cards, and cramped auth forms.
+- Cache-busting updated for the revised CSS and JavaScript.
+
+Required after upload:
+1. Preserve the production .env; this ZIP intentionally does not contain it.
+2. Restart the Node.js application.
+3. Purge Cloudflare cache.
+4. Confirm TURNSTILE_SECRET_KEY and the SMTP EMAIL_* settings in the hosting environment.
+5. Test a new registration with an inbox you control.
+
+Important: Code cannot make OTP email delivery succeed if the production SMTP credentials, port, TLS mode, DNS, or provider access are wrong. The UI now reports and recovers from that failure correctly, but hosting SMTP must still be valid.

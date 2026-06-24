@@ -1,0 +1,21 @@
+# ApexBoost SMTP/Auth hotfix env values
+# Put/update these in the live .env file, then restart the Node app.
+
+EMAIL_HOST=192.64.117.65
+EMAIL_PORT=465
+EMAIL_SECURE=true
+EMAIL_TLS_SERVERNAME=apexsmmboosting.com
+EMAIL_CONNECTION_TIMEOUT_MS=8000
+EMAIL_GREETING_TIMEOUT_MS=8000
+EMAIL_SOCKET_TIMEOUT_MS=12000
+EMAIL_SEND_ATTEMPTS=1
+EMAIL_USER=admin@apexsmmboosting.com
+EMAIL_PASS=USE_THE_EMAIL_ACCOUNT_PASSWORD
+EMAIL_FROM_NAME=ApexBoost Support
+EMAIL_FROM=admin@apexsmmboosting.com
+SUPPORT_EMAIL=admin@apexsmmboosting.com
+
+# Why not EMAIL_HOST=mail.apexsmmboosting.com?
+# Current DNS for apexsmmboosting.com and mail.apexsmmboosting.com points to Cloudflare proxy IPs.
+# Cloudflare does not proxy SMTP port 465, so the app can timeout if it uses those hostnames.
+# The verified SMTP origin for this setup is 192.64.117.65 with TLS servername apexsmmboosting.com.

@@ -1,0 +1,20 @@
+HERMES TELEGRAM RECOVERY - 2026-06-07
+
+Upload/extract this patch in the Node.js application root:
+/home/apexilvn/smm-boosting-website-v2
+
+In cPanel Setup Node.js App, verify these environment variables:
+
+DEEPSEEK_API_KEY=<ROTATED_VALID_DEEPSEEK_KEY>
+DEEPSEEK_MODEL=deepseek-chat
+HERMES_AGENT_ENABLED=true
+HERMES_TELEGRAM_BOT_TOKEN=<BOTFATHER_TOKEN>
+HERMES_TELEGRAM_CHAT_ID=<NUMERIC_CHAT_ID>
+HERMES_TELEGRAM_WEBHOOK_SECRET=<LONG_RANDOM_SECRET>
+HERMES_TELEGRAM_AUTO_WEBHOOK=true
+PUBLIC_SITE_URL=https://apexsmmboosting.com
+
+Then restart the Node.js app. Startup will verify and repair the Telegram
+webhook automatically. Send /start to the bot after restart.
+
+Do not upload a real .env inside a public or shared ZIP.

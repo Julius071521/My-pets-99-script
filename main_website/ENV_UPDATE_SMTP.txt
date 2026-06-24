@@ -1,0 +1,20 @@
+Paste/update these lines in your production .env:
+
+EMAIL_HOST=192.64.117.65
+EMAIL_PORT=465
+EMAIL_SECURE=true
+EMAIL_TLS_SERVERNAME=apexsmmboosting.com
+EMAIL_USER=admin@apexsmmboosting.com
+EMAIL_PASS=910297191@@
+EMAIL_FROM_NAME=ApexBoost Support
+EMAIL_FROM=admin@apexsmmboosting.com
+SUPPORT_EMAIL=admin@apexsmmboosting.com
+
+Reason:
+- apexsmmboosting.com and mail.apexsmmboosting.com currently resolve to Cloudflare proxy IPs.
+- Cloudflare does not proxy SMTP port 465, so SMTP times out through those hostnames.
+- 192.64.117.65 accepted SMTP 465 and presented a valid TLS certificate for apexsmmboosting.com when EMAIL_TLS_SERVERNAME is set.
+
+Alternative:
+- In Cloudflare DNS, set the mail SMTP record to DNS-only and point it to the real Namecheap hosting mail IP.
+- Then EMAIL_HOST can be that DNS-only hostname instead of the IP.

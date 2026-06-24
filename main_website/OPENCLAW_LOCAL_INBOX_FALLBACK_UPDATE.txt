@@ -1,0 +1,22 @@
+﻿ApexBoost OpenClaw Local Inbox Fallback Deploy
+
+Includes all current updates:
+- Local message storage fallback when VPS bridge 72.61.113.82:18790 is unreachable.
+- Protected POST /api/agent/inbox for OpenClaw to read pending local customer messages.
+- Protected POST /api/agent/reply for OpenClaw to queue replies and mark messages read.
+- Website chat webhook mode with no DeepSeek/local auto-reply when OpenClaw is configured.
+- OpenClaw reply quota controls.
+- Professional Add Funds approval SMTP email.
+
+Auth for /api/agent/inbox and /api/agent/reply:
+Authorization: Bearer OPENCLAW_API_TOKEN
+or X-OpenClaw-Token: OPENCLAW_API_TOKEN
+
+After upload:
+1. Extract into cPanel app folder: /home/apexilvn/smm-boosting-website-v2
+2. Keep production .env values configured.
+3. Restart Node.js app in cPanel.
+
+Verification after deploy:
+grep -n "api/agent" server.js
+grep -n "openClawWebsiteMessageInbox" server.js
