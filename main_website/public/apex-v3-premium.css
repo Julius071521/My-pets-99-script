@@ -1720,3 +1720,350 @@ a { transition: color var(--v3-transition-fast); }
 .apex-payment-card:hover .apex-payment-logo img {
   filter: brightness(1.2) contrast(1.1);
 }
+
+/* ── 49. API KEY MANAGEMENT CARD ────────────────────────────────────────── */
+.api-key-management-card {
+  border-color: var(--v3-border2) !important;
+  background: linear-gradient(135deg, var(--v3-glass) 0%, rgba(20,184,166,0.04) 100%) !important;
+}
+
+.api-key-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.api-key-status-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(20,184,166,0.15);
+  color: #14b8a6;
+  border: 1px solid rgba(20,184,166,0.3);
+}
+
+.api-key-status-badge.revoked {
+  background: rgba(239,68,68,0.12);
+  color: #ef4444;
+  border-color: rgba(239,68,68,0.25);
+}
+
+.api-key-desc {
+  font-size: 0.84rem;
+  color: var(--v3-text2);
+  margin: 0 0 1.25rem 0;
+}
+
+.api-key-display-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(2,11,18,0.6);
+  border: 1px solid var(--v3-border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.api-key-field-wrap {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.api-key-code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: #14b8a6;
+  word-break: break-all;
+  letter-spacing: 0.03em;
+}
+
+.api-key-code.masked {
+  letter-spacing: 0.08em;
+  color: var(--v3-text3);
+}
+
+.api-key-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.api-key-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.api-key-meta-item {
+  font-size: 0.77rem;
+  color: var(--v3-text3);
+}
+
+.api-key-danger-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border: 1px solid rgba(20,184,166,0.4);
+  color: #14b8a6;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-outline-primary:hover {
+  background: rgba(20,184,166,0.12);
+  border-color: #14b8a6;
+}
+
+.btn-danger-outline {
+  background: transparent;
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #ef4444;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-danger-outline:hover {
+  background: rgba(239,68,68,0.1);
+  border-color: #ef4444;
+}
+
+/* ── 50. API ACTIONS REFERENCE TABLE ────────────────────────────────────── */
+.api-actions-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--v3-border);
+}
+
+.api-actions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.api-actions-table thead tr {
+  background: rgba(99,102,241,0.1);
+}
+
+.api-actions-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--v3-text2);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--v3-border);
+  white-space: nowrap;
+}
+
+.api-actions-table td {
+  padding: 9px 14px;
+  color: var(--v3-text);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+
+.api-actions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.api-actions-table tbody tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+.api-actions-table td code {
+  background: rgba(20,184,166,0.12);
+  color: #14b8a6;
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+/* ── 51. ACCOUNT PASSWORD STRENGTH ─────────────────────────────────────── */
+#account-password-strength {
+  margin-top: 6px;
+}
+
+/* ── 52. QUICK GUIDE TOOLTIP ────────────────────────────────────────────── */
+.quick-guide-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(99,102,241,0.18);
+  border: 1px solid rgba(99,102,241,0.35);
+  color: #6366f1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 6px;
+}
+
+.quick-guide-tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--v3-surface2);
+  border: 1px solid var(--v3-border);
+  color: var(--v3-text);
+  font-size: 0.75rem;
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 100;
+  max-width: 260px;
+  white-space: normal;
+  text-align: center;
+}
+
+.quick-guide-tip:hover::after {
+  opacity: 1;
+}
+
+/* ── 53. QUICK GUIDE BANNER ─────────────────────────────────────────────── */
+.quick-guide-banner {
+  background: linear-gradient(135deg, rgba(20,184,166,0.07) 0%, rgba(99,102,241,0.07) 100%);
+  border: 1px solid rgba(20,184,166,0.2);
+  border-radius: var(--v3-radius-lg, 18px);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.quick-guide-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.quick-guide-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.quick-guide-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #14b8a6;
+}
+
+.quick-guide-subtitle {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--v3-text2);
+  margin-top: 1px;
+}
+
+.quick-guide-dismiss {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--v3-text3);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.quick-guide-dismiss:hover {
+  background: rgba(239,68,68,0.15);
+  border-color: rgba(239,68,68,0.4);
+  color: #ef4444;
+}
+
+.quick-guide-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.quick-guide-step {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: rgba(2,11,18,0.35);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+}
+
+.qs-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #6366f1);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.qs-step-body strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--v3-text);
+  margin-bottom: 2px;
+}
+
+.qs-step-body span {
+  font-size: 0.77rem;
+  color: var(--v3-text2);
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .quick-guide-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .api-key-display-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

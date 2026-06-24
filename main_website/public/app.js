@@ -642,22 +642,113 @@ document.addEventListener('DOMContentLoaded', () => {
       btnCopyApiKey.addEventListener('click', () => {
         const keyDisplay = document.getElementById('developer-api-key-display');
         if (!keyDisplay) return;
-        const keyText = keyDisplay.textContent;
-        if (keyText && keyText !== 'apx_your_api_key_here' && keyText !== 'apx_...') {
+        const keyText = keyDisplay.dataset.fullKey || keyDisplay.textContent;
+        if (keyText && !keyText.includes('•') && keyText !== 'apx_your_api_key_here' && keyText !== 'apx_...') {
           navigator.clipboard.writeText(keyText).then(() => {
-            btnCopyApiKey.textContent = "Copied! ✓";
+            btnCopyApiKey.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
             btnCopyApiKey.style.borderColor = "var(--success)";
             btnCopyApiKey.style.color = "var(--success)";
             setTimeout(() => {
-              btnCopyApiKey.textContent = "Copy";
+              btnCopyApiKey.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
               btnCopyApiKey.style.borderColor = "";
               btnCopyApiKey.style.color = "";
             }, 2000);
-          }).catch(err => {
-            console.error("Clipboard copy failed: ", err);
-          });
+          }).catch(err => console.error("Clipboard copy failed:", err));
         }
       });
+    }
+
+    // Toggle API key reveal/mask
+    const btnToggleApiKey = document.getElementById('btn-toggle-api-key');
+    if (btnToggleApiKey) {
+      btnToggleApiKey.addEventListener('click', () => {
+        const keyDisplay = document.getElementById('developer-api-key-display');
+        if (!keyDisplay) return;
+        const isRevealed = btnToggleApiKey.getAttribute('aria-pressed') === 'true';
+        if (isRevealed) {
+          const full = keyDisplay.dataset.fullKey;
+          if (full) keyDisplay.textContent = full.substring(0, 7) + '••••••••••••••••••••••••••••••••';
+          keyDisplay.classList.add('masked');
+          btnToggleApiKey.setAttribute('aria-pressed', 'false');
+          btnToggleApiKey.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Reveal`;
+        } else {
+          const full = keyDisplay.dataset.fullKey;
+          if (full) { keyDisplay.textContent = full; keyDisplay.classList.remove('masked'); }
+          btnToggleApiKey.setAttribute('aria-pressed', 'true');
+          btnToggleApiKey.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg> Hide`;
+        }
+      });
+    }
+
+    // Generate API Key
+    const btnGenerateApiKey = document.getElementById('btn-generate-api-key');
+    if (btnGenerateApiKey) {
+      btnGenerateApiKey.addEventListener('click', async () => {
+        const alert = document.getElementById('api-key-alert');
+        if (!confirm('Regenerate your API key? All existing integrations using the old key will stop working immediately.')) return;
+        btnGenerateApiKey.disabled = true;
+        btnGenerateApiKey.textContent = 'Generating…';
+        try {
+          const res = await safeFetch('/api/user/api-key/generate', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.authToken}` } });
+          const data = await res.json();
+          if (res.ok && (data.apiKey || data.api_key)) {
+            const generatedKey = data.apiKey || data.api_key;
+            const keyDisplay = document.getElementById('developer-api-key-display');
+            if (keyDisplay) {
+              keyDisplay.dataset.fullKey = generatedKey;
+              keyDisplay.textContent = generatedKey;
+              keyDisplay.classList.remove('masked');
+              const btnToggle = document.getElementById('btn-toggle-api-key');
+              if (btnToggle) { btnToggle.setAttribute('aria-pressed', 'true'); btnToggle.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg> Hide`; }
+            }
+            if (state.user) state.user.apiKey = generatedKey;
+            if (alert) { alert.className = 'order-status-alert success'; alert.textContent = 'New API key generated. Copy it now — it will be masked on next page load.'; }
+          } else {
+            if (alert) { alert.className = 'order-status-alert error'; alert.textContent = data.error || 'Failed to generate API key.'; }
+          }
+        } catch (e) {
+          if (alert) { alert.className = 'order-status-alert error'; alert.textContent = 'Network error. Please try again.'; }
+        } finally {
+          btnGenerateApiKey.disabled = false;
+          btnGenerateApiKey.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Regenerate Key`;
+        }
+      });
+    }
+
+    // Revoke API Key
+    const btnRevokeApiKey = document.getElementById('btn-revoke-api-key');
+    if (btnRevokeApiKey) {
+      btnRevokeApiKey.addEventListener('click', async () => {
+        const alert = document.getElementById('api-key-alert');
+        if (!confirm('Revoke your API key? All API access will be immediately disabled. You can generate a new key at any time.')) return;
+        btnRevokeApiKey.disabled = true;
+        btnRevokeApiKey.textContent = 'Revoking…';
+        try {
+          const res = await safeFetch('/api/user/api-key', { method: 'DELETE', headers: { 'Authorization': `Bearer ${state.authToken}` } });
+          const data = await res.json();
+          if (res.ok) {
+            const keyDisplay = document.getElementById('developer-api-key-display');
+            if (keyDisplay) { keyDisplay.dataset.fullKey = ''; keyDisplay.textContent = 'apx_••••••••••••••••••••••••••••••••'; keyDisplay.classList.add('masked'); }
+            if (state.user) state.user.apiKey = '';
+            const badge = document.getElementById('api-key-status-badge');
+            if (badge) { badge.textContent = 'Revoked'; badge.className = 'api-key-status-badge revoked'; }
+            if (alert) { alert.className = 'order-status-alert success'; alert.textContent = 'API key revoked successfully.'; }
+          } else {
+            if (alert) { alert.className = 'order-status-alert error'; alert.textContent = data.error || 'Failed to revoke API key.'; }
+          }
+        } catch (e) {
+          if (alert) { alert.className = 'order-status-alert error'; alert.textContent = 'Network error. Please try again.'; }
+        } finally {
+          btnRevokeApiKey.disabled = false;
+          btnRevokeApiKey.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Revoke Key`;
+        }
+      });
+    }
+
+    // Account settings — password strength for change-password-new
+    const changePasswordNew = document.getElementById('change-password-new');
+    if (changePasswordNew) {
+      changePasswordNew.addEventListener('input', () => updateAccountPasswordStrength(changePasswordNew.value));
     }
 
     // PREMIUM TABS & SERVICES SEARCH BINDINGS
@@ -1275,13 +1366,42 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAdminTabSpecificData('dashboard');
   }
 
-  function updateDeveloperApiTab() {
+  async function updateDeveloperApiTab() {
     const keyDisplay = document.getElementById('developer-api-key-display');
     const apiEndpointDisplay = document.getElementById('api-endpoint-display');
     if (!keyDisplay) return;
 
+    // If logged in and in live mode, fetch fresh API key info from server
+    if (state.operatingMode === 'live' && state.authToken) {
+      try {
+        const res = await safeFetch('/api/user/api-key', { headers: { 'Authorization': `Bearer ${state.authToken}` } });
+        if (res.ok) {
+          const data = await res.json();
+          const hasKey = data.hasKey || data.has_key;
+          const maskedKey = data.maskedKey || data.masked_key;
+          if (hasKey && maskedKey) {
+            keyDisplay.dataset.fullKey = '';
+            keyDisplay.textContent = maskedKey;
+            keyDisplay.classList.add('masked');
+            if (state.user) state.user.apiKey = maskedKey;
+            const createdLabel = document.getElementById('api-key-created-label');
+            const lastUsedLabel = document.getElementById('api-key-last-used-label');
+            const createdAt = data.createdAt || data.created_at;
+            const lastUsed = data.lastUsed || data.last_used;
+            if (createdLabel && createdAt) createdLabel.textContent = `Created: ${new Date(createdAt).toLocaleDateString()}`;
+            if (lastUsedLabel && lastUsed) lastUsedLabel.textContent = `Last used: ${new Date(lastUsed).toLocaleString()}`;
+            else if (lastUsedLabel) lastUsedLabel.textContent = 'Last used: Never';
+            const badge = document.getElementById('api-key-status-badge');
+            if (badge) { badge.textContent = 'Active'; badge.className = 'api-key-status-badge'; }
+          }
+        }
+      } catch (_e) { /* non-critical */ }
+    }
+
     const apiKey = state.user ? (state.user.apiKey || 'apx_your_api_key_here') : 'apx_your_api_key_here';
-    keyDisplay.textContent = apiKey;
+    if (!keyDisplay.dataset.fullKey && !keyDisplay.classList.contains('masked')) {
+      keyDisplay.textContent = apiKey;
+    }
 
     const currentOrigin = window.location.origin;
     const apiEndpoint = `${currentOrigin}/api/v2`;
@@ -2423,6 +2543,30 @@ print("Demo Response:", response.json())`;
     syncFloatingWidgets();
     updateBrowserURL();
   }
+
+  // Quick Guide dismiss
+  (function initQuickGuide() {
+    const banner = document.getElementById('quick-guide-banner');
+    const btn = document.getElementById('btn-dismiss-quick-guide');
+    if (!banner) return;
+    if (localStorage.getItem('apex_quick_guide_dismissed') === '1') {
+      banner.style.display = 'none';
+      return;
+    }
+    if (btn) {
+      btn.addEventListener('click', () => {
+        banner.style.maxHeight = banner.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          banner.style.transition = 'max-height 0.35s ease, opacity 0.35s ease, margin 0.35s ease';
+          banner.style.maxHeight = '0';
+          banner.style.opacity = '0';
+          banner.style.marginBottom = '0';
+        });
+        setTimeout(() => { banner.style.display = 'none'; }, 370);
+        localStorage.setItem('apex_quick_guide_dismissed', '1');
+      });
+    }
+  })();
 
   // --- EVENT LISTENERS SETUP ---
   function setupEventListeners() {
@@ -5225,15 +5369,17 @@ print("Demo Response:", response.json())`;
     setRegisterStep(2);
   }
 
-  function updatePasswordStrength(password = '') {
-    const meter = document.getElementById('register-password-strength');
-    if (!meter) return;
+  function _calcPasswordScore(password) {
     let score = 0;
     if (password.length >= 8) score += 1;
     if (password.length >= 12) score += 1;
     if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 1;
     if (/\d/.test(password)) score += 1;
     if (/[^A-Za-z0-9]/.test(password)) score += 1;
+    return score;
+  }
+
+  function _applyStrengthMeter(meter, score) {
     const levels = [
       { width: '0%', color: '#ef4444', level: 'weak', label: 'Use at least 8 characters.' },
       { width: '22%', color: '#ef4444', level: 'weak', label: 'Weak — add uppercase, numbers, and symbols.' },
@@ -5242,12 +5388,24 @@ print("Demo Response:", response.json())`;
       { width: '84%', color: '#10b981', level: 'strong', label: 'Strong password.' },
       { width: '100%', color: '#10b981', level: 'strong', label: 'Excellent password.' }
     ];
-    const state = levels[Math.min(score, 5)];
-    meter.dataset.level = state.level;
-    meter.style.setProperty('--strength', state.width);
-    meter.style.setProperty('--strength-color', state.color);
+    const lvl = levels[Math.min(score, 5)];
+    meter.dataset.level = lvl.level;
+    meter.style.setProperty('--strength', lvl.width);
+    meter.style.setProperty('--strength-color', lvl.color);
     const label = meter.querySelector('.password-strength-label');
-    if (label) label.textContent = state.label;
+    if (label) label.textContent = lvl.label;
+  }
+
+  function updatePasswordStrength(password = '') {
+    const meter = document.getElementById('register-password-strength');
+    if (!meter) return;
+    _applyStrengthMeter(meter, _calcPasswordScore(password));
+  }
+
+  function updateAccountPasswordStrength(password = '') {
+    const meter = document.getElementById('account-password-strength');
+    if (!meter) return;
+    _applyStrengthMeter(meter, _calcPasswordScore(password));
   }
 
   async function getTurnstileSiteKey(target) {
