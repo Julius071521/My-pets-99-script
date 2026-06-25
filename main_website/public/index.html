@@ -88,8 +88,8 @@
   <link rel="stylesheet" href="/codex-ui-v2.css?v=20260622-qa-final">
   <link rel="stylesheet" href="/apex-responsive.css?v=20260624-rework">
   <!-- ApexBoost v3 Premium Design System — Professional redesign with animations -->
-  <link rel="stylesheet" href="/apex-v3-premium.css?v=20260625-dashfix">
-  <link rel="preload" href="/apex-v3-premium.css?v=20260625-dashfix" as="style">
+  <link rel="stylesheet" href="/apex-v3-premium.css?v=20260625-bugfix2">
+  <link rel="preload" href="/apex-v3-premium.css?v=20260625-bugfix2" as="style">
   
   <!-- CRITICAL INLINE CSS — Promo Banner (fallback if external CSS is slow) -->
   <style>
@@ -241,7 +241,7 @@
   <!-- Header Navigation -->
   <header class="navbar" id="main-nav">
     <div class="nav-container">
-      <a href="#" class="nav-logo apex-brand-logo" id="logo-btn">
+      <a href="javascript:void(0)" class="nav-logo apex-brand-logo" id="logo-btn">
         <span class="logo-icon"><picture><source srcset="/images/apexboost-site-logo.webp" type="image/webp"><img src="/images/apexboost-site-logo.png" alt="ApexBoost logo" width="40" height="40" decoding="async"></picture></span>
         <span class="logo-text">Apex<span>Boost</span></span>
       </a>
@@ -375,7 +375,7 @@
   <div class="nav-menu-backdrop hidden" id="nav-menu-backdrop" aria-hidden="true"></div>
 
   <!-- MAIN WRAPPER -->
-  <main class="main-content">
+  <main class="main-content" id="main-content">
     
     <!-- LANDING PAGE SECTION -->
     <section class="landing-section" id="landing-page-view">
@@ -1523,12 +1523,12 @@
           <a href="#hero">Home</a>
           <a href="#services-promo">Service Catalog</a>
           <a href="#reseller-api" onclick="document.getElementById('reseller-api')?.scrollIntoView({behavior:'smooth'});return false;">API Access</a>
-          <a href="#dashboard" id="footer-dashboard-link">Dashboard</a>
+          <a href="javascript:void(0)" id="footer-dashboard-link">Dashboard</a>
         </div>
         <div class="footer-link-col">
           <h4>Product</h4>
           <a href="#services-promo" id="footer-features-link" onclick="document.getElementById('services-promo')?.scrollIntoView({behavior:'smooth'});return false;">Browse Services</a>
-          <a href="#dashboard" id="footer-order-link">Order Desk</a>
+          <a href="javascript:void(0)" id="footer-order-link">Order Desk</a>
           <a href="#how-it-works" onclick="document.getElementById('how-it-works')?.scrollIntoView({behavior:'smooth'});return false;">How It Works</a>
           <a href="#technology-showcase">Technology Stack</a>
           <a href="#quick-guide" onclick="document.getElementById('quick-guide')?.scrollIntoView({behavior:'smooth'});return false;">Quick Guide</a>
@@ -1592,7 +1592,7 @@
       <div class="auth-error-alert hidden" id="auth-error-alert"></div>
 
       <!-- Login Form -->
-      <form class="auth-form" id="login-form">
+      <form class="auth-form" id="login-form" novalidate>
         <div class="form-group">
           <label for="login-email">Username or Email Address</label>
           <input type="text" id="login-email" placeholder="Enter username or email" required>
@@ -1600,7 +1600,7 @@
         <div class="form-group">
           <div class="label-row-flex">
             <label for="login-password">Password</label>
-            <a href="#" class="forgot-pass-link" id="trigger-forgot-btn">Forgot Password?</a>
+            <a href="javascript:void(0)" class="forgot-pass-link" id="trigger-forgot-btn">Forgot Password?</a>
           </div>
           <input type="password" id="login-password" placeholder="••••••••" required>
         </div>
@@ -1624,7 +1624,7 @@
       </form>
 
       <!-- Register Form (2-step: account details → terms + captcha) -->
-      <form class="auth-form hidden" id="register-form">
+      <form class="auth-form hidden" id="register-form" novalidate>
         <div class="register-step register-step-active" id="register-step-1">
           <div class="register-step-label">Step 1 of 2 — Account details</div>
           <div class="form-group">
@@ -1663,7 +1663,25 @@
         </div>
         <div class="register-step hidden" id="register-step-2">
           <div class="register-step-label">Step 2 of 2 — Verify &amp; create</div>
-          <!-- Bug Fix #10: Terms & Privacy links now navigate to the terms section instead of void -->
+          <!-- Account summary so this step is not a single sparse checkbox -->
+          <div class="register-summary-card" id="register-summary-card">
+            <div class="register-summary-row">
+              <span class="register-summary-icon">👤</span>
+              <div class="register-summary-text">
+                <small>Username</small>
+                <strong id="register-summary-username">—</strong>
+              </div>
+            </div>
+            <div class="register-summary-row">
+              <span class="register-summary-icon">✉️</span>
+              <div class="register-summary-text">
+                <small>Email</small>
+                <strong id="register-summary-email">—</strong>
+              </div>
+            </div>
+            <p class="register-summary-note">We'll send a verification code to this email after you create your account.</p>
+          </div>
+          <!-- Terms & Privacy links navigate to the terms section instead of void -->
           <div class="form-group form-checkbox-group register-terms-row">
             <input type="checkbox" id="register-terms" required>
             <label for="register-terms">
@@ -1686,7 +1704,7 @@
       </form>
 
       <!-- Register OTP Verification Form -->
-      <form class="auth-form hidden" id="register-otp-form">
+      <form class="auth-form hidden" id="register-otp-form" novalidate>
         <div class="verification-success-alert mb-3">
           <span class="success-icon">📧</span>
           <span>Check your email and enter the verification code to verify your account. Sent to <strong id="register-otp-target-email">your email</strong>.</span>
@@ -1708,12 +1726,12 @@
         </div>
         
         <div class="auth-back-to-login">
-          <a href="#" id="register-otp-back-btn">← Back to Log In</a>
+          <a href="javascript:void(0)" id="register-otp-back-btn">← Back to Log In</a>
         </div>
       </form>
 
       <!-- Forgot Password Form -->
-      <form class="auth-form hidden" id="forgot-form">
+      <form class="auth-form hidden" id="forgot-form" novalidate>
         <!-- View State 1: Enter Username/Email -->
         <div id="forgot-state-verify">
           <div class="form-group">
@@ -1756,7 +1774,7 @@
         </div>
 
         <div class="auth-back-to-login">
-          <a href="#" id="forgot-back-to-login-btn">← Back to Log In</a>
+          <a href="javascript:void(0)" id="forgot-back-to-login-btn">← Back to Log In</a>
         </div>
       </form>
 
@@ -2023,7 +2041,7 @@
   </nav>
 
   <!-- Custom Scripts -->
-  <script src="/app.js?v=20260625-dashfix" defer data-apex-core="1"></script>
+  <script src="/app.js?v=20260625-bugfix2" defer data-apex-core="1"></script>
 
   <!-- Imp #4+9+10: Spotlight tracking, scroll progress, terms link fix -->
   <script>

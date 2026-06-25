@@ -2765,3 +2765,127 @@ button:focus-visible {
     padding: 14px !important;
   }
 }
+
+/* ── 66. AUTH / MODAL / NAV BUG FIXES (round 2) ──────────────────────────── */
+
+/* #2: Autofill input color — force dark background so autofilled fields match
+   the theme instead of turning white. The inset box-shadow trick is the only
+   reliable way to override the browser's yellow/white autofill background. */
+.auth-form input:-webkit-autofill,
+.auth-form input:-webkit-autofill:hover,
+.auth-form input:-webkit-autofill:focus,
+.auth-form input:-webkit-autofill:active,
+.dashboard-card input:-webkit-autofill,
+.dashboard-card input:-webkit-autofill:hover,
+.dashboard-card input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--auth-input-bg, rgba(0,0,0,0.2)) inset !important;
+  box-shadow: 0 0 0 1000px var(--auth-input-bg, rgba(0,0,0,0.2)) inset !important;
+  -webkit-text-fill-color: var(--text-primary, #f3f4f6) !important;
+  caret-color: var(--text-primary, #f3f4f6) !important;
+  transition: background-color 9999s ease-out 0s !important;
+}
+
+/* #11: Modal headers not clipped — give the auth card breathing room at top */
+.auth-card {
+  padding-top: 1.75rem !important;
+}
+.auth-card .auth-logo,
+.auth-card #auth-title {
+  margin-top: 0 !important;
+}
+
+/* #10 support: smooth focus ring on the autofocused auth input */
+.auth-form input:focus-visible {
+  outline: none !important;
+  border-color: var(--v3-primary) !important;
+  box-shadow: 0 0 0 2px rgba(20,184,166,0.25) !important;
+}
+
+/* MOBILE: nav drawer backdrop — dim the page behind the open drawer.
+   The JS toggles the `hidden` class; this gives it a visible dim layer. */
+.nav-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 11, 18, 0.6);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 99990; /* just below the .nav-menu drawer (99999), above all page content */
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.nav-menu-backdrop.hidden {
+  display: none !important;
+}
+@media (min-width: 992px) {
+  /* Drawer/backdrop are mobile-only — never show on desktop */
+  .nav-menu-backdrop {
+    display: none !important;
+  }
+}
+
+/* #4: Step 2 account summary card — fills the previously sparse step */
+.register-summary-card {
+  background: var(--v3-glass2, rgba(15,31,54,0.88));
+  border: 1px solid var(--v3-border, rgba(99,102,241,0.14));
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: grid;
+  gap: 12px;
+}
+.register-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.register-summary-icon {
+  font-size: 1.1rem;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(20,184,166,0.12);
+  flex-shrink: 0;
+}
+.register-summary-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.register-summary-text small {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--v3-text3, #4a6080);
+}
+.register-summary-text strong {
+  font-size: 0.92rem;
+  color: var(--v3-text, #f0f4ff);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.register-summary-note {
+  font-size: 0.78rem;
+  color: var(--v3-text2, #8ba3c7);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* OpenClaw FAB — enforce compact circular shape over the higher-specificity
+   `.ai-chat-widget.ai-vip-unlocked .ai-chat-fab` rule from style.min.css */
+.ai-chat-widget .ai-chat-fab,
+.ai-chat-widget.ai-vip-unlocked .ai-chat-fab {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  justify-content: center !important;
+}
+.ai-chat-widget.ai-vip-unlocked .ai-chat-fab .ai-fab-text,
+.ai-chat-widget.ai-vip-unlocked .ai-chat-fab .ai-fab-vip {
+  display: none !important;
+}

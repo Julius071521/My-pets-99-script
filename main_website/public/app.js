@@ -255,6 +255,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return text.trim();
   }
 
+  // Format a service min/max limit. Providers often send the int32 ceiling
+  // (2147483647) or other huge sentinels to mean "no limit" — show "Unlimited".
+  function formatServiceLimit(value) {
+    const n = parseInt(value, 10);
+    if (!Number.isFinite(n) || n <= 0) return '—';
+    if (n >= 100000000) return 'Unlimited';
+    return n.toLocaleString();
+  }
+
   function getAuthToken() {
     return localStorage.getItem('apexboost_token') || '';
   }
@@ -1816,9 +1825,11 @@ print("Demo Response:", response.json())`;
   function closeMobileNavMenu() {
     const hamburgerToggle = document.getElementById('hamburger-toggle');
     const navLinks = document.getElementById('nav-links');
+    const navBackdrop = document.getElementById('nav-menu-backdrop');
 
     if (hamburgerToggle) hamburgerToggle.classList.remove('active');
     if (navLinks) navLinks.classList.remove('mobile-active');
+    if (navBackdrop) navBackdrop.classList.add('hidden');
     syncAppShellState();
   }
 
@@ -2812,12 +2823,15 @@ print("Demo Response:", response.json())`;
           }
         } else {
           // Normal landing page menu toggle
-          hamburgerToggle.classList.toggle('active');
-          navLinks.classList.toggle('mobile-active');
+          const willOpen = !navLinks.classList.contains('mobile-active');
+          hamburgerToggle.classList.toggle('active', willOpen);
+          navLinks.classList.toggle('mobile-active', willOpen);
+          const navBackdrop = document.getElementById('nav-menu-backdrop');
+          if (navBackdrop) navBackdrop.classList.toggle('hidden', !willOpen);
           syncAppShellState();
         }
       });
-      
+
       // Close menu when clicking a link
       navLinks.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
@@ -2825,7 +2839,31 @@ print("Demo Response:", response.json())`;
         });
       });
     }
-    
+
+    // Mobile nav drawer backdrop — click to close
+    const navMenuBackdrop = document.getElementById('nav-menu-backdrop');
+    if (navMenuBackdrop) {
+      navMenuBackdrop.addEventListener('click', () => closeMobileNavMenu());
+    }
+
+    // Footer "Dashboard" / "Order Desk" links — route to dashboard (auth-gated)
+    const footerDashboardLink = document.getElementById('footer-dashboard-link');
+    if (footerDashboardLink) {
+      footerDashboardLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchView('dashboard');
+      });
+    }
+    const footerOrderLink = document.getElementById('footer-order-link');
+    if (footerOrderLink) {
+      footerOrderLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchView('dashboard').then(() => {
+          if (state.user) switchTab('new-order');
+        });
+      });
+    }
+
     // Close menu when clicking outside navbar
     document.addEventListener('click', (e) => {
       if (navLinks && navLinks.classList.contains('mobile-active') && mainNavbar && !mainNavbar.contains(e.target)) {
@@ -2882,6 +2920,15 @@ print("Demo Response:", response.json())`;
     // Global keydown Escape listener for active overlays
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        // Close mobile nav drawer (and release body scroll lock via syncAppShellState)
+        if (navLinks && navLinks.classList.contains('mobile-active')) {
+          closeMobileNavMenu();
+        }
+        // Close dashboard sidebar drawer if open
+        const dashSidebarEsc = document.querySelector('.dash-sidebar.mobile-open');
+        if (dashSidebarEsc) {
+          closeMobileSidebar();
+        }
         if (authModal && !authModal.classList.contains('hidden')) {
           hideAuthModal();
         }
@@ -3389,7 +3436,7 @@ print("Demo Response:", response.json())`;
         </div>
         <h3 class="title" style="margin-bottom: 10px;">${s.name}</h3>
         <div class="specs" style="margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 0.8rem;">
-          <span>Min: <strong>${s.min}</strong> | Max: <strong>${s.max}</strong></span>
+          <span>Min: <strong>${formatServiceLimit(s.min)}</strong> | Max: <strong>${formatServiceLimit(s.max)}</strong></span>
           <span class="price">₱${parseFloat(s.rate).toFixed(2)} <small>/1K</small></span>
         </div>
         <button type="button" class="btn btn-primary btn-sm btn-block btn-order-now" style="margin-top: auto; padding: 8px 12px; font-weight: 700; letter-spacing: 0.3px; border-radius: 6px;">Order Now 🚀</button>
@@ -3760,12 +3807,12 @@ print("Demo Response:", response.json())`;
     // Show dynamic specs card
     serviceSpecsBox.classList.remove('hidden');
     specRateSpan.textContent = `₱${parseFloat(selectedService.rate).toFixed(2)}`;
-    specMinSpan.textContent = parseInt(selectedService.min).toLocaleString();
-    specMaxSpan.textContent = parseInt(selectedService.max).toLocaleString();
+    specMinSpan.textContent = formatServiceLimit(selectedService.min);
+    specMaxSpan.textContent = formatServiceLimit(selectedService.max);
     specTypeSpan.textContent = selectedService.type;
 
     calcRatePer1k.textContent = `₱${parseFloat(selectedService.rate).toFixed(2)}`;
-    quantityLimitsTip.textContent = `Limits: Min ${selectedService.min} - Max ${selectedService.max}`;
+    quantityLimitsTip.textContent = `Limits: Min ${formatServiceLimit(selectedService.min)} - Max ${formatServiceLimit(selectedService.max)}`;
 
     // Enable quantity & link input
     orderUrlInput.disabled = false;
@@ -3844,8 +3891,8 @@ print("Demo Response:", response.json())`;
     const detailsAvg = document.getElementById('details-avg-time-val');
     const detailsDesc = document.getElementById('details-description-val');
 
-    if (detailsMin) detailsMin.textContent = parseInt(selectedService.min).toLocaleString();
-    if (detailsMax) detailsMax.textContent = parseInt(selectedService.max).toLocaleString();
+    if (detailsMin) detailsMin.textContent = formatServiceLimit(selectedService.min);
+    if (detailsMax) detailsMax.textContent = formatServiceLimit(selectedService.max);
 
     // 1. Example Link Simulator - Visually shortened with premium badge label to prevent wraps!
     if (detailsLink) {
@@ -4884,8 +4931,8 @@ print("Demo Response:", response.json())`;
           </div>
         </td>
         <td data-label="Rate"><span class="text-success font-weight-bold" style="font-size: 0.95rem;">₱${parseFloat(s.rate).toFixed(2)}</span></td>
-        <td data-label="Min">${parseInt(s.min).toLocaleString()}</td>
-        <td data-label="Max">${parseInt(s.max).toLocaleString()}</td>
+        <td data-label="Min">${formatServiceLimit(s.min)}</td>
+        <td data-label="Max">${formatServiceLimit(s.max)}</td>
         <td data-label="AI Analysis"><span class="badge-ai-status ${aiStatus.class}">${aiStatus.text}</span></td>
         <td data-label="Compare">
           <button type="button" class="compare-toggle-btn btn btn-secondary btn-sm ${isCompareChecked ? 'is-selected' : ''}" data-id="${s.service}" ${isCompareChecked ? 'aria-pressed="true"' : ''}>
@@ -5298,6 +5345,17 @@ print("Demo Response:", response.json())`;
     switchAuthTab(tab);
     clearAuthError();
     syncAppShellState();
+    // Autofocus the first visible input of the active form (desktop only —
+    // avoids forcing the mobile keyboard open immediately on tap).
+    if (!window.matchMedia || !window.matchMedia('(pointer: coarse)').matches) {
+      requestAnimationFrame(() => {
+        const activeForm = authModal.querySelector('.auth-form:not(.hidden)');
+        const firstInput = activeForm && activeForm.querySelector('input:not([type="hidden"]):not([disabled])');
+        if (firstInput) {
+          try { firstInput.focus({ preventScroll: true }); } catch (_) { firstInput.focus(); }
+        }
+      });
+    }
   }
   window.showAuthModal = showAuthModal;
 
@@ -5376,10 +5434,26 @@ print("Demo Response:", response.json())`;
     const email = document.getElementById('register-email');
     const password = document.getElementById('register-password');
     const confirmPassword = document.getElementById('register-confirm-password');
-    const fields = [username, email, password, confirmPassword].filter(Boolean);
-    const invalid = fields.find((field) => !field.checkValidity());
-    if (invalid) {
-      invalid.reportValidity();
+
+    // Custom inline validation (no native browser tooltips)
+    if (!username || !username.value.trim()) {
+      showAuthError('Please enter a username.');
+      if (username) username.focus();
+      return;
+    }
+    if (!email || !email.value.trim()) {
+      showAuthError('Please enter your email address.');
+      if (email) email.focus();
+      return;
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      showAuthError('Please enter a valid email address.');
+      email.focus();
+      return;
+    }
+    if (!password || password.value.length < 8) {
+      showAuthError('Password must be at least 8 characters.');
+      if (password) password.focus();
       return;
     }
     if (password.value !== confirmPassword.value) {
@@ -5387,6 +5461,13 @@ print("Demo Response:", response.json())`;
       confirmPassword.focus();
       return;
     }
+
+    // Populate the Step 2 account summary so it is not a sparse single checkbox
+    const summaryUsername = document.getElementById('register-summary-username');
+    const summaryEmail = document.getElementById('register-summary-email');
+    if (summaryUsername) summaryUsername.textContent = username.value.trim();
+    if (summaryEmail) summaryEmail.textContent = email.value.trim();
+
     setRegisterStep(2);
   }
 
@@ -5668,6 +5749,19 @@ print("Demo Response:", response.json())`;
     
     const usernameOrEmail = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
+
+    // Custom inline validation (no native browser tooltips)
+    if (!usernameOrEmail.trim()) {
+      showAuthError('Please enter your username or email.');
+      document.getElementById('login-email').focus();
+      return;
+    }
+    if (!password) {
+      showAuthError('Please enter your password.');
+      document.getElementById('login-password').focus();
+      return;
+    }
+
     const turnstileToken = loginTurnstileToken || (
       window.turnstile && loginTurnstileWidgetId !== null
         ? window.turnstile.getResponse(loginTurnstileWidgetId)
@@ -6352,8 +6446,8 @@ print("Demo Response:", response.json())`;
 
               <div class="popular-svc-stats" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
                 <span class="stat-chip stat-chip-spent" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--success); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">₱ ${svc.price}/1K</span>
-                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 Min: ${svc.min.toLocaleString()}</span>
-                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 Max: ${svc.max.toLocaleString()}</span>
+                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 Min: ${formatServiceLimit(svc.min)}</span>
+                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 Max: ${formatServiceLimit(svc.max)}</span>
                 <span class="stat-chip stat-chip-time" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); color: var(--primary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">⏱️ ${svc.time}</span>
               </div>
               
