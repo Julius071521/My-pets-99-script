@@ -2533,6 +2533,11 @@ print("Demo Response:", response.json())`;
       }
     });
 
+    // Always scroll the viewport container to top on tab switch so content
+    // is never hidden above the fold from a previous tab's scroll position.
+    const viewportEl = document.getElementById('dash-viewport-container');
+    if (viewportEl) viewportEl.scrollTop = 0;
+
     // Trigger tab specific actions
     if (tabName === 'services-list') {
       renderServicesDirectory();
@@ -3475,8 +3480,12 @@ print("Demo Response:", response.json())`;
       if (typeof updateCustomDropdownTriggerText === 'function') {
         updateCustomDropdownTriggerText();
       }
+      // Re-sync custom dropdown items so the selected category is marked active
+      if (typeof syncCustomCategoryDropdown === 'function') {
+        syncCustomCategoryDropdown();
+      }
     }
-    
+
     // D. Populate Package dropdown selection and trigger AI/Limit calculators
     if (orderServiceSelect) {
       orderServiceSelect.value = serviceId;
@@ -3486,18 +3495,22 @@ print("Demo Response:", response.json())`;
         updateCustomPackageTriggerText();
       }
     }
-    
-    // E. Smooth scroll screen to New Order Form
+
+    // E. Scroll the dashboard viewport container to the form.
+    // Using scrollIntoView on window does not work when .dash-viewport is the
+    // scrollable container — scroll it directly instead.
     const form = document.getElementById('smm-order-form');
+    const vp = document.getElementById('dash-viewport-container');
     if (form) {
       setTimeout(() => {
-        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Highlight form momentarily for visual cue
+        if (vp) {
+          vp.scrollTo({ top: Math.max(0, form.offsetTop - 16), behavior: 'smooth' });
+        } else {
+          form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
         form.style.boxShadow = '0 0 40px rgba(20, 184, 166, 0.4)';
-        setTimeout(() => {
-          form.style.boxShadow = '';
-        }, 1500);
-      }, 350);
+        setTimeout(() => { form.style.boxShadow = ''; }, 1500);
+      }, 400);
     }
   }
 
