@@ -4655,8 +4655,8 @@ print("Demo Response:", response.json())`;
 
   function handleCompareCheckboxChange(service, isChecked) {
     if (isChecked) {
-      if (state.compareSelectedServices.length >= 3) {
-        showPremiumToast("Limit Reached", "You can compare a maximum of 3 SMM service packages at once.", "warning");
+      if (state.compareSelectedServices.length >= 2) {
+        showPremiumToast("Limit Reached", "You can compare a maximum of 2 SMM service packages at once.", "warning");
         // uncheck in UI
         const btn = document.querySelector(`.compare-toggle-btn[data-id="${service.service}"]`);
         if (btn) {

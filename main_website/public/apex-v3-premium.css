@@ -2889,3 +2889,190 @@ button:focus-visible {
 .ai-chat-widget.ai-vip-unlocked .ai-chat-fab .ai-fab-vip {
   display: none !important;
 }
+
+/* ═══ 67. ROUND 3 BUG FIXES ════════════════════════════════════════════════ */
+
+/* FIX-1: Hide native <select> wrapper when custom dropdown is active.
+   The class was referenced in HTML but never defined — causing double dropdowns. */
+.visually-hidden-select {
+  display: none !important;
+}
+
+/* FIX-2: Hermes suggestions panel — dark glass theme.
+   style.css hard-codes background:#ffffff which conflicts with dark UI. */
+.apexbot-top-panel,
+#apexbot-top-panel {
+  background: rgba(8,18,36,0.97) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+  border: 1px solid rgba(99,102,241,0.18) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(99,102,241,0.08) !important;
+}
+@media (max-width: 767px) {
+  .apexbot-top-panel,
+  #apexbot-top-panel,
+  body.apexbot-top-open #apexbot-top-panel,
+  body.apexbot-top-open .apexbot-top-panel {
+    background: rgba(8,18,36,0.98) !important;
+  }
+}
+.apexbot-top-header h3,
+.apexbot-top-ai        { color: var(--v3-text, #f0f4ff) !important; }
+.apexbot-top-header p  { color: var(--v3-text2, #8ba3c7) !important; }
+.apexbot-top-body      { color: var(--v3-text, #f0f4ff) !important; background: transparent !important; }
+.apexbot-top-footer    { color: var(--v3-text2, #8ba3c7) !important; background: transparent !important; border-top-color: rgba(255,255,255,0.06) !important; }
+/* Suggestion items inside hermes panel */
+.apexbot-top-body .suggestion-item,
+.apexbot-top-body .hermes-service-card,
+.apexbot-top-body .hermes-sugg-item {
+  background: rgba(20,184,166,0.06) !important;
+  border: 1px solid rgba(20,184,166,0.15) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+}
+.apexbot-top-body .suggestion-item:hover,
+.apexbot-top-body .hermes-service-card:hover {
+  background: rgba(20,184,166,0.12) !important;
+}
+/* Hermes loading text */
+.apexbot-top-loading { color: var(--v3-text2, #8ba3c7) !important; }
+/* Platform tab buttons inside panel */
+.apexbot-top-body button,
+.apexbot-top-footer button {
+  color: var(--v3-text, #f0f4ff) !important;
+}
+
+/* FIX-3: Drag handle — show a subtle pill bar instead of word "Move" */
+.assistant-drag-grip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: grab !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0 !important;
+  color: transparent !important;
+  outline: none !important;
+  flex-shrink: 0 !important;
+}
+.assistant-drag-grip::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 2px;
+}
+
+/* FIX-4: Widget stacking — explicit bottom positions so all 3 FABs never overlap.
+   Stack: WhatsApp 20px → OpenClaw 84px → Hermes 152px (each 52px + 12px gap). */
+@media (min-width: 768px) {
+  #messenger-fab,     .messenger-fab     { bottom: 20px  !important; right: 20px !important; }
+  #ai-chat-widget,    .ai-chat-widget    { bottom: 84px  !important; right: 20px !important; }
+  #apexbot-top-widget,.apexbot-top-widget{ bottom: 152px !important; right: 20px !important; }
+}
+@media (max-width: 767px) {
+  /* Mobile nav = 64px safe base; stack each widget 64px apart */
+  #messenger-fab, .messenger-fab {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 12px) !important;
+    right: 14px !important;
+  }
+  #ai-chat-widget, .ai-chat-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 80px) !important;
+    right: 14px !important;
+  }
+  #apexbot-top-widget, .apexbot-top-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 148px) !important;
+    right: 14px !important;
+  }
+}
+
+/* FIX-5: Compare modal — constrained height + scrollable body */
+.compare-modal-card {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: min(88dvh, 660px) !important;
+  overflow: hidden !important;
+}
+.compare-modal-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0 !important;
+}
+.compare-modal-body .scrollable-table-wrap {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 0 !important;
+}
+/* Sticky first column so labels stay readable while scrolling horizontally */
+.compare-table td:first-child,
+.compare-table th:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  background: #0a1628 !important;
+  min-width: 110px !important;
+  font-size: 0.73rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--v3-text2, #8ba3c7) !important;
+}
+.compare-table th {
+  background: rgba(10,22,40,0.95) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+.compare-table th,
+.compare-table td {
+  min-width: 140px !important;
+  font-size: 0.82rem !important;
+}
+.compare-header-cell {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+.compare-header-id   { font-size: 0.72rem !important; color: var(--v3-text2, #8ba3c7) !important; }
+.compare-header-name { font-size: 0.82rem !important; color: var(--v3-text, #f0f4ff) !important; white-space: normal !important; word-break: break-word !important; }
+
+/* FIX-6: Hermes panel inner components — dark theme overrides */
+.apexbot-top-card {
+  background: rgba(20,184,166,0.06) !important;
+  border: 1px solid rgba(20,184,166,0.18) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+}
+.apexbot-top-card:hover {
+  background: rgba(20,184,166,0.12) !important;
+  border-color: rgba(20,184,166,0.35) !important;
+  box-shadow: 0 8px 20px rgba(20,184,166,0.15) !important;
+}
+.apexbot-top-card strong { color: var(--v3-text, #f0f4ff) !important; }
+.apexbot-top-breadcrumb {
+  background: rgba(10,22,40,0.8) !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+  color: var(--v3-text2, #8ba3c7) !important;
+}
+.apexbot-top-breadcrumb button {
+  background: rgba(99,102,241,0.15) !important;
+  color: var(--v3-primary, #14b8a6) !important;
+  border: 1px solid rgba(99,102,241,0.18) !important;
+}
+.apexbot-service-card {
+  background: rgba(10,22,40,0.75) !important;
+  border: 1px solid rgba(99,102,241,0.14) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+.apexbot-rank {
+  background: rgba(99,102,241,0.18) !important;
+  color: var(--v3-primary, #14b8a6) !important;
+}
+.apexbot-top-body h4 { color: var(--v3-text, #f0f4ff) !important; }
+
