@@ -2417,3 +2417,61 @@ html { scroll-behavior: smooth; }
   from { opacity: 0; transform: translateY(8px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0)   scale(1); }
 }
+
+/* ── 64. BUG FIXES ────────────────────────────────────────────────────────── */
+
+/* U1: FAQ answer not clipped by max-height:0 from apex-improvements.css */
+.apex-faq-a:not([hidden]) {
+  max-height: none !important;
+  overflow: visible !important;
+}
+/* Chevron SVG must not be clipped by overflow:hidden on .apex-faq-item */
+.apex-faq-q {
+  overflow: visible !important;
+}
+
+/* U3: Skip-to-content — hide reliably on all screens (no keyboard on mobile) */
+.skip-to-content {
+  top: -9999px !important;
+}
+.skip-to-content:focus {
+  top: 1rem !important;
+}
+@media (max-width: 767px) {
+  .skip-to-content {
+    display: none !important;
+  }
+}
+
+/* U4: Hero title word-wrap — prevent text overflow cutoff on narrow screens */
+@media (max-width: 767px) {
+  .hero-title {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    max-width: 100% !important;
+  }
+  .hero-subtitle {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+}
+
+/* U5: Platform logos strip — reduce fade mask on mobile so first logo isn't cut off */
+@media (max-width: 767px) {
+  .apex-platforms-track {
+    mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%) !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%) !important;
+  }
+}
+
+/* U6: Navbar — improve spacing between hamburger and Log In button on mobile */
+@media (max-width: 767px) {
+  .nav-auth-controls {
+    gap: 0.6rem !important;
+  }
+  .hamburger-toggle {
+    margin-right: 0.25rem !important;
+  }
+}

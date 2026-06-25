@@ -7,7 +7,7 @@
 // forward to the correct server entry instead of crashing.
 if (typeof window === 'undefined' && typeof module !== 'undefined' && typeof require === 'function') {
   require('./server');
-  return;
+  throw new Error('app.js is browser-only code and must not be the Node.js entrypoint.');
 }
 
 const safeFetch = typeof window.fetch === 'function'
