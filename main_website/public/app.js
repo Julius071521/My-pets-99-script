@@ -2468,6 +2468,7 @@ print("Demo Response:", response.json())`;
       tabName = 'new-order';
     }
 
+    const prevTab = state.activeTab;
     state.activeTab = tabName;
     document.body.dataset.activeTab = state.activeTab;
     
@@ -2533,10 +2534,11 @@ print("Demo Response:", response.json())`;
       }
     });
 
-    // Always scroll the viewport container to top on tab switch so content
-    // is never hidden above the fold from a previous tab's scroll position.
-    const viewportEl = document.getElementById('dash-viewport-container');
-    if (viewportEl) viewportEl.scrollTop = 0;
+    // Only scroll to top when switching to a different tab, not on re-clicks
+    if (prevTab !== tabName) {
+      const viewportEl = document.getElementById('dash-viewport-container');
+      if (viewportEl) viewportEl.scrollTop = 0;
+    }
 
     // Trigger tab specific actions
     if (tabName === 'services-list') {

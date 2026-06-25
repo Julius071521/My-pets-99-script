@@ -3076,3 +3076,13 @@ button:focus-visible {
 }
 .apexbot-top-body h4 { color: var(--v3-text, #f0f4ff) !important; }
 
+/* FIX-7: Services list mobile — push table content left of floating widgets.
+   FABs sit at right:14px with ~52px width (occupy right:14-66px).
+   Viewport already has padding:16px. Adding 72px to the table wrapper makes
+   the Order button column end at ~88px from screen right, clearing FABs by 22px. */
+@media (max-width: 767px) {
+  #tab-services-list .scrollable-table-wrap {
+    padding-right: 72px !important;
+    box-sizing: border-box !important;
+  }
+}
