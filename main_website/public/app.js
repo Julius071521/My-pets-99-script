@@ -1999,7 +1999,7 @@ print("Demo Response:", response.json())`;
       console.warn("Non-blocking error during services/balance sync:", err);
     }
 
-    // Background status poller: demo = simulate transitions, live = poll RKD Panel every 30s
+    // Background status poller: demo = simulate transitions, live = poll SMM provider every 30s
     setInterval(() => {
       if (state.operatingMode === 'demo') {
         syncOrdersStatus({ silent: true });
@@ -9793,7 +9793,7 @@ print("Demo Response:", response.json())`;
           showPremiumToast('Sync Error', e.message, 'error');
         } finally {
           syncCatalogBtn.disabled = false;
-          syncCatalogBtn.textContent = 'Sync from RKD 🔄';
+          syncCatalogBtn.textContent = 'Sync Services 🔄';
         }
       });
     }
@@ -10135,7 +10135,7 @@ print("Demo Response:", response.json())`;
             const statusClass = status === 'online' ? 'is-healthy' : status === 'low-balance' ? 'is-warning' : 'is-degraded';
             return `
               <article class="provider-balance-card ${statusClass}">
-                <header><strong>${escapeHtml(provider.name || provider.key || 'Provider')}</strong><span class="provider-health-label">${statusLabel(status)}</span></header>
+                <header><strong>${escapeHtml('API Provider ' + String.fromCharCode(65 + providers.indexOf(provider)))}</strong><span class="provider-health-label">${statusLabel(status)}</span></header>
                 <div class="provider-money-grid">
                   <div><span>USD balance</span><strong>${dollars(provider.balanceUsd)}</strong></div>
                   <div><span>PHP equivalent</span><strong>${peso(provider.balancePhp)}</strong></div>

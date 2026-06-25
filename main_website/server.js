@@ -5927,22 +5927,24 @@ async function checkProviderBalanceSnapshot(providerOverride = null) {
 
 async function checkAllProviderBalances() {
   const checkedAt = new Date().toISOString();
-  const providers = await Promise.all(getProviderDefinitions().map(async provider => {
+  const defs = getProviderDefinitions();
+  const providers = await Promise.all(defs.map(async (provider, index) => {
+    const displayName = `API Provider ${String.fromCharCode(65 + index)}`;
     if (!provider.apiKey || !provider.apiUrl) {
       return {
         key: provider.key,
-        name: provider.name,
+        name: displayName,
         configured: false,
         status: 'not-configured',
         balanceUsd: 0,
         balancePhp: 0,
         latencyMs: 0,
         lowBalanceAlert: false,
-        errorLog: `${provider.name} API credentials are not configured.`
+        errorLog: `${displayName} credentials are not configured.`
       };
     }
     const snapshot = await checkProviderBalanceSnapshot(provider);
-    return { key: provider.key, name: provider.name, ...snapshot };
+    return { key: provider.key, name: displayName, ...snapshot };
   }));
   const configuredProviders = providers.filter(provider => provider.configured);
   return {
@@ -18389,8 +18391,8 @@ app.get('/api/admin/api-provider/check', requireAdmin, async (req, res) => {
       lastServicesSyncAt: providerHealthSnapshot.lastServicesSyncAt,
       lastServicesSyncCount: providerHealthSnapshot.lastServicesSyncCount,
       lastServicesSource: providerHealthSnapshot.lastServicesSource,
-      smmworldImportServiceIds: readRuntimeConfig().smmworldImportServiceIds !== undefined ? readRuntimeConfig().smmworldImportServiceIds : SMMWORLD_IMPORT_SERVICE_IDS,
-      smmworldImportKeywords: readRuntimeConfig().smmworldImportKeywords !== undefined ? readRuntimeConfig().smmworldImportKeywords : SMMWORLD_IMPORT_KEYWORDS
+      providerBImportServiceIds: readRuntimeConfig().smmworldImportServiceIds !== undefined ? readRuntimeConfig().smmworldImportServiceIds : SMMWORLD_IMPORT_SERVICE_IDS,
+      providerBImportKeywords: readRuntimeConfig().smmworldImportKeywords !== undefined ? readRuntimeConfig().smmworldImportKeywords : SMMWORLD_IMPORT_KEYWORDS
     });
   } catch (err) {
     writeProductionLog('error', 'Provider check exception occurred', { message: err.message });
