@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     text = text.replace(/WhatsApp Unba-nned/gi, 'WhatsApp Unbanned');
     text = text.replace(/Unba-nned/gi, 'Unbanned');
     text = text.replace(/p(\d+\.\d{2})/gi, '₱$1');
-    return text;
+    return text.trim();
   }
 
   function getAuthToken() {

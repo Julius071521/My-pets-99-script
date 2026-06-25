@@ -2475,3 +2475,293 @@ html { scroll-behavior: smooth; }
     margin-right: 0.25rem !important;
   }
 }
+
+/* ── 65. DASHBOARD UI/UX OVERHAUL ────────────────────────────────────────── */
+
+/* F1: Floating widgets — professional compact icon-only redesign ---------- */
+
+/* OpenClaw — collapse to clean 52px circular icon button */
+.ai-chat-fab {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  box-shadow: 0 4px 20px rgba(20,184,166,0.4), 0 0 0 2px rgba(20,184,166,0.15) !important;
+}
+.ai-chat-fab .ai-fab-text,
+.ai-chat-fab .ai-fab-vip { display: none !important; }
+.ai-chat-fab .ai-fab-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0 !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+.ai-chat-fab .ai-fab-icon img {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+/* Hermes — compact 52px, cleaner pulse */
+.apexbot-top-fab {
+  width: 52px !important;
+  height: 52px !important;
+  box-shadow: 0 4px 20px rgba(91,69,242,0.4), 0 0 0 2px rgba(139,63,244,0.15) !important;
+}
+.apexbot-robot-icon {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+/* F2: Ticket chat modal — proper flex with scrollable message body -------- */
+.ticket-chat-modal {
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(95vw, 580px) !important;
+  max-width: 580px !important;
+  height: min(88dvh, 640px) !important;
+  max-height: 640px !important;
+  padding: 0 !important;
+  text-align: left !important;
+  overflow: hidden !important;
+}
+.ticket-chat-modal-header {
+  flex-shrink: 0 !important;
+  padding: 14px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: linear-gradient(135deg, rgba(20,184,166,0.10), rgba(56,189,248,0.06)) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+.ticket-chat-modal-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 14px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255,255,255,0.18) transparent !important;
+}
+.ticket-chat-modal-body::-webkit-scrollbar { width: 4px; }
+.ticket-chat-modal-body::-webkit-scrollbar-track { background: transparent; }
+.ticket-chat-modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 4px; }
+.ticket-typing-indicator { flex-shrink: 0 !important; }
+.ticket-reply-form,
+#ticket-reply-form {
+  flex-shrink: 0 !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  padding: 10px 12px !important;
+  margin: 0 !important;
+}
+.ticket-chat-header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+.ticket-chat-header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+.ticket-chat-header-left h3 {
+  font-size: 0.95rem !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.ticket-chat-subject {
+  font-size: 0.76rem !important;
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* F3: Custom dropdown items — prevent long category names from overflowing */
+.custom-dropdown-item .item-left {
+  flex: 1 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+.custom-dropdown-item .item-left > span:not(.badge-recommended) {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  display: block !important;
+  min-width: 0 !important;
+}
+.custom-dropdown-item {
+  min-height: 44px !important;
+}
+
+/* F4: Support contact buttons — proper SVG icon sizing & alignment -------- */
+.support-contact-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  flex-shrink: 0 !important;
+}
+.support-contact-icon svg {
+  display: block !important;
+  pointer-events: none !important;
+}
+.support-contact-button.telegram .support-contact-icon {
+  background: linear-gradient(135deg, #229ed9, #1a86b8) !important;
+  box-shadow: 0 2px 12px rgba(34,158,217,0.35) !important;
+}
+.support-contact-button.whatsapp .support-contact-icon {
+  background: linear-gradient(135deg, #25D366, #128C7E) !important;
+  box-shadow: 0 2px 12px rgba(37,211,102,0.35) !important;
+}
+.support-contact-button {
+  text-decoration: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.support-contact-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* F5: Add funds — controlled payment logo sizes --------------------------- */
+#tab-add-funds .payment-method-logo {
+  height: 26px !important;
+  width: auto !important;
+  max-width: 72px !important;
+  object-fit: contain !important;
+}
+#tab-add-funds .payment-info-title .payment-method-logo {
+  height: 22px !important;
+  max-width: 60px !important;
+}
+
+/* F6: Dashboard general improvements ------------------------------------- */
+
+/* Smoother tab content transitions */
+.dash-tab-content:not(.hidden) {
+  animation: dashTabIn 0.22s cubic-bezier(0.4,0,0.2,1) both !important;
+}
+@keyframes dashTabIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Better card interaction */
+.dashboard-card {
+  transition: box-shadow 0.2s ease !important;
+}
+.dashboard-card:hover {
+  box-shadow: 0 6px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) !important;
+}
+
+/* Table row hover — subtle teal highlight */
+.data-table tbody tr:hover td {
+  background: rgba(20,184,166,0.06) !important;
+}
+
+/* Better button focus rings for accessibility */
+.btn:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--v3-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* Sidebar link active indicator cleanup */
+.sidebar-link.active {
+  position: relative !important;
+}
+
+/* Form input focus glow */
+.dashboard-card input:focus,
+.dashboard-card select:focus,
+.dashboard-card textarea:focus {
+  box-shadow: 0 0 0 2px rgba(20,184,166,0.25) !important;
+  outline: none !important;
+}
+
+/* Status badges — consistent sizing */
+.status-badge {
+  font-size: 0.68rem !important;
+  letter-spacing: 0.04em !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+/* Tab header spacing refinement */
+.tab-header {
+  margin-bottom: 1.5rem !important;
+}
+.tab-header h2 {
+  margin-bottom: 0.35rem !important;
+}
+.tab-header p {
+  color: var(--v3-text2) !important;
+  font-size: 0.9rem !important;
+  margin: 0 !important;
+}
+
+/* Quick amount buttons — better spacing */
+.quick-amounts-group {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin-top: 8px !important;
+}
+.quick-amount-btn {
+  font-size: 0.8rem !important;
+  padding: 5px 10px !important;
+  border-radius: 6px !important;
+  transition: background 0.15s ease, transform 0.1s ease !important;
+}
+.quick-amount-btn:hover {
+  transform: translateY(-1px) !important;
+}
+.quick-amount-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* F7: Mobile improvements ----------------------------------------------- */
+@media (max-width: 767px) {
+  /* Ticket chat modal — full-screen on mobile */
+  .ticket-chat-modal {
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+
+  /* Floating widgets — smaller on mobile so they don't overlap content */
+  .ai-chat-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 10px) !important;
+    right: 14px !important;
+  }
+  .apexbot-top-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 72px) !important;
+    right: 14px !important;
+  }
+  .ai-chat-fab,
+  .apexbot-top-fab {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  /* Support contact panel full-width on mobile */
+  .support-contact-panel {
+    padding: 14px !important;
+  }
+}
