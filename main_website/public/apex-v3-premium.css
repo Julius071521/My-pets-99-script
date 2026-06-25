@@ -9,7 +9,8 @@
 /* Remove 300ms tap delay on ALL interactive elements for mobile */
 a, button, [role="button"], input, select, textarea, label,
 .btn, .nav-link, .hamburger-toggle, .auth-tab, .sidebar-nav-link,
-.top-tab-btn, .subtab-btn, .filter-pill, .promo-service-card {
+.top-tab-btn, .subtab-btn, .filter-pill, .promo-service-card,
+.dropdown-item-btn {
   touch-action: manipulation;
 }
 
@@ -40,6 +41,7 @@ a, button, [role="button"], input, select, textarea, label,
   --v3-shadow-indigo: 0 0 40px rgba(99,102,241,0.16);
   --v3-transition:   0.28s cubic-bezier(0.4,0,0.2,1);
   --v3-transition-fast: 0.15s cubic-bezier(0.4,0,0.2,1);
+  --v3-ease:         cubic-bezier(0.4,0,0.2,1);
 }
 
 /* ── 2. BACKGROUND STARS & PARTICLES ───────────────────────────────────── */
@@ -1117,9 +1119,9 @@ body.apex-pro-v34 {
   overflow: visible !important;
 }
 
-/* When auth modal is open, keep sidebar behind it */
+/* When auth modal is open, keep sidebar behind it (modal is z-index:9999) */
 body.auth-modal-open .dash-sidebar {
-  z-index: 90000 !important;
+  z-index: 50 !important;
 }
 
 /* iOS auto-zoom prevention — inputs <16px font-size trigger zoom on focus */

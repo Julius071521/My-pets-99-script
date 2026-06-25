@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Prevent background touchmove scroll leaking on mobile
   document.addEventListener('touchmove', (e) => {
     if (document.body.classList.contains('body-scroll-locked')) {
-      const scrollable = e.target.closest('.nav-menu, .dash-sidebar, .updates-dropdown-menu, .auth-card, .auth-modal-overlay, .auth-form, .captcha-wrap');
+      const scrollable = e.target.closest('.nav-menu, .dash-sidebar, .updates-dropdown-menu, .auth-card, .auth-modal-overlay, .auth-form, .captcha-wrap, .compare-modal-card, .ticket-chat-overlay, .dash-viewport-container');
       if (!scrollable) {
         e.preventDefault();
       }
@@ -5299,6 +5299,7 @@ print("Demo Response:", response.json())`;
     clearAuthError();
     syncAppShellState();
   }
+  window.showAuthModal = showAuthModal;
 
   function hideAuthModal() {
     if (!authModal) return;

@@ -88,8 +88,8 @@
   <link rel="stylesheet" href="/codex-ui-v2.css?v=20260622-qa-final">
   <link rel="stylesheet" href="/apex-responsive.css?v=20260624-rework">
   <!-- ApexBoost v3 Premium Design System — Professional redesign with animations -->
-  <link rel="stylesheet" href="/apex-v3-premium.css?v=20260624-v3">
-  <link rel="preload" href="/apex-v3-premium.css?v=20260624-v3" as="style">
+  <link rel="stylesheet" href="/apex-v3-premium.css?v=20260625-bugfix">
+  <link rel="preload" href="/apex-v3-premium.css?v=20260625-bugfix" as="style">
   
   <!-- CRITICAL INLINE CSS — Promo Banner (fallback if external CSS is slow) -->
   <style>
@@ -1352,7 +1352,7 @@
       <!-- ═══════════════════════════════════════════════════
            TESTIMONIALS / TRUST SECTION
            ═══════════════════════════════════════════════════ -->
-      <section class="apex-trust-section reveal-on-scroll" id="testimonials" aria-labelledby="trust-heading">
+      <section class="apex-trust-section reveal-on-scroll" id="trust-section" aria-labelledby="trust-heading">
         <div class="apex-trust-inner">
           <div class="apex-trust-header">
             <span class="section-kicker">What customers say</span>
@@ -1536,8 +1536,8 @@
         <div class="footer-link-col">
           <h4>Support</h4>
           <a href="#faq" onclick="document.getElementById('faq')?.scrollIntoView({behavior:'smooth'});return false;">FAQ</a>
-          <a href="javascript:void(0)" id="footer-login-link" onclick="document.getElementById('auth-modal')?.classList.remove('hidden');document.getElementById('tab-login-btn')?.click();return false;">Log In</a>
-          <a href="javascript:void(0)" id="footer-register-link" onclick="document.getElementById('auth-modal')?.classList.remove('hidden');document.getElementById('tab-register-btn')?.click();return false;">Create Account</a>
+          <a href="javascript:void(0)" id="footer-login-link" onclick="window.showAuthModal?window.showAuthModal('login'):(document.getElementById('auth-modal')?.classList.remove('hidden'),document.getElementById('tab-login-btn')?.click());return false;">Log In</a>
+          <a href="javascript:void(0)" id="footer-register-link" onclick="window.showAuthModal?window.showAuthModal('register'):(document.getElementById('auth-modal')?.classList.remove('hidden'),document.getElementById('tab-register-btn')?.click());return false;">Create Account</a>
           <a href="/terms.html" id="footer-terms-link">Terms of Service</a>
           <a href="/privacy.html">Privacy Policy</a>
           <a href="/refund.html">Refund Policy</a>
@@ -2023,7 +2023,7 @@
   </nav>
 
   <!-- Custom Scripts -->
-  <script src="/app.js?v=20260624-mobile-fix" defer data-apex-core="1"></script>
+  <script src="/app.js?v=20260625-bugfix" defer data-apex-core="1"></script>
 
   <!-- Imp #4+9+10: Spotlight tracking, scroll progress, terms link fix -->
   <script>
