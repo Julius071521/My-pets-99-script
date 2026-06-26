@@ -539,7 +539,7 @@
 
                     <!-- Submit -->
                     <button type="submit" class="btn btn-primary btn-block" id="submit-order-btn" disabled>
-                      <span>Launch Campaign 🚀</span>
+                      <span>Launch Campaign</span>
                     </button>
                   </div>
                 </form>
@@ -764,7 +764,7 @@
             <!-- Campaign Analytics Card -->
             <div class="dashboard-card bg-glass campaign-analytics-card" id="campaign-analytics-card">
               <h3 class="analytics-card-title">
-                <span>📈 Campaign Spend & Order Analytics</span>
+                <span>Campaign Spend &amp; Order Analytics</span>
               </h3>
               <div class="analytics-metrics-row">
                 <div class="analytic-metric-card">
@@ -1058,7 +1058,7 @@ print(response.json())</code></pre>
             </div>
 
             <div class="dashboard-card card-caution">
-              <h3>⚠️ Security & Deployment Information</h3>
+              <h3>Security &amp; Deployment Information</h3>
               <p>Protected deployment and fulfillment configuration details are intentionally hidden from public users.</p>
               <ol class="setup-ol">
                 <li>Public API consumers only need the published endpoint and their access key.</li>
@@ -1093,7 +1093,7 @@ print(response.json())</code></pre>
           <!-- TAB 8: ACCOUNT SETTINGS -->
           <div class="dash-tab-content hidden" id="tab-account">
             <div class="tab-header">
-              <h2>👤 Account Settings</h2>
+              <h2>Account Settings</h2>
               <p>Update your password and secure your boosting desk.</p>
             </div>
             
@@ -1135,7 +1135,7 @@ print(response.json())</code></pre>
           <!-- TAB 9: ADD FUNDS -->
           <div class="dash-tab-content hidden" id="tab-add-funds">
             <div class="tab-header">
-              <h2>💳 Add Funds</h2>
+              <h2>Add Funds</h2>
               <p>Top up your Philippine Peso balance to place real boosting orders.</p>
             </div>
             
@@ -1217,7 +1217,7 @@ print(response.json())</code></pre>
                   </div>
                   
                   <button type="button" class="btn btn-primary btn-block" id="btn-start-deposit">
-                    <span>Reveal Payment Instructions 🔓</span>
+                    <span>Reveal Payment Instructions</span>
                   </button>
 
                   <div id="payment-proof-submission-wrapper" class="hidden">
@@ -1229,7 +1229,7 @@ print(response.json())</code></pre>
                     </div>
                     
                     <button type="submit" class="btn btn-primary btn-block" id="btn-submit-deposit">
-                      <span>Submit Payment Proof 🚀</span>
+                      <span>Submit Payment Proof</span>
                     </button>
                   </div>
                 </form>
@@ -1251,7 +1251,7 @@ print(response.json())</code></pre>
                 </div>
 
                 <div class="dashboard-card bg-glass">
-                  <h3>⚡ Important Info</h3>
+                  <h3>Important Info</h3>
                   <ul class="guide-list">
                     <li>
                       <strong>Fast Verification:</strong> Deposits are checked and verified manually by administrators. This typically takes 5 to 30 minutes.
@@ -1327,7 +1327,9 @@ print(response.json())</code></pre>
                   <p class="support-lane-heading">Choose your support lane</p>
                   <div class="support-lane-grid" id="support-lane-grid" role="radiogroup" aria-label="Support lane">
                     <button type="button" class="support-lane-card active" data-lane="ai" data-subject="Order Issue" data-request="Status Update">
-                      <span class="support-lane-icon">🤖</span>
+                      <span class="support-lane-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      </span>
                       <span class="support-lane-radio"></span>
                       <span class="support-lane-copy">
                         <strong>Order AI Support</strong>
@@ -1335,7 +1337,9 @@ print(response.json())</code></pre>
                       </span>
                     </button>
                     <button type="button" class="support-lane-card" data-lane="fake-complete" data-subject="Order Issue" data-request="Fake Complete">
-                      <span class="support-lane-icon">⚠️</span>
+                      <span class="support-lane-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      </span>
                       <span class="support-lane-radio"></span>
                       <span class="support-lane-copy">
                         <strong>False Completion</strong>
@@ -1343,7 +1347,9 @@ print(response.json())</code></pre>
                       </span>
                     </button>
                     <button type="button" class="support-lane-card" data-lane="human" data-subject="Payment Concern" data-request="Human Support">
-                      <span class="support-lane-icon">🧑‍💻</span>
+                      <span class="support-lane-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                      </span>
                       <span class="support-lane-radio"></span>
                       <span class="support-lane-copy">
                         <strong>Human Support</strong>
@@ -1466,7 +1472,10 @@ print(response.json())</code></pre>
                     <label for="ticket-attachment">Upload Screenshot / Proof (Max 10MB)</label>
                     <div class="file-upload-wrapper">
                       <input type="file" id="ticket-attachment" accept="image/*,application/pdf" class="sr-only">
-                      <button type="button" class="btn btn-secondary btn-sm" id="btn-ticket-file-trigger">Choose File 📎</button>
+                      <button type="button" class="btn btn-secondary btn-sm" id="btn-ticket-file-trigger">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:4px"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                        Attach File
+                      </button>
                       <span id="ticket-file-name" class="file-name-display">No file chosen</span>
                     </div>
                     <div id="ticket-file-preview" class="file-preview-box hidden">
@@ -1475,7 +1484,7 @@ print(response.json())</code></pre>
                   </div>
 
                   <button type="submit" class="btn btn-primary btn-block" id="btn-submit-ticket">
-                    <span>Submit Support Ticket 🚀</span>
+                    <span>Submit Support Ticket</span>
                   </button>
                 </form>
                 
@@ -1485,7 +1494,7 @@ print(response.json())</code></pre>
               <!-- Ticket guidelines sidebar -->
               <div class="order-info-panel">
                 <div class="dashboard-card bg-glass">
-                  <h3>💡 Support Guidelines</h3>
+                  <h3>Support Guidelines</h3>
                   <ul class="guide-list">
                     <li>
                       <strong>Detailed Descriptions:</strong> Provide clear screenshots and specify Order IDs so our moderators can diagnose the issue within seconds.
@@ -1503,7 +1512,7 @@ print(response.json())</code></pre>
 
             <!-- Active Ticket History Monitor -->
             <div class="dashboard-card tickets-history-card">
-              <h3>🎫 Ticket History &amp; Status Monitor</h3>
+              <h3>Ticket History &amp; Status Monitor</h3>
               <span class="table-scroll-hint">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7M5 12h14m0 0l-7 7m7-7l-7-7"/></svg>
                 Swipe left/right to view details ↔
@@ -1592,7 +1601,7 @@ print(response.json())</code></pre>
           <!-- TAB 10: AFFILIATES -->
           <div class="dash-tab-content hidden" id="tab-affiliates">
             <div class="tab-header">
-              <h2>👥 Affiliates Program</h2>
+              <h2>Affiliates Program</h2>
               <p>Refer users to ApexBoost SMM Panel and earn 3% commission on every deposit they make!</p>
             </div>
             

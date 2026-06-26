@@ -3186,3 +3186,193 @@ button:focus-visible {
 
 /* FIX-13: Hide WhatsApp pulse ring */
 .messenger-pulse { display: none !important; }
+
+/* ── QA POLISH BATCH 2 ──────────────────────────────────────────────────── */
+
+/* QA-1: Services table — word-wrap in fixed-layout columns (text overlap fix) */
+#services-directory-table td {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+#services-directory-table th {
+  white-space: nowrap !important;
+}
+
+/* QA-2: Add funds — QR image + payment logo sizing */
+#dynamic-qr-img {
+  display: block !important;
+  width: 180px !important;
+  height: 180px !important;
+  max-width: 180px !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  padding: 8px !important;
+}
+.qr-tap-zoom-btn {
+  display: block !important;
+  width: 196px !important;
+  height: 196px !important;
+  margin: 8px auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 2px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+}
+.payment-info-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  font-size: 1rem !important;
+}
+#tab-add-funds .payment-method-logo {
+  height: 24px !important;
+  width: auto !important;
+  max-width: 70px !important;
+  object-fit: contain !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+#tab-add-funds .payment-info-title .payment-method-logo {
+  height: 20px !important;
+  max-width: 56px !important;
+}
+
+/* QA-3: Ticket chat modal — iOS touch scroll + short-screen support */
+.ticket-chat-modal-body {
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+  touch-action: pan-y !important;
+  scroll-behavior: smooth !important;
+}
+.ticket-chat-overlay {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+.ticket-chat-overlay.hidden { display: none !important; }
+@media (max-height: 640px) {
+  .ticket-chat-modal {
+    height: calc(100dvh - 20px) !important;
+    max-height: calc(100dvh - 20px) !important;
+  }
+}
+/* Fallback: ensure ticket-chat-modal body is always constrained to scroll area */
+.ticket-chat-modal {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* QA-4: Support contact panel — professional elevated card look */
+.support-contact-panel {
+  margin-top: 14px !important;
+  padding: 16px !important;
+  gap: 10px !important;
+  border-radius: 14px !important;
+  background: rgba(20,184,166,0.05) !important;
+  border: 1px solid rgba(20,184,166,0.18) !important;
+}
+.support-contact-heading {
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  margin-bottom: 2px !important;
+}
+.support-contact-heading strong {
+  font-size: 0.95rem !important;
+  color: var(--v3-text) !important;
+  display: block !important;
+  margin-bottom: 2px !important;
+}
+.support-contact-button {
+  background: rgba(255,255,255,0.04) !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  min-height: 64px !important;
+}
+.support-contact-button.telegram { border-color: rgba(34,158,217,0.3) !important; }
+.support-contact-button.whatsapp { border-color: rgba(37,211,102,0.3) !important; }
+.support-contact-button > span:last-child strong {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  color: var(--v3-text) !important;
+}
+.support-contact-button > span:last-child small {
+  font-size: 0.76rem !important;
+  color: var(--v3-text2) !important;
+}
+
+/* QA-5: Support lane card icon wrapper — consistent box for SVG icons */
+.support-lane-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.07) !important;
+  flex-shrink: 0 !important;
+}
+.support-lane-icon svg { display: block !important; }
+.support-lane-card.active .support-lane-icon { background: rgba(20,184,166,0.18) !important; }
+.support-lane-card.active .support-lane-icon svg { stroke: var(--v3-primary) !important; }
+
+/* QA-6: Responsive - preserve motion on capable devices, reduce on low-end */
+@media (prefers-reduced-motion: reduce) {
+  .aurora { animation: none !important; }
+  .landing-section::before { animation: none !important; }
+  .dash-tab-content:not(.hidden) { animation: none !important; }
+}
+
+/* QA-7: Ticket chat header avatar — replace emoji with icon box */
+.ticket-chat-header-avatar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(56,189,248,0.15)) !important;
+  border: 1px solid rgba(20,184,166,0.25) !important;
+  font-size: 1rem !important;
+}
+
+/* QA-8: Affiliates warning box — reduce alarmist styling */
+.affiliates-warning-box {
+  font-size: 0.82rem !important;
+  line-height: 1.6 !important;
+  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  margin-bottom: 1.25rem !important;
+}
+
+/* QA-9: Emoji in h3 Support Guidelines — inline icon sizing */
+#tab-support-tickets .dashboard-card h3 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* QA-10: Table scroll hint visibility on touch devices */
+.table-scroll-hint {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  .table-scroll-hint {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 0.74rem !important;
+    color: var(--v3-text2) !important;
+    margin-bottom: 8px !important;
+  }
+}

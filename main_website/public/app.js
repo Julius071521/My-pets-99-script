@@ -3061,7 +3061,7 @@ print("Demo Response:", response.json())`;
       if (submitOrderBtn) {
         if (submitBtnSpan && submitBtnSpan.textContent === "⚠️ Maintenance Mode Active") {
           submitOrderBtn.disabled = false;
-          submitBtnSpan.textContent = "Launch Campaign 🚀";
+          submitBtnSpan.textContent = "Launch Campaign";
         }
       }
       if (orderServiceSelect && orderServiceSelect.value) {
@@ -4234,7 +4234,7 @@ print("Demo Response:", response.json())`;
       showFormAlert("Fatal connection issue: Server cannot reach proxy gateway.", "error");
     } finally {
       submitOrderBtn.disabled = false;
-      submitOrderBtn.querySelector('span').textContent = 'Launch Campaign 🚀';
+      submitOrderBtn.querySelector('span').textContent = 'Launch Campaign';
       checkMaintenanceButtonState();
     }
   }
@@ -7011,7 +7011,7 @@ print("Demo Response:", response.json())`;
         const paymentMethod = activeMethodTab ? activeMethodTab.getAttribute('data-method') : 'gcash';
 
         btnStartDeposit.disabled = true;
-        btnStartDeposit.textContent = "Loading Instructions... 🔓";
+        btnStartDeposit.textContent = "Loading Instructions...";
 
         try {
           const response = await request('/api/user/deposit/start', {
@@ -7068,7 +7068,7 @@ print("Demo Response:", response.json())`;
           showPremiumToast("Error", `❌ ${err.message}`, "error");
         } finally {
           btnStartDeposit.disabled = false;
-          btnStartDeposit.textContent = "Reveal Payment Instructions 🔓";
+          btnStartDeposit.textContent = "Reveal Payment Instructions";
         }
       });
     }
@@ -7566,7 +7566,7 @@ print("Demo Response:", response.json())`;
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.querySelector('span').textContent = 'Submit Support Ticket 🚀';
+            submitBtn.querySelector('span').textContent = 'Submit Support Ticket';
           }
         }
       });
