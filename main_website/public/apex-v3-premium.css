@@ -3086,3 +3086,63 @@ button:focus-visible {
     box-sizing: border-box !important;
   }
 }
+
+/* FIX-8: Desktop services table — restore table display.
+   style.min.css has display:block on tbody/tr/td WITHOUT a media query,
+   which breaks column layout at all widths. Reset to proper table values
+   at ≥768px so columns stay in their columns. */
+@media (min-width: 768px) {
+  #services-directory-table { display: table !important; }
+  #services-directory-table thead { display: table-header-group !important; }
+  #services-directory-table tbody { display: table-row-group !important; }
+  #services-directory-table tr { display: table-row !important; }
+  #services-directory-table th,
+  #services-directory-table td { display: table-cell !important; }
+}
+
+/* FIX-9: Search bar — left-pad input so text starts after the magnifier icon */
+#dash-custom-service-search {
+  padding-left: 2.4rem !important;
+}
+
+/* FIX-10: WhatsApp FAB wrapper — relative container so dismiss button can be placed at corner */
+.messenger-fab-wrap {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 9990;
+  display: flex;
+  align-items: flex-start;
+}
+.messenger-fab-wrap.hidden { display: none !important; }
+
+/* Move messenger-fab back to static positioning inside the wrapper */
+.messenger-fab-wrap .messenger-fab {
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* Small ×  dismiss chip shown at top-right corner of the FAB */
+.wa-fab-dismiss {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(15,23,42,0.88);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.messenger-fab-wrap:hover .wa-fab-dismiss { opacity: 1; }
+

@@ -255,6 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return text.trim();
   }
 
+  // Shared peso formatter — always shows thousands separators (₱1,446.96)
+  function formatPhp(value) {
+    const n = parseFloat(value) || 0;
+    return '₱' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
   // Format a service min/max limit. Providers often send the int32 ceiling
   // (2147483647) or other huge sentinels to mean "no limit" — show "Unlimited".
   function formatServiceLimit(value) {
@@ -835,7 +841,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   </div>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                  <strong style="color: var(--primary); font-size: 0.85rem;">₱${parseFloat(d.amount).toFixed(2)}</strong>
+                  <strong style="color: var(--primary); font-size: 0.85rem;">${formatPhp(d.amount)}</strong>
                   <span style="font-size: 0.7rem; color: ${statusColor}; font-weight: 600; margin-top: 2px;">${d.status}</span>
                 </div>
               `;
@@ -915,7 +921,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="autocomplete-item-name" style="font-size: 0.8rem; font-weight: 600; color: var(--text-primary); line-height: 1.3;">${s.name}</span>
                 </div>
               </div>
-              <span class="autocomplete-item-rate" style="font-size: 0.82rem; font-weight: 700; color: var(--success); background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 8px; border-radius: 6px; flex-shrink: 0;">₱${parseFloat(s.rate).toFixed(2)}/1K</span>
+              <span class="autocomplete-item-rate" style="font-size: 0.82rem; font-weight: 700; color: var(--success); background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 8px; border-radius: 6px; flex-shrink: 0;">${formatPhp(s.rate)}/1K</span>
             `;
             
             item.addEventListener('click', () => {
@@ -1285,6 +1291,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize deposit interactions dynamically
     bindAddFundsEventListeners();
+
+    // Wire up dismissable widgets that live inside the dashboard fragment
+    initQuickGuide();
+    initAiSupportCardDismiss();
+  }
+
+  // AI Support card dismiss — sessionStorage so it stays hidden for the session
+  function initAiSupportCardDismiss() {
+    const card = document.getElementById('ai-support-card');
+    const btn  = document.getElementById('ai-support-dismiss');
+    if (!card || !btn) return;
+    if (sessionStorage.getItem('apex_ai_support_dismissed') === '1') {
+      card.style.display = 'none';
+      return;
+    }
+    btn.addEventListener('click', () => {
+      card.style.display = 'none';
+      sessionStorage.setItem('apex_ai_support_dismissed', '1');
+    });
   }
 
   let adminPanelLoaded = false;
@@ -1609,9 +1634,11 @@ print("Demo Response:", response.json())`;
     document.body.classList.toggle('mobile-dashboard-fab-mode', mobileDock);
     document.body.classList.toggle('mobile-dash-pro', mobileDock);
 
-    const messengerFab = document.getElementById('messenger-fab');
+    const messengerFabWrap = document.getElementById('messenger-fab-wrap');
+    const messengerFab = messengerFabWrap || document.getElementById('messenger-fab');
     const hermesWidget = document.getElementById('apexbot-top-widget');
-    const showWhatsApp = showBackendFabStack;
+    const waDismissed = sessionStorage.getItem('apex_wa_dismissed') === '1';
+    const showWhatsApp = showBackendFabStack && !waDismissed;
     const showHermes = shouldShowHermesWidget();
 
     if (messengerFab) {
@@ -1909,8 +1936,8 @@ print("Demo Response:", response.json())`;
     
     document.getElementById('receipt-quantity').textContent = parseInt(receipt.quantity).toLocaleString();
     
-    const spentStr = `₱${parseFloat(receipt.charge).toFixed(2)}`;
-    const balStr = `₱${parseFloat(receipt.remainingBalance).toFixed(2)}`;
+    const spentStr = `${formatPhp(receipt.charge)}`;
+    const balStr = `${formatPhp(receipt.remainingBalance)}`;
     
     document.getElementById('receipt-total-spent').textContent = spentStr;
     document.getElementById('receipt-remaining-balance').textContent = balStr;
@@ -2449,7 +2476,7 @@ print("Demo Response:", response.json())`;
           <tr class="premium-svc-row">
             <td data-label="Ref ID" style="font-weight: 700;">#${d.id}</td>
             <td data-label="Payment Method"><strong style="text-transform: uppercase;">${d.payment_method || d.paymentMethod}</strong></td>
-            <td data-label="Amount" style="font-weight: 700; color: var(--primary);">₱${parseFloat(d.amount).toFixed(2)}</td>
+            <td data-label="Amount" style="font-weight: 700; color: var(--primary);">${formatPhp(d.amount)}</td>
             <td data-label="Reference ID" style="font-family: monospace;">${d.reference_id || d.referenceId}</td>
             <td data-label="Status">${statusBadge}</td>
             <td data-label="Submit Date" style="color: var(--text-secondary); font-size: 0.8rem;">${dateStr}</td>
@@ -2578,8 +2605,8 @@ print("Demo Response:", response.json())`;
     updateBrowserURL();
   }
 
-  // Quick Guide dismiss
-  (function initQuickGuide() {
+  // Quick Guide dismiss — called after dashboard HTML is injected into the DOM
+  function initQuickGuide() {
     const banner = document.getElementById('quick-guide-banner');
     const btn = document.getElementById('btn-dismiss-quick-guide');
     if (!banner) return;
@@ -2600,7 +2627,7 @@ print("Demo Response:", response.json())`;
         localStorage.setItem('apex_quick_guide_dismissed', '1');
       });
     }
-  })();
+  }
 
   // --- EVENT LISTENERS SETUP ---
   function setupEventListeners() {
@@ -2953,6 +2980,18 @@ print("Demo Response:", response.json())`;
         }
       }
     });
+
+    // WhatsApp FAB dismiss — persisted for the session
+    const waDismissBtn = document.getElementById('wa-fab-dismiss');
+    if (waDismissBtn) {
+      waDismissBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const wrap = document.getElementById('messenger-fab-wrap');
+        if (wrap) wrap.classList.add('hidden');
+        sessionStorage.setItem('apex_wa_dismissed', '1');
+      });
+    }
   }
 
 
@@ -3294,7 +3333,7 @@ print("Demo Response:", response.json())`;
   // --- USER BALANCE SYNC ---
   function updateUserDashboardSummary() {
     const summaryBalance = document.getElementById('user-summary-balance');
-    if (summaryBalance) summaryBalance.textContent = `₱${(parseFloat(state.balance) || 0).toFixed(2)}`;
+    if (summaryBalance) summaryBalance.textContent = `${formatPhp(state.balance)}`;
 
     const counts = { pending: 0, processing: 0, completed: 0, failed: 0 };
     (state.orders || []).forEach((order) => {
@@ -3338,7 +3377,7 @@ print("Demo Response:", response.json())`;
       }
       
       // Update UI displays
-      const balanceStr = `₱${state.balance.toFixed(2)}`;
+      const balanceStr = `${formatPhp(state.balance)}`;
       const sidebarBalance = document.getElementById('sidebar-balance-value');
       if (sidebarBalance) sidebarBalance.textContent = balanceStr;
       
@@ -3444,7 +3483,7 @@ print("Demo Response:", response.json())`;
         <h3 class="title" style="margin-bottom: 10px;">${s.name}</h3>
         <div class="specs" style="margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 0.8rem;">
           <span>Min: <strong>${formatServiceLimit(s.min)}</strong> | Max: <strong>${formatServiceLimit(s.max)}</strong></span>
-          <span class="price">₱${parseFloat(s.rate).toFixed(2)} <small>/1K</small></span>
+          <span class="price">${formatPhp(s.rate)} <small>/1K</small></span>
         </div>
         <button type="button" class="btn btn-primary btn-sm btn-block btn-order-now" style="margin-top: auto; padding: 8px 12px; font-weight: 700; letter-spacing: 0.3px; border-radius: 6px;">Order Now 🚀</button>
       `;
@@ -3760,7 +3799,7 @@ print("Demo Response:", response.json())`;
         </div>
         <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
           <span class="badge-ai-status ${aiStatus.class}" style="padding: 2px 6px; font-size: 0.65rem;">${aiStatus.text}</span>
-          <span class="text-success font-weight-bold" style="font-size: 0.88rem;">₱${parseFloat(selectedService.rate).toFixed(2)}</span>
+          <span class="text-success font-weight-bold" style="font-size: 0.88rem;">${formatPhp(selectedService.rate)}</span>
         </div>
       `;
       
@@ -3795,7 +3834,7 @@ print("Demo Response:", response.json())`;
     filtered.forEach(s => {
       const opt = document.createElement('option');
       opt.value = s.service;
-      opt.textContent = `[ID: ${s.service}] ${s.name} - ₱${parseFloat(s.rate).toFixed(2)}/1K`;
+      opt.textContent = `[ID: ${s.service}] ${s.name} - ${formatPhp(s.rate)}/1K`;
       orderServiceSelect.appendChild(opt);
     });
 
@@ -3821,12 +3860,12 @@ print("Demo Response:", response.json())`;
 
     // Show dynamic specs card
     serviceSpecsBox.classList.remove('hidden');
-    specRateSpan.textContent = `₱${parseFloat(selectedService.rate).toFixed(2)}`;
+    specRateSpan.textContent = `${formatPhp(selectedService.rate)}`;
     specMinSpan.textContent = formatServiceLimit(selectedService.min);
     specMaxSpan.textContent = formatServiceLimit(selectedService.max);
     specTypeSpan.textContent = selectedService.type;
 
-    calcRatePer1k.textContent = `₱${parseFloat(selectedService.rate).toFixed(2)}`;
+    calcRatePer1k.textContent = `${formatPhp(selectedService.rate)}`;
     quantityLimitsTip.textContent = `Limits: Min ${formatServiceLimit(selectedService.min)} - Max ${formatServiceLimit(selectedService.max)}`;
 
     // Enable quantity & link input
@@ -4110,7 +4149,7 @@ print("Demo Response:", response.json())`;
     const rate = parseFloat(selectedService.rate);
     const cost = parseFloat((rate * (qty / 1000)).toFixed(2));
     if (state.balance < cost) {
-      showFormAlert(`Insufficient balance. Calculated cost is ₱${cost.toFixed(2)} PHP but your balance is only ₱${state.balance.toFixed(2)} PHP. Please add funds.`, "error");
+      showFormAlert(`Insufficient balance. Calculated cost is ${formatPhp(cost)} PHP but your balance is only ${formatPhp(state.balance)} PHP. Please add funds.`, "error");
       return;
     }
 
@@ -4434,7 +4473,7 @@ print("Demo Response:", response.json())`;
           <div style="font-size: 0.7rem; color: var(--accent); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${activityDesc}</div>
         </div>
         <div class="ai-suggest-price-row">
-          <span class="ai-suggest-rate">₱${parseFloat(activityService.rate).toFixed(2)}/1K</span>
+          <span class="ai-suggest-rate">${formatPhp(activityService.rate)}/1K</span>
           <button class="ai-suggest-action-btn">Launch</button>
         </div>
       `;
@@ -4460,7 +4499,7 @@ print("Demo Response:", response.json())`;
           <div class="ai-suggest-title" title="${formatted.name}">${formatted.name}</div>
         </div>
         <div class="ai-suggest-price-row">
-          <span class="ai-suggest-rate">₱${parseFloat(s.rate).toFixed(2)}/1K</span>
+          <span class="ai-suggest-rate">${formatPhp(s.rate)}/1K</span>
           <button class="ai-suggest-action-btn">Launch</button>
         </div>
       `;
@@ -4516,10 +4555,26 @@ print("Demo Response:", response.json())`;
   window.apexboostSelectHermesService = selectSuggestedService;
 
   // --- PREMIUM SMM PARSERS & AI CLASSIFICATION ENGINE ---
-  
+
+  // Normalize raw provider service names before display parsing:
+  // strips decorative emojis, converts round brackets to square, uppercases common SMM abbreviations
+  function normalizeServiceDisplayName(raw) {
+    if (!raw) return raw;
+    var s = raw;
+    // Strip decorative emoji (covers most common emoji Unicode blocks)
+    s = s.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}]/gu, '');
+    // Normalize round brackets → square brackets so the pill parser picks them up
+    s = s.replace(/\(([^)]*)\)/g, '[$1]');
+    // Uppercase common SMM abbreviations when written in lowercase
+    s = s.replace(/\b(sv|hq|vip|uk|us|eu)\b/gi, function(w) { return w.toUpperCase(); });
+    // Collapse any extra spaces left by emoji removal
+    s = s.replace(/\s+/g, ' ').trim();
+    return s;
+  }
+
   // Format cluttered wholesale service names into clean, structured titles and attribute tags
   function formatServiceName(fullName) {
-    fullName = fullName || '';
+    fullName = normalizeServiceDisplayName(fullName) || '';
     const brackets = [];
     const bracketRegex = /\[([^\]]+)\]/g;
     let match;
@@ -4642,7 +4697,7 @@ print("Demo Response:", response.json())`;
     // Attributes to compare
     const attributes = [
       { key: 'category', label: 'Platform Category' },
-      { key: 'rate', label: 'Wholesale Rate / 1K', format: (v) => `₱${parseFloat(v).toFixed(2)}` },
+      { key: 'rate', label: 'Wholesale Rate / 1K', format: (v) => `${formatPhp(v)}` },
       { key: 'min', label: 'Minimum Order', format: (v) => parseInt(v).toLocaleString() },
       { key: 'max', label: 'Maximum Order', format: (v) => parseInt(v).toLocaleString() },
       { key: 'type', label: 'Delivery Type' },
@@ -4945,7 +5000,7 @@ print("Demo Response:", response.json())`;
             </div>
           </div>
         </td>
-        <td data-label="Rate"><span class="text-success font-weight-bold" style="font-size: 0.95rem;">₱${parseFloat(s.rate).toFixed(2)}</span></td>
+        <td data-label="Rate"><span class="text-success font-weight-bold" style="font-size: 0.95rem;">${formatPhp(s.rate)}</span></td>
         <td data-label="Min">${formatServiceLimit(s.min)}</td>
         <td data-label="Max">${formatServiceLimit(s.max)}</td>
         <td data-label="AI Analysis"><span class="badge-ai-status ${aiStatus.class}">${aiStatus.text}</span></td>
@@ -5199,7 +5254,7 @@ print("Demo Response:", response.json())`;
         <td><span style="display: inline-flex; align-items: center;">${logoHtml}<strong>${o.serviceName}</strong></span></td>
         <td><a href="${o.url}" target="_blank" class="text-secondary" style="font-size: 0.75rem; text-decoration: underline" title="${o.url}">View Target Link</a></td>
         <td>${parseInt(o.quantity).toLocaleString()}</td>
-        <td><strong>₱${parseFloat(o.charge).toFixed(2)}</strong></td>
+        <td><strong>${formatPhp(o.charge)}</strong></td>
         <td>
           <span class="badge-status ${statusClass}">${o.status}</span>
           ${progressBarHtml}
@@ -6255,7 +6310,7 @@ print("Demo Response:", response.json())`;
         <div class="user-info" style="flex: 1; min-width: 150px; margin-right: 15px;">
           <strong style="color: var(--text-primary); font-size: 1rem;">${user.username}</strong>
           <div style="font-size: 0.8rem; color: var(--text-muted);">${user.email}</div>
-          <div style="margin-top: 5px; font-weight: bold; color: var(--success);">Current Balance: ₱${parseFloat(user.balance).toFixed(2)}</div>
+          <div style="margin-top: 5px; font-weight: bold; color: var(--success);">Current Balance: ${formatPhp(user.balance)}</div>
         </div>
         <div class="user-actions" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
           <!-- Set Balance (Overwrite/Direct Edit) -->
@@ -6305,7 +6360,7 @@ print("Demo Response:", response.json())`;
 
           showPremiumToast(
             "Balance Updated",
-            `Balance successfully set for ${data.username}! New balance: ₱${parseFloat(data.newBalance).toFixed(2)}`,
+            `Balance successfully set for ${data.username}! New balance: ${formatPhp(data.newBalance)}`,
             "success"
           );
 
@@ -6354,7 +6409,7 @@ print("Demo Response:", response.json())`;
 
           showPremiumToast(
             "Funds Added",
-            `Added ₱${amount.toFixed(2)} to ${data.username}! New balance: ₱${parseFloat(data.newBalance).toFixed(2)}`,
+            `Added ${formatPhp(amount)} to ${data.username}! New balance: ${formatPhp(data.newBalance)}`,
             "success"
           );
 
@@ -6538,7 +6593,7 @@ print("Demo Response:", response.json())`;
                 <div class="popular-svc-stats" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
                   <span class="stat-chip stat-chip-orders" style="background: rgba(20, 184, 166, 0.06); border-color: rgba(20, 184, 166, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">📦 ${svc.totalOrders} order${svc.totalOrders > 1 ? 's' : ''}</span>
                   <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.02); border-color: var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 ${parseInt(svc.totalQuantity || 0).toLocaleString()} delivered</span>
-                  <span class="stat-chip stat-chip-spent" style="background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.15); color: var(--success); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">₱ ${parseFloat(svc.totalSpent).toFixed(2)} spent</span>
+                  <span class="stat-chip stat-chip-spent" style="background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.15); color: var(--success); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${formatPhp(svc.totalSpent)} spent</span>
                   ${svc.avgCompletionMinutes ? `<span class="stat-chip stat-chip-time" style="background: rgba(59, 130, 246, 0.06); border-color: rgba(59, 130, 246, 0.15); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">⏱️ ${completionText}</span>` : ''}
                 </div>
                 <div class="popular-svc-footer" style="font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.03); padding-top: 8px; margin-top: 10px;">📅 Last ordered: <strong>${lastDate}</strong></div>
@@ -7062,7 +7117,7 @@ print("Demo Response:", response.json())`;
           
           showPremiumToast(
             "Request Submitted",
-            `🎉 Deposit proof submitted successfully! Amount: ₱${parseFloat(amountVal).toFixed(2)}, Ref ID: ${reference}. Awaiting administrator verification.`,
+            `🎉 Deposit proof submitted successfully! Amount: ${formatPhp(amountVal)}, Ref ID: ${reference}. Awaiting administrator verification.`,
             "success"
           );
           triggerApexConfetti();
@@ -8420,11 +8475,6 @@ print("Demo Response:", response.json())`;
     }
   }
 
-  function formatPhp(value) {
-    const numeric = parseFloat(value) || 0;
-    return `₱${numeric.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  }
-
   function formatPercent(value) {
     const numeric = parseFloat(value) || 0;
     return `${numeric.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
@@ -8589,7 +8639,7 @@ print("Demo Response:", response.json())`;
           <div style="font-weight:600; font-size:0.88rem;">${escapeHtml(u.username || '—')}</div>
           <div style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(u.email || '—')}</div>
         </td>
-        <td style="font-weight:700; color:var(--success);">₱${parseFloat(u.balance || 0).toFixed(2)}</td>
+        <td style="font-weight:700; color:var(--success);">${formatPhp(u.balance || 0)}</td>
         <td><span style="color:${roleBadgeColor}; font-size:0.82rem; font-weight:600;">${roleLabel}</span></td>
         <td>
           <div style="display:flex; gap:6px; align-items:center;">
@@ -8632,7 +8682,7 @@ print("Demo Response:", response.json())`;
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        showPremiumToast('Balance Updated Successfully', `Balance for ${userEmail} set to ₱${val.toFixed(2)}`, 'success');
+        showPremiumToast('Balance Updated Successfully', `Balance for ${userEmail} set to ${formatPhp(val)}`, 'success');
         input.value = '';
         // Update in-memory list
         const user = allAdminUsersList.find(u => u.id === userId);
@@ -8722,7 +8772,7 @@ print("Demo Response:", response.json())`;
             <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(d.email || '—')}</div>
           </td>
           <td style="font-size:0.85rem;">${escapeHtml(d.paymentMethod || 'GCash')}</td>
-          <td style="font-weight:700; color:var(--success);">₱${parseFloat(d.amount || 0).toFixed(2)}</td>
+          <td style="font-weight:700; color:var(--success);">${formatPhp(d.amount || 0)}</td>
           <td style="font-size:0.82rem; font-family:monospace;">
             ${escapeHtml(d.referenceId || '—')}
             ${refWarning}
@@ -8955,7 +9005,7 @@ print("Demo Response:", response.json())`;
       text.setAttribute("y", y + 4);
       text.setAttribute("text-anchor", "end");
       text.setAttribute("class", "chart-axis-text");
-      text.textContent = `₱${yValues[idx].toFixed(2)}`;
+      text.textContent = `${formatPhp(yValues[idx])}`;
       svg.appendChild(text);
     });
 
@@ -9028,7 +9078,7 @@ print("Demo Response:", response.json())`;
         if (tooltip) {
           tooltip.innerHTML = `
             <div style="font-weight: 700; margin-bottom: 4px; color: var(--primary);">${pt.day.label}</div>
-            <div style="margin-bottom: 2px;">Spend: <strong>₱${pt.day.spend.toFixed(2)}</strong></div>
+            <div style="margin-bottom: 2px;">Spend: <strong>${formatPhp(pt.day.spend)}</strong></div>
             <div>Campaigns: <strong>${pt.day.count}</strong></div>
           `;
           // Position using percentages to be fully responsive
@@ -9180,7 +9230,7 @@ print("Demo Response:", response.json())`;
     ctx.fillStyle = primaryColor;
     ctx.font = "bold 26px 'Inter', sans-serif";
     ctx.textAlign = "right";
-    ctx.fillText(`₱${parseFloat(receipt.charge).toFixed(2)}`, 550, totalY + 8);
+    ctx.fillText(`${formatPhp(receipt.charge)}`, 550, totalY + 8);
 
     const balY = totalY + 45;
     ctx.textAlign = "left";
@@ -9191,7 +9241,7 @@ print("Demo Response:", response.json())`;
     ctx.fillStyle = textMain;
     ctx.font = "bold 16px 'Inter', sans-serif";
     ctx.textAlign = "right";
-    ctx.fillText(`₱${parseFloat(receipt.remainingBalance).toFixed(2)}`, 550, balY);
+    ctx.fillText(`${formatPhp(receipt.remainingBalance)}`, 550, balY);
 
     // Divider Line 3
     drawReceiptDivider(ctx, 40, balY + 30, 520);
@@ -9450,8 +9500,8 @@ print("Demo Response:", response.json())`;
         }
         tooltip.innerHTML = `
           <div style="font-weight:700; color:var(--primary);">${pt.day.key}</div>
-          <div>Sales: <strong>₱${pt.day.grossSales.toFixed(2)}</strong></div>
-          <div>Profit: <strong style="color:var(--success);">₱${pt.day.netProfit.toFixed(2)}</strong></div>
+          <div>Sales: <strong>${formatPhp(pt.day.grossSales)}</strong></div>
+          <div>Profit: <strong style="color:var(--success);">${formatPhp(pt.day.netProfit)}</strong></div>
         `;
         const rect = circle.getBoundingClientRect();
         tooltip.style.left = (rect.left + window.scrollX) + 'px';
@@ -9674,9 +9724,9 @@ print("Demo Response:", response.json())`;
             <div style="font-size:0.78rem; color:var(--text-muted); max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="${escapeHtml(o.url || o.link || '#')}" target="_blank">${escapeHtml(o.url || o.link || '—')}</a></div>
             <div style="font-size:0.72rem; color:var(--primary);">Qty: ${o.quantity}</div>
           </td>
-          <td style="font-size:0.85rem; color:var(--text-muted);">₱${cost.toFixed(2)}</td>
-          <td style="font-size:0.85rem; font-weight:700;">₱${charge.toFixed(2)}</td>
-          <td style="font-size:0.85rem; font-weight:700; color:${profit >= 0 ? 'var(--success)' : 'var(--danger)'};">₱${profit.toFixed(2)}</td>
+          <td style="font-size:0.85rem; color:var(--text-muted);">${formatPhp(cost)}</td>
+          <td style="font-size:0.85rem; font-weight:700;">${formatPhp(charge)}</td>
+          <td style="font-size:0.85rem; font-weight:700; color:${profit >= 0 ? 'var(--success)' : 'var(--danger)'};">${formatPhp(profit)}</td>
           <td>
             <span class="status-badge" style="background:rgba(255,255,255,0.03); border:1px solid ${badgeColor}; color:${badgeColor};">${o.status}</span>
             ${stuckBadge}
@@ -9920,7 +9970,7 @@ print("Demo Response:", response.json())`;
             <tr>
               <td><strong>${escapeHtml(p.code)}</strong></td>
               <td>${escapeHtml(p.type)}</td>
-              <td>${p.type === 'percentage' ? `${parseFloat(p.value).toFixed(0)}%` : `₱${parseFloat(p.value).toFixed(2)}`}</td>
+              <td>${p.type === 'percentage' ? `${parseFloat(p.value).toFixed(0)}%` : `${formatPhp(p.value)}`}</td>
               <td>${p.uses || 0}</td>
               <td>${p.max_uses || p.maxUses || 100}</td>
               <td>
@@ -10676,7 +10726,7 @@ print("Demo Response:", response.json())`;
   const configs = [
     { key: 'openclaw', widgetId: 'ai-chat-widget', handleId: 'ai-chat-fab' },
     { key: 'hermes', widgetId: 'apexbot-top-widget', handleId: 'apexbot-top-fab' },
-    { key: 'whatsapp', widgetId: 'messenger-fab', handleId: 'messenger-fab' }
+    { key: 'whatsapp', widgetId: 'messenger-fab-wrap', handleId: 'messenger-fab-wrap' }
   ];
 
   const viewport = () => ({
