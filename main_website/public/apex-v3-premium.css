@@ -3146,3 +3146,43 @@ button:focus-visible {
 }
 .messenger-fab-wrap:hover .wa-fab-dismiss { opacity: 1; }
 
+/* FIX-11: Hermes FAB — hide CSS pixel-art robot, style SVG layout */
+.apexbot-robot-icon,
+.apexbot-robot-antenna,
+.apexbot-robot-head,
+.apexbot-robot-eye,
+.apexbot-robot-smile,
+.apexbot-robot-hand,
+.apexbot-top-spark { display: none !important; }
+.apexbot-top-ai-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: currentColor;
+  line-height: 1;
+  margin-top: 1px;
+  display: block;
+}
+.apexbot-top-fab {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1px !important;
+  color: #fff !important;
+}
+
+/* FIX-12: Stop perpetual page-chrome animations */
+.glass-dashboard-mock { animation: none !important; }
+.chip-top, .chip-bottom { animation: none !important; }
+.apex-stat-icon { animation: none !important; }
+.apex-cta-main-btn {
+  animation: none !important;
+  box-shadow: 0 8px 32px rgba(20,184,166,0.35) !important;
+}
+.apex-stat-icon svg { stroke: var(--v3-primary); opacity: 0.85; }
+.receipt-success-badge { display: flex; align-items: center; justify-content: center; }
+.receipt-success-badge svg { stroke: #fff; }
+
+/* FIX-13: Hide WhatsApp pulse ring */
+.messenger-pulse { display: none !important; }

@@ -2064,18 +2064,24 @@ print("Demo Response:", response.json())`;
       if (navDashboardTrigger) navDashboardTrigger.classList.remove('hidden');
       if (navUsername) navUsername.textContent = state.user.username;
       
-      const avatarUrl = state.user.avatar || '/images/default-ai-profile-squidward-v2.png';
-      if (navUserAvatar) {
+      const avatarUrl = state.user.avatar || '';
+      if (avatarUrl && navUserAvatar) {
         navUserAvatar.style.backgroundImage = `url('${avatarUrl}')`;
       }
-      if (dropdownUserAvatarMenu) {
+      if (avatarUrl && dropdownUserAvatarMenu) {
         dropdownUserAvatarMenu.style.backgroundImage = `url('${avatarUrl}')`;
       }
       const sidebarAvatar = document.getElementById('sidebar-avatar-btn');
       if (sidebarAvatar) {
-        sidebarAvatar.textContent = '';
-        sidebarAvatar.style.backgroundImage = `url('${avatarUrl}')`;
-        sidebarAvatar.classList.add('has-profile-image');
+        if (avatarUrl) {
+          sidebarAvatar.textContent = '';
+          sidebarAvatar.style.backgroundImage = `url('${avatarUrl}')`;
+          sidebarAvatar.classList.add('has-profile-image');
+        } else {
+          sidebarAvatar.textContent = (state.user.username || '?').charAt(0).toUpperCase();
+          sidebarAvatar.style.backgroundImage = '';
+          sidebarAvatar.classList.remove('has-profile-image');
+        }
       }
       if (sidebarUsername) sidebarUsername.textContent = state.user.username;
       
