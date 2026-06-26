@@ -348,6 +348,28 @@ runWhenReady(() => {
         throw new Error(quotaReply || 'Server error');
       }
       const reply = data.reply || '';
+      if (data.pending) {
+        // Backend queued the request to the OpenClaw VPS agent (async reply).
+        // Poll GET /api/ai/chat/replies/:chatId every 2s for up to 30s, then fall back to local bot.
+        let received = false;
+        for (let attempt = 0; attempt < 15 && !received; attempt++) {
+          await new Promise(r => setTimeout(r, 2000));
+          received = await pollOpenClawCallbackReplies();
+        }
+        typingEl.remove();
+        if (received) {
+          if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+          if (!isOpen) {
+            unreadBadge.textContent = '1';
+            unreadBadge.classList.remove('hidden');
+          }
+        } else {
+          const fallbackReply = buildClientApexBotFallback(text);
+          appendMessage('bot', fallbackReply);
+          chatHistory.push({ role: 'assistant', content: fallbackReply });
+        }
+        return;
+      }
       if (!reply) {
         typingEl.remove();
         await pollOpenClawCallbackReplies();
