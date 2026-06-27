@@ -3376,3 +3376,111 @@ button:focus-visible {
     margin-bottom: 8px !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   QA POLISH BATCH 3 — Site-wide professional consistency pass
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* P3-1: SVG icons (landing) — align + color-code by section.
+   These containers used to hold emoji; now they hold inline SVGs. */
+.security-badge-icon svg,
+.apex-api-feature-icon svg,
+.dropdown-item-btn .item-icon svg {
+  display: block !important;
+}
+.security-badge-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+}
+.security-badge-green .security-badge-icon  { color: #34d399 !important; background: rgba(16,185,129,0.10) !important; }
+.security-badge-blue .security-badge-icon   { color: #38bdf8 !important; background: rgba(56,189,248,0.10) !important; }
+.security-badge-indigo .security-badge-icon { color: #818cf8 !important; background: rgba(99,102,241,0.10) !important; }
+.apex-api-feature-icon { color: #818cf8 !important; }
+
+/* P3-2: FAQ WhatsApp button — center icon + label cleanly */
+.faq-whatsapp-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.faq-whatsapp-btn svg { color: #25D366 !important; flex-shrink: 0 !important; }
+
+/* P3-3: Tone down the perpetual cyan icon glow — was the main "unprofessional
+   glow" look. Keep a subtle hover sheen only; remove the always-on box-shadow. */
+.dropdown-item-btn .item-icon,
+.platform-tab .platform-icon,
+.trigger-icon-wrapper,
+.pill-icon,
+.title-icon {
+  box-shadow: none !important;
+}
+.sidebar-link:hover .icon,
+.top-tab-btn:hover .tab-icon,
+.bottom-nav-item:hover .nav-icon,
+.dropdown-item-btn:hover .item-icon,
+.platform-tab:hover .platform-icon {
+  box-shadow: 0 0 14px rgba(20,184,166,0.18) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* P3-4: GLOBAL text-overflow safety — no overlapping text in any
+   card/badge/pill/cell regardless of content length. */
+.dashboard-card h2,
+.dashboard-card h3,
+.dashboard-card h4,
+.tab-header h2,
+.tab-header p,
+.security-badge span,
+.support-lane-copy strong,
+.support-lane-copy small,
+.metric-label,
+.stat-label-sm,
+.metric-label-sm {
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  min-width: 0 !important;
+}
+
+/* P3-5: Consistent section heading rhythm on the landing page */
+.section-title { letter-spacing: -0.02em !important; }
+.section-subtitle { line-height: 1.6 !important; }
+
+/* P3-6: Buttons with icon + text — vertical centering everywhere */
+.btn svg { vertical-align: middle !important; }
+
+/* P3-7: Payment method tabs — equal sizing, no logo overflow */
+#payment-method-tabs .platform-tab {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 52px !important;
+}
+
+/* P3-8: Quick-amount buttons — even grid, no wrap jitter */
+.quick-amounts-group {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+}
+.quick-amount-btn { width: 100% !important; }
+
+/* P3-9: Affiliates stat values — prevent currency symbol cramping */
+.stat-value-lg { white-space: nowrap !important; }
+
+/* P3-10: Reduce motion on low-end / accessibility — already partly handled,
+   extend to all decorative transforms. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
