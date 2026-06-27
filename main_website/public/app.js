@@ -2064,7 +2064,7 @@ print("Demo Response:", response.json())`;
       if (navDashboardTrigger) navDashboardTrigger.classList.remove('hidden');
       if (navUsername) navUsername.textContent = state.user.username;
       
-      const avatarUrl = state.user.avatar || '';
+      const avatarUrl = state.user.avatar || '/images/default-ai-profile-squidward.png';
       if (avatarUrl && navUserAvatar) {
         navUserAvatar.style.backgroundImage = `url('${avatarUrl}')`;
       }
