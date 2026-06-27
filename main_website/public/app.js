@@ -4048,7 +4048,7 @@ print("Demo Response:", response.json())`;
     const preSubmitServiceTime = document.getElementById('pre-submit-service-time');
     const preSubmitSpeedBadge = document.getElementById('pre-submit-speed-badge');
     if (preSubmitServiceTime) {
-      preSubmitServiceTime.textContent = "Pumili muna ng service package.";
+      preSubmitServiceTime.textContent = "Select a service package first.";
     }
     if (preSubmitSpeedBadge) {
       preSubmitSpeedBadge.classList.add('hidden', 'muted');
@@ -10757,8 +10757,21 @@ print("Demo Response:", response.json())`;
     const vp = viewport();
     const rect = widget.getBoundingClientRect();
     const mobileClearance = window.innerWidth < 768 ? MOBILE_NAV_CLEARANCE : EDGE;
+    // Keep widgets out of the desktop sidebar region so they never cover the
+    // navigation links. Only applies when the sidebar is docked at the left.
+    let minLeft = EDGE;
+    if (window.innerWidth >= 992) {
+      const sidebar = document.querySelector('.dash-sidebar');
+      if (sidebar) {
+        const sb = sidebar.getBoundingClientRect();
+        if (sb.width > 0 && sb.left < 40 && sb.right > EDGE) {
+          minLeft = Math.max(EDGE, sb.right + EDGE);
+        }
+      }
+    }
+    const maxLeft = vp.width - Math.max(rect.width, 48) - EDGE;
     return {
-      left: Math.max(EDGE, Math.min(left, vp.width - Math.max(rect.width, 48) - EDGE)),
+      left: Math.max(minLeft, Math.min(left, Math.max(minLeft, maxLeft))),
       top: Math.max(EDGE, Math.min(top, vp.height - Math.max(rect.height, 48) - mobileClearance))
     };
   }

@@ -3484,3 +3484,57 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   QA POLISH BATCH 4 — live QA report fixes
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* QA4-1 (CRITICAL): AI Recommendation cards — price + Launch button overlap.
+   In narrow 2-col cards the price column collapsed to ~26px and the nowrap
+   price overflowed into the button. Stack them so each gets full width. */
+.ai-suggest-price-row,
+.order-ai-recommendation-panel .ai-suggest-price-row {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  grid-template-columns: none !important;
+}
+.ai-suggest-rate,
+.order-ai-recommendation-panel .ai-suggest-rate {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+}
+.ai-suggest-action-btn,
+.order-ai-recommendation-panel .ai-suggest-action-btn {
+  width: 100% !important;
+  min-width: 0 !important;
+  text-align: center !important;
+}
+
+/* QA4-3: Platform selector — let tabs WRAP so none are clipped/hidden.
+   Was overflow-x:auto + nowrap + hidden scrollbar = TikTok cut off, no hint. */
+.platform-tabs {
+  flex-wrap: wrap !important;
+  overflow-x: visible !important;
+}
+.platform-tabs .platform-tab {
+  flex: 1 1 84px !important;
+}
+
+/* QA4-4: Hide the fixed Flash-Sale promo banner for logged-in users so it no
+   longer double-stacks with the dashboard nav (it's a visitor marketing bar). */
+body.is-authenticated .apex-promo-banner {
+  display: none !important;
+  transform: translateY(-100%) !important;
+}
+
+/* QA4-5: Service "Description" used a monospace/code font, clashing with the
+   rest of the UI. Match the body font while keeping the callout box. */
+.details-desc-section .desc-text {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+  color: var(--text-secondary, #8ba3c7) !important;
+  font-size: 0.85rem !important;
+}
