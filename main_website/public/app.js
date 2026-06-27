@@ -6447,6 +6447,18 @@ print("Demo Response:", response.json())`;
     const grid = document.getElementById('popular-services-grid');
     if (!grid) return;
 
+    // Reusable inline SVG icons (professional, replaces emoji clutter)
+    const POP_ICONS = {
+      flame: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+      chart: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+      users: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      clock: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+      box: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      calendar: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      lock: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+      alert: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+    };
+
     // 1. Define General Public Globally Trending Services
     const trendingServices = [
       {
@@ -6459,8 +6471,7 @@ print("Demo Response:", response.json())`;
         time: "~1-2 hours completion",
         badge: "Recommended",
         badgeClass: "ai-fast",
-        rank: "Globally #1 Trending",
-        rankEmoji: "🥇"
+        rank: "Globally #1 Trending"
       },
       {
         id: 16606,
@@ -6472,8 +6483,7 @@ print("Demo Response:", response.json())`;
         time: "Instant delivery",
         badge: "Stable",
         badgeClass: "ai-sale",
-        rank: "Globally #2 Trending",
-        rankEmoji: "🥈"
+        rank: "Globally #2 Trending"
       },
       {
         id: 16614,
@@ -6485,8 +6495,7 @@ print("Demo Response:", response.json())`;
         time: "~15-30 mins completion",
         badge: "Fast",
         badgeClass: "ai-fast",
-        rank: "Globally #3 Trending",
-        rankEmoji: "🥉"
+        rank: "Globally #3 Trending"
       },
       {
         id: 16598,
@@ -6498,38 +6507,38 @@ print("Demo Response:", response.json())`;
         time: "~30-60 mins completion",
         badge: "Stable",
         badgeClass: "ai-sale",
-        rank: "Globally #4 Trending",
-        rankEmoji: "🔥"
+        rank: "Globally #4 Trending"
       }
     ];
 
-    // Build the container HTML with dual grid sections
+    // Build the container HTML with dual grid sections.
+    // NOTE: trendingServices is hardcoded/trusted; still escaped for consistency.
     let htmlContent = `
       <div class="trending-section" style="margin-bottom: 30px;">
         <h3 style="color: var(--primary); margin-top: 0; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 8px;">
-          <span>🔥</span> Globally Trending SMM Services
+          ${POP_ICONS.flame} Globally Trending SMM Services
         </h3>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Real-time trending services across the reseller network. High safety, lightning speed, and maximum stability.</p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-          ${trendingServices.map(svc => `
+          ${trendingServices.map((svc, i) => `
             <div class="popular-svc-card" style="position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(20, 184, 166, 0.15);">
-              <div class="popular-rank-badge" style="background: linear-gradient(135deg, var(--primary), var(--accent)); width: 36px; height: 36px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; position: absolute; top: 12px; right: 12px; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(20, 184, 166, 0.2);">${svc.rankEmoji}</div>
-              
-              <div style="padding-right: 40px;">
-                <div class="popular-svc-name" style="font-weight: 700; color: #fff; font-size: 0.95rem; line-height: 1.4; font-family: 'Outfit', sans-serif;">${svc.name}</div>
-                <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px; margin-top: 4px;">Platform: <strong>${svc.platform}</strong> &nbsp;·&nbsp; ID #${svc.id}</div>
+              <div class="popular-rank-badge" style="background: linear-gradient(135deg, var(--primary), var(--accent)); width: 30px; height: 30px; border-radius: 8px; font-weight: 800; color: #03161a; display: flex; align-items: center; justify-content: center; position: absolute; top: 12px; right: 12px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(20, 184, 166, 0.2);">#${i + 1}</div>
+
+              <div style="padding-right: 44px;">
+                <div class="popular-svc-name" style="font-weight: 700; color: #fff; font-size: 0.95rem; line-height: 1.4; font-family: 'Outfit', sans-serif;">${escapeHtml(svc.name)}</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px; margin-top: 4px;">Platform: <strong>${escapeHtml(svc.platform)}</strong> &nbsp;·&nbsp; ID #${escapeHtml(svc.id)}</div>
               </div>
 
               <div class="popular-svc-stats" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
-                <span class="stat-chip stat-chip-spent" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--success); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">₱ ${svc.price}/1K</span>
-                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 Min: ${formatServiceLimit(svc.min)}</span>
-                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 Max: ${formatServiceLimit(svc.max)}</span>
-                <span class="stat-chip stat-chip-time" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); color: var(--primary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">⏱️ ${svc.time}</span>
+                <span class="stat-chip stat-chip-spent" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--success); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">₱ ${escapeHtml(svc.price)}/1K</span>
+                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${POP_ICONS.users}Min: ${formatServiceLimit(svc.min)}</span>
+                <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${POP_ICONS.users}Max: ${formatServiceLimit(svc.max)}</span>
+                <span class="stat-chip stat-chip-time" style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${POP_ICONS.clock}${escapeHtml(svc.time)}</span>
               </div>
-              
+
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; margin-top: auto;">
-                <span class="badge-ai-status ${svc.badgeClass}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: capitalize;">${svc.badge}</span>
-                <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">${svc.rank}</span>
+                <span class="badge-ai-status ${svc.badgeClass}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: capitalize;">${escapeHtml(svc.badge)}</span>
+                <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">${escapeHtml(svc.rank)}</span>
               </div>
             </div>
           `).join('')}
@@ -6538,7 +6547,7 @@ print("Demo Response:", response.json())`;
 
       <div class="personal-section" style="margin-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 30px;">
         <h3 style="color: var(--primary); margin-top: 0; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 8px;">
-          <span>📈</span> Your Campaign Statistics
+          ${POP_ICONS.chart} Your Campaign Statistics
         </h3>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Your personal campaign order volume, quantity, and total invested balance statistics.</p>
         <div id="personal-stats-grid-container">
@@ -6555,7 +6564,7 @@ print("Demo Response:", response.json())`;
     if (!state.user) {
       personalContainer.innerHTML = `
         <div class="popular-empty-state" style="padding: 30px; text-align: center; border: 1px dashed var(--border-color); border-radius: 12px; background: rgba(0,0,0,0.15);">
-          <div class="empty-icon" style="font-size: 2rem; margin-bottom: 10px;">🔒</div>
+          <div class="empty-icon" style="margin-bottom: 10px; color: var(--text-muted);">${POP_ICONS.lock}</div>
           <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">Please <a href="javascript:void(0)" onclick="showAuthModal('login')" style="color: var(--primary); text-decoration: underline;">log in</a> to see your personal campaign statistics.</p>
         </div>
       `;
@@ -6572,7 +6581,7 @@ print("Demo Response:", response.json())`;
       if (!Array.isArray(stats) || stats.length === 0) {
         personalContainer.innerHTML = `
           <div class="popular-empty-state" style="padding: 30px; text-align: center; border: 1px dashed var(--border-color); border-radius: 12px; background: rgba(0,0,0,0.15);">
-            <div class="empty-icon" style="font-size: 2rem; margin-bottom: 10px;">📦</div>
+            <div class="empty-icon" style="margin-bottom: 10px; color: var(--text-muted);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
             <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">No campaigns launched yet. Place your first order to see your personalized statistics here!</p>
           </div>
         `;
@@ -6582,34 +6591,37 @@ print("Demo Response:", response.json())`;
       personalContainer.innerHTML = `
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
           ${stats.map((svc, idx) => {
-            const rankEmoji = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`;
-            const lastDate = svc.lastOrderedAt ? new Date(svc.lastOrderedAt).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+            // SECURITY: serviceName / serviceId come from the API — escape before injecting.
+            const safeName = escapeHtml(svc.serviceName);
+            const safeId = escapeHtml(svc.serviceId);
+            const totalOrders = parseInt(svc.totalOrders || 0, 10);
+            const lastDate = svc.lastOrderedAt ? escapeHtml(new Date(svc.lastOrderedAt).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' })) : 'N/A';
             const completionText = svc.avgCompletionMinutes
               ? (svc.avgCompletionMinutes >= 60
                   ? `~${Math.round(svc.avgCompletionMinutes / 60)}h avg`
-                  : `~${svc.avgCompletionMinutes}min avg`)
+                  : `~${parseInt(svc.avgCompletionMinutes, 10)}min avg`)
               : 'N/A';
 
             return `
               <div class="popular-svc-card" style="position: relative;">
-                <div class="popular-rank-badge" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-primary);">${rankEmoji}</div>
-                <div class="popular-svc-name" style="font-weight: 700; color: #fff; font-size: 0.9rem; line-height: 1.4;">${svc.serviceName}</div>
-                <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px; margin-top: 4px;">Service ID #${svc.serviceId}</div>
-                
+                <div class="popular-rank-badge" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-primary); font-weight: 800; font-size: 0.85rem;">#${idx + 1}</div>
+                <div class="popular-svc-name" style="font-weight: 700; color: #fff; font-size: 0.9rem; line-height: 1.4;">${safeName}</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px; margin-top: 4px;">Service ID #${safeId}</div>
+
                 <div class="popular-svc-stats" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
-                  <span class="stat-chip stat-chip-orders" style="background: rgba(20, 184, 166, 0.06); border-color: rgba(20, 184, 166, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">📦 ${svc.totalOrders} order${svc.totalOrders > 1 ? 's' : ''}</span>
-                  <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.02); border-color: var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">👥 ${parseInt(svc.totalQuantity || 0).toLocaleString()} delivered</span>
+                  <span class="stat-chip stat-chip-orders" style="background: rgba(20, 184, 166, 0.06); border-color: rgba(20, 184, 166, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${POP_ICONS.box}${totalOrders} order${totalOrders === 1 ? '' : 's'}</span>
+                  <span class="stat-chip stat-chip-qty" style="background: rgba(255,255,255,0.02); border-color: var(--border-color); color: var(--text-secondary); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${POP_ICONS.users}${parseInt(svc.totalQuantity || 0, 10).toLocaleString()} delivered</span>
                   <span class="stat-chip stat-chip-spent" style="background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.15); color: var(--success); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${formatPhp(svc.totalSpent)} spent</span>
-                  ${svc.avgCompletionMinutes ? `<span class="stat-chip stat-chip-time" style="background: rgba(59, 130, 246, 0.06); border-color: rgba(59, 130, 246, 0.15); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">⏱️ ${completionText}</span>` : ''}
+                  ${svc.avgCompletionMinutes ? `<span class="stat-chip stat-chip-time" style="background: rgba(56, 189, 248, 0.06); border-color: rgba(56, 189, 248, 0.15); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">${POP_ICONS.clock}${completionText}</span>` : ''}
                 </div>
-                <div class="popular-svc-footer" style="font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.03); padding-top: 8px; margin-top: 10px;">📅 Last ordered: <strong>${lastDate}</strong></div>
+                <div class="popular-svc-footer" style="font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.03); padding-top: 8px; margin-top: 10px;">${POP_ICONS.calendar}Last ordered: <strong>${lastDate}</strong></div>
               </div>
             `;
           }).join('')}
         </div>
       `;
     } catch (err) {
-      personalContainer.innerHTML = `<div class="popular-empty-state" style="padding: 20px;"><div class="empty-icon">⚠️</div><p>Could not load order statistics. Try again shortly.</p></div>`;
+      personalContainer.innerHTML = `<div class="popular-empty-state" style="padding: 20px; text-align: center;"><div class="empty-icon" style="color: var(--text-muted); margin-bottom: 8px;">${POP_ICONS.alert}</div><p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">Could not load order statistics. Try again shortly.</p></div>`;
       console.error('Popular services error:', err);
     }
   }
