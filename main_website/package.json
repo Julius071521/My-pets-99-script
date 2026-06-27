@@ -1,0 +1,35 @@
+﻿{
+  "name": "smm-boosting-website",
+  "version": "1.0.0",
+  "description": "Premium SMM Panel with Live and Mock mode capabilities",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:assets": "node scripts/build-assets.js",
+    "optimize:images": "node scripts/optimize-images.js",
+    "fix:mojibake": "node scripts/fix-mojibake.js",
+    "deploy:prepare": "node scripts/prepare-deploy.js",
+    "predeploy": "npm run build:assets",
+    "test": "node --test tests/*.test.js",
+    "check:mojibake": "node scripts/check-mojibake.js",
+    "check:release": "npm run check:mojibake && npm test",
+    "backup:database": "node scripts/backup-database.js",
+    "test:hermes": "node --test tests/hermes-owner-command-parser.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
+    "nodemailer": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}
+

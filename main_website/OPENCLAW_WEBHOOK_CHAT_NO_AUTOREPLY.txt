@@ -1,0 +1,18 @@
+﻿OpenClaw Website Chat Webhook Mode - No Auto Reply
+
+What changed:
+- Customer website chat messages are forwarded to the VPS bridge using this format:
+  { "webhook": true, "type": "customer_message", "chat_id": "...", "customer_name": "...", "message": "...", "secret": "..." }
+- Website backend returns pending=true and does not generate DeepSeek/local auto-replies when OpenClaw is configured.
+- OpenClaw replies can be POSTed to the same VPS endpoint:
+  { "reply": "reply text", "chat_id": "customer-id", "secret": "..." }
+- Website polls the VPS queue through its backend and displays the reply in the matching customer chatbox.
+- Chat content is HTML-escaped before display.
+- Previous OpenClaw quota and Add Funds approval email updates are included.
+
+Verified locally:
+1. /api/ai/chat forwarded customer message and returned source=openclaw-pending.
+2. POST reply to http://72.61.113.82:18790/api/website-ai-help queued it.
+3. Website GET /api/ai/chat/replies/:chatId retrieved the queued reply.
+
+After upload: restart Node.js app in cPanel.

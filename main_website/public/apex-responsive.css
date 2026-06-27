@@ -1,0 +1,462 @@
+/* ==========================================================================
+   ApexBoost — Responsive & Animation Enhancement Layer
+   Handles: smooth animations, GPU acceleration, low-device adaptation,
+   reduced-motion support, and full mobile-first breakpoints.
+   ========================================================================== */
+
+/* ── GPU Acceleration for animated elements ─────────────────────────────── */
+.hero-section,
+.feature-card,
+.service-card,
+.stat-counter,
+.tech-carousel,
+.platform-logos,
+.promo-banner,
+.dashboard-preview,
+.ai-chat-fab,
+#messenger-fab,
+.sidebar,
+.modal,
+.dropdown-menu,
+.notification-dropdown,
+.profile-dropdown {
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* ── Smooth global transitions ──────────────────────────────────────────── */
+a,
+button,
+.btn,
+.nav-link,
+.card,
+.feature-card,
+.service-card,
+input,
+select,
+textarea {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Hero section entrance ───────────────────────────────────────────────── */
+@keyframes apex-hero-fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes apex-hero-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes apex-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes apex-glow-pulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(20,184,166,0.25); }
+  50%       { box-shadow: 0 0 48px rgba(20,184,166,0.50), 0 0 80px rgba(56,189,248,0.20); }
+}
+@keyframes apex-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes apex-spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes apex-bounce-in {
+  0%   { transform: scale(0.75); opacity: 0; }
+  60%  { transform: scale(1.06); opacity: 1; }
+  80%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+@keyframes apex-slide-left {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes apex-slide-right {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes apex-counter-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* Apply float to hero artwork / dashboard preview */
+.dashboard-preview,
+.hero-illustration,
+.hero-mockup {
+  animation: apex-float 5s ease-in-out infinite;
+}
+
+/* Glow on primary CTA buttons */
+.btn-primary,
+.cta-btn,
+[class*="cta-button"],
+[class*="hero-cta"] {
+  animation: apex-glow-pulse 3.5s ease-in-out infinite;
+}
+
+/* Shimmer on skeleton loaders */
+.skeleton,
+.loading-skeleton,
+[class*="skeleton-"] {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: apex-shimmer 1.6s linear infinite;
+}
+
+/* Reveal-on-scroll base state — JS adds .is-visible */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
+              transform 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children in a reveal group */
+.reveal-stagger > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 0.19s; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 0.26s; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 0.33s; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 0.40s; }
+
+/* ── Card hover lifts ────────────────────────────────────────────────────── */
+.feature-card,
+.service-card,
+.stat-card,
+.advantage-card,
+[class*="info-card"],
+[class*="glass-card"] {
+  transition: transform 0.28s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.28s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.28s ease;
+}
+.feature-card:hover,
+.service-card:hover,
+.stat-card:hover,
+.advantage-card:hover,
+[class*="info-card"]:hover,
+[class*="glass-card"]:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(20,184,166,0.22);
+}
+
+/* ── Input focus glow ────────────────────────────────────────────────────── */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(20,184,166,0.40), 0 0 16px rgba(20,184,166,0.12);
+  border-color: rgba(20,184,166,0.60) !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* ── Stat counters pop when they increment ───────────────────────────────── */
+.stat-number.counting {
+  animation: apex-counter-pop 0.3s ease-out;
+}
+
+/* ==========================================================================
+   RESPONSIVE — Mobile-first, full breakpoint system
+   ========================================================================== */
+
+/* ── Base (all screens) ─────────────────────────────────────────────────── */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Touch targets: minimum 44px for all interactive elements on mobile */
+@media (hover: none) and (pointer: coarse) {
+  a,
+  button,
+  .btn,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="tab"],
+  .nav-link,
+  .sidebar-link,
+  .dropdown-item {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* Disable hover-only effects on touch screens */
+  .feature-card:hover,
+  .service-card:hover,
+  .advantage-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ── Very small phones (< 360px) ────────────────────────────────────────── */
+@media (max-width: 359px) {
+  html { font-size: 14px; }
+  .hero-section h1,
+  .hero-title { font-size: clamp(1.6rem, 10vw, 2.2rem) !important; }
+  .hero-subtitle,
+  .hero-description { font-size: 0.88rem !important; }
+  .promo-banner { font-size: 0.78rem !important; padding: 6px 10px !important; }
+  .btn, button[class*="btn"] { padding: 11px 16px !important; font-size: 0.88rem !important; }
+  .stat-number { font-size: 1.6rem !important; }
+  .platform-logos { gap: 8px !important; }
+  .platform-logo { width: 36px !important; height: 36px !important; }
+  .feature-card { padding: 16px !important; }
+  .card, [class*="-card"] { border-radius: 14px !important; }
+  .navbar, .top-navbar { padding: 10px 12px !important; }
+}
+
+/* ── Small phones (360px – 479px) ───────────────────────────────────────── */
+@media (min-width: 360px) and (max-width: 479px) {
+  html { font-size: 15px; }
+  .hero-section h1,
+  .hero-title { font-size: clamp(1.9rem, 9vw, 2.5rem) !important; }
+  .stat-number { font-size: 1.9rem !important; }
+  .feature-card { padding: 18px !important; }
+}
+
+/* ── All phones (< 640px) ────────────────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* Sidebar hides on mobile */
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+
+  /* Full-width buttons */
+  .hero-actions,
+  .cta-actions { flex-direction: column; gap: 10px !important; }
+  .hero-actions .btn,
+  .cta-actions .btn { width: 100%; justify-content: center; }
+
+  /* Single column grids */
+  .features-grid,
+  .advantages-grid,
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Service catalog: 1 column */
+  .services-grid { grid-template-columns: 1fr !important; }
+
+  /* FAQ full width */
+  .faq-grid { grid-template-columns: 1fr !important; }
+
+  /* Promo banner smaller text */
+  .promo-banner { font-size: 0.82rem; line-height: 1.45; }
+
+  /* Navbar compact */
+  .navbar-links { display: none; }
+  .hamburger-toggle { display: flex !important; }
+
+  /* Footer stack */
+  .footer-grid { grid-template-columns: 1fr !important; }
+  .footer-links { flex-direction: column; gap: 8px !important; }
+
+  /* Dashboard */
+  .dashboard-wrapper { padding: 12px !important; }
+  .dashboard-header { flex-direction: column; gap: 10px; align-items: flex-start !important; }
+
+  /* Modal full-screen on mobile */
+  .modal-content,
+  .modal-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    margin: 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  /* Order form full width */
+  .order-form { padding: 16px !important; }
+  .order-form input,
+  .order-form select { font-size: 16px !important; } /* Prevent iOS zoom */
+}
+
+/* ── Tablets portrait (640px – 767px) ───────────────────────────────────── */
+@media (min-width: 640px) and (max-width: 767px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .stats-grid    { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── Tablets landscape (768px – 1023px) ─────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .dashboard-wrapper { padding: 20px !important; }
+}
+
+/* ── Desktop (≥ 1024px) ─────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(3, 1fr); }
+  .services-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Large desktop (≥ 1280px) ───────────────────────────────────────────── */
+@media (min-width: 1280px) {
+  .services-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ── Ultra-wide (≥ 1440px) — prevent left-alignment ─────────────────────── */
+@media (min-width: 1440px) {
+  .main-content,
+  .container,
+  .section-container,
+  .landing-section,
+  .footer-container,
+  header.site-header,
+  .site-header {
+    max-width: 1440px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  body > * {
+    width: 100%;
+    max-width: 1440px;
+  }
+}
+
+/* ==========================================================================
+   LOW-END DEVICE OPTIMIZATIONS
+   Detects low performance via prefers-reduced-motion OR slow connection.
+   ========================================================================== */
+
+/* Reduced motion: respect user OS setting */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15ms !important;
+    scroll-behavior: auto !important;
+  }
+  .dashboard-preview,
+  .hero-illustration,
+  .hero-mockup { animation: none !important; }
+  .btn-primary,
+  .cta-btn { animation: none !important; }
+  .skeleton { animation: none !important; background: rgba(255,255,255,0.06) !important; }
+  .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+}
+
+/* Low-bandwidth or data-saver: disable heavy backgrounds */
+@media (prefers-reduced-data: reduce) {
+  body {
+    background: #080b10 !important;
+    background-image: none !important;
+  }
+  [style*="background-image"] { background-image: none !important; }
+}
+
+/* ── Low-end CPU detection via interaction media ─────────────────────────── */
+/* Target devices that don't support fine pointer (i.e., touch-only, typically low-end mobile) */
+@media (hover: none) and (pointer: coarse) and (max-width: 480px) {
+  /* Disable blur/backdrop-filter — expensive on low-end GPUs */
+  .glass-panel,
+  .glass-card,
+  .modal-content,
+  .modal-panel,
+  [class*="glass-"],
+  [style*="backdrop-filter"] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(15,23,42,0.97) !important;
+  }
+
+  /* Disable box-shadow on cards — paint expensive */
+  .feature-card,
+  .service-card,
+  .stat-card {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+  }
+
+  /* Disable all background animations */
+  .promo-banner::before,
+  .hero-section::before,
+  .hero-section::after,
+  [class*="glow-"],
+  [class*="-glow"] {
+    display: none !important;
+    animation: none !important;
+  }
+
+  /* Simplify gradients */
+  .hero-section,
+  .hero-wrapper {
+    background: linear-gradient(160deg, #080b10 0%, #0d1520 100%) !important;
+  }
+}
+
+/* ── Scrollbar styling (desktop only) ───────────────────────────────────── */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(20,184,166,0.35);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(20,184,166,0.60); }
+}
+
+/* ── Safe area insets for notched phones (iPhone X+) ────────────────────── */
+@supports (padding: max(0px)) {
+  .navbar,
+  .top-navbar,
+  .promo-banner {
+    padding-left:  max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .mobile-bottom-nav,
+  .bottom-nav {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Text rendering ──────────────────────────────────────────────────────── */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent text overflow on small screens */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ── Image responsiveness ────────────────────────────────────────────────── */
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Prevent horizontal scroll ───────────────────────────────────────────── */
+body, .page-wrapper, .container {
+  overflow-x: hidden;
+}

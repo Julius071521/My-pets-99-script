@@ -1,0 +1,21 @@
+﻿ApexBoost OpenClaw AI Help Quota Update
+
+What this update adds:
+- Non-admin users: max 5 OpenClaw replies every 10 hours.
+- Admin/super_admin users: exempt when authenticated by the backend.
+- Quota applies before remote OpenClaw/DeepSeek fallback, so abuse is blocked before model spend.
+- Frontend displays the real quota message instead of a generic fallback.
+- Prompt modification remains server/VPS controlled, not user-controlled.
+
+Required cPanel env vars:
+
+OPENCLAW_AGENT_ENABLED=true
+OPENCLAW_API_URL=http://72.61.113.82:18790/api/website-ai-help
+OPENCLAW_API_TOKEN=apx_openclaw_site_f732c8b25140fa0009f6f94dc36c35ddf32d1ae5336af9c8329605b2e8525319
+OPENCLAW_TIMEOUT_MS=30000
+OPENCLAW_TRUSTED_HOSTS=72.61.113.82
+OPENCLAW_REPLY_LIMIT=5
+OPENCLAW_REPLY_WINDOW_MS=36000000
+
+Restart the Node.js app after upload/env changes.
+Security note: rotate tokens later because several secrets were pasted in chat.

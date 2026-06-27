@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Completing Google sign-in</title>
+  <style>
+    body{margin:0;display:grid;place-items:center;min-height:100vh;background:#080b10;color:#fff;font-family:Inter,system-ui,sans-serif;text-align:center}
+    main{padding:32px}.spinner{width:40px;height:40px;margin:0 auto 20px;border:4px solid #ffffff1a;border-top-color:#0d9488;border-radius:50%;animation:spin .8s linear infinite}
+    p{color:#cbd5e1} @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body><main><div class="spinner" aria-hidden="true"></div><h1>Completing sign-in</h1><p id="status">Securing your session…</p></main>
+<script>
+(() => {
+  const status = document.getElementById('status');
+  const params = new URLSearchParams(location.hash.slice(1));
+  const error = params.get('error');
+  const token = params.get('token');
+  const user = params.get('user');
+  if (error || !token || !user) {
+    status.textContent = error === 'access_denied' ? 'Google sign-in was cancelled.' : 'Google sign-in could not be completed. Please try again.';
+    setTimeout(() => { if (window.opener) window.close(); else location.replace('/login'); }, 1800);
+    return;
+  }
+  try {
+    JSON.parse(user);
+    localStorage.setItem('apexboost_token', token);
+    localStorage.setItem('apexboost_user', user);
+    history.replaceState(null, '', '/google-login.html');
+    if (window.opener && !window.opener.closed) {
+      window.opener.location.replace('/dashboard');
+      window.close();
+    } else {
+      location.replace('/dashboard');
+    }
+  } catch (_) {
+    status.textContent = 'The sign-in response was invalid. Please try again.';
+  }
+})();
+</script></body></html>

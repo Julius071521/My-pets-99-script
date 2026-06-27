@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | ApexBoost</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080b10;
+      --primary: #14b8a6;
+      --accent: #38bdf8;
+      --secondary: #f97316;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --panel: rgba(15,23,42,0.80);
+      --border: rgba(20,184,166,0.15);
+      --prose-border: rgba(255,255,255,0.07);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(56,189,248,0.09) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 90%, rgba(20,184,166,0.08) 0%, transparent 38%),
+        linear-gradient(160deg, #080b10 0%, #0d1117 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px clamp(20px,5vw,56px);
+      background: rgba(8,11,16,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+      font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;
+    }
+    .nav-logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid; place-items: center;
+      font-weight: 900; font-size: 0.85rem; color: #fff;
+    }
+    .nav-back { font-size: 0.9rem; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--primary); }
+    .container { max-width: 780px; margin: 0 auto; padding: clamp(32px,6vw,64px) clamp(20px,5vw,40px); }
+    .page-header { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--prose-border); }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(56,189,248,0.10); border: 1px solid rgba(56,189,248,0.25);
+      color: var(--accent); font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(2rem,6vw,3rem); font-weight: 900;
+      letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--text) 40%, var(--muted));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .effective-date { font-size: 0.88rem; color: var(--muted); }
+    .section { margin-bottom: 36px; }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--accent);
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--prose-border);
+    }
+    p { color: var(--muted); margin-bottom: 12px; font-size: 0.97rem; }
+    ul, ol { padding-left: 20px; color: var(--muted); font-size: 0.97rem; }
+    li { margin-bottom: 6px; }
+    strong { color: var(--text); }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .callout {
+      padding: 16px 20px; border-left: 3px solid var(--accent);
+      background: rgba(56,189,248,0.06); border-radius: 0 12px 12px 0;
+      margin: 20px 0; font-size: 0.95rem; color: #cbd5e1;
+    }
+    .data-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem;
+    }
+    .data-table th {
+      text-align: left; padding: 10px 14px;
+      background: rgba(255,255,255,0.04); color: var(--text);
+      border-bottom: 1px solid var(--prose-border); font-weight: 700;
+    }
+    .data-table td {
+      padding: 10px 14px; color: var(--muted);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    footer {
+      text-align: center; padding: 32px 20px;
+      border-top: 1px solid var(--prose-border);
+      color: var(--muted); font-size: 0.85rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 520px) {
+      h2 { font-size: 1.05rem; }
+      .data-table { font-size: 0.82rem; }
+      .data-table th, .data-table td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo">AB</div>
+    ApexBoost
+  </a>
+  <a href="/" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="container">
+  <header class="page-header">
+    <div class="page-tag">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="effective-date">Effective date: June 24, 2026 &nbsp;·&nbsp; ApexSMM Boosting</p>
+  </header>
+
+  <div class="callout">
+    ApexBoost is committed to protecting your personal data. This policy explains what we collect, how we use it, and your rights regarding your information.
+  </div>
+
+  <div class="section">
+    <h2>1. Information We Collect</h2>
+    <table class="data-table">
+      <thead>
+        <tr><th>Data Type</th><th>What We Collect</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Account Data</td><td>Username, email address, password (hashed)</td><td>Account creation and authentication</td></tr>
+        <tr><td>Payment Data</td><td>GCash/Maya/BPI reference numbers, deposit amounts</td><td>Deposit verification only</td></tr>
+        <tr><td>Order Data</td><td>Social media URLs submitted for orders, service type, quantity</td><td>Service fulfillment</td></tr>
+        <tr><td>Device/IP Data</td><td>IP address, browser type, device type</td><td>Security, fraud prevention</td></tr>
+        <tr><td>Communication Data</td><td>Support ticket messages, email correspondence</td><td>Customer support</td></tr>
+      </tbody>
+    </table>
+    <p>We do <strong>not</strong> collect your social media passwords, credit card numbers, or government IDs.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+      <li>To create and manage your ApexBoost account</li>
+      <li>To process and fulfill your service orders</li>
+      <li>To verify deposits and manage your wallet balance</li>
+      <li>To send transactional emails (OTP, order updates, deposit confirmations)</li>
+      <li>To detect and prevent fraud, abuse, and unauthorized access</li>
+      <li>To improve our platform based on usage patterns</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>3. Data Sharing</h2>
+    <p>We do <strong>not</strong> sell your personal data. We share data only with:</p>
+    <ul>
+      <li><strong>SMM Provider Partners</strong> (e.g., RKD Panel) — only your service URL and order details are transmitted, never your account information</li>
+      <li><strong>Email Service Provider</strong> — to send transactional emails</li>
+      <li><strong>Cloudflare</strong> — for DDoS protection, CDN, and bot filtering</li>
+      <li><strong>Law Enforcement</strong> — if legally required by Philippine law</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Data Retention</h2>
+    <p>Your account data is retained for as long as your account is active. Order history is retained for <strong>24 months</strong> for dispute resolution. IP logs are retained for <strong>90 days</strong> for security purposes. You may request deletion of your account at any time (see Section 6).</p>
+  </div>
+
+  <div class="section">
+    <h2>5. Cookies & Tracking</h2>
+    <p>ApexBoost uses:</p>
+    <ul>
+      <li><strong>Session tokens</strong> — stored in your browser's localStorage to keep you logged in</li>
+      <li><strong>Cloudflare cookies</strong> — for bot detection and performance</li>
+      <li><strong>Facebook Pixel</strong> — for marketing analytics (you can opt out via your Facebook settings)</li>
+    </ul>
+    <p>We do not use third-party advertising cookies beyond what is listed above.</p>
+  </div>
+
+  <div class="section">
+    <h2>6. Your Rights</h2>
+    <p>As a user, you have the right to:</p>
+    <ul>
+      <li><strong>Access</strong> — request a copy of your personal data</li>
+      <li><strong>Correction</strong> — update incorrect information via your account settings</li>
+      <li><strong>Deletion</strong> — request deletion of your account and associated data</li>
+      <li><strong>Portability</strong> — receive your data in a machine-readable format</li>
+    </ul>
+    <p>To exercise any of these rights, email us at <a href="mailto:admin@apexsmmboosting.com">admin@apexsmmboosting.com</a>.</p>
+  </div>
+
+  <div class="section">
+    <h2>7. Security</h2>
+    <p>We use industry-standard measures to protect your data: bcrypt password hashing, JWT-signed sessions, TLS/HTTPS encryption, Cloudflare Turnstile bot protection, and IP-based brute force detection. No system is 100% secure — please use a strong, unique password for your account.</p>
+  </div>
+
+  <div class="section">
+    <h2>8. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy periodically. The effective date at the top of this page will reflect the latest revision. Continued use of ApexBoost after changes constitutes your acceptance.</p>
+  </div>
+
+  <div class="section">
+    <h2>9. Contact</h2>
+    <p>For privacy-related concerns, contact us at <a href="mailto:admin@apexsmmboosting.com">admin@apexsmmboosting.com</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 ApexBoost · ApexSMM Boosting · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/refund.html">Refund Policy</a></p>
+</footer>
+
+</body>
+</html>

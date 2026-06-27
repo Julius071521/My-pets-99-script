@@ -1,0 +1,3618 @@
+/* ==========================================================================
+   ApexBoost v3 — Premium Design System
+   Professional Animations & Elegant UI
+   ========================================================================== */
+
+/* ── 1. GLOBAL RESET & BASE ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Remove 300ms tap delay on ALL interactive elements for mobile */
+a, button, [role="button"], input, select, textarea, label,
+.btn, .nav-link, .hamburger-toggle, .auth-tab, .sidebar-nav-link,
+.top-tab-btn, .subtab-btn, .filter-pill, .promo-service-card,
+.dropdown-item-btn {
+  touch-action: manipulation;
+}
+
+:root {
+  --v3-primary:      #14b8a6;
+  --v3-primary-dim:  rgba(20,184,166,0.12);
+  --v3-accent:       #6366f1;
+  --v3-accent-dim:   rgba(99,102,241,0.12);
+  --v3-orange:       #f97316;
+  --v3-orange-dim:   rgba(249,115,22,0.12);
+  --v3-sky:          #38bdf8;
+  --v3-sky-dim:      rgba(56,189,248,0.12);
+  --v3-bg:           #020b12;
+  --v3-surface:      #0a1628;
+  --v3-surface2:     #0f1f36;
+  --v3-glass:        rgba(10,22,40,0.72);
+  --v3-glass2:       rgba(15,31,54,0.88);
+  --v3-border:       rgba(99,102,241,0.14);
+  --v3-border2:      rgba(20,184,166,0.18);
+  --v3-text:         #f0f4ff;
+  --v3-text2:        #8ba3c7;
+  --v3-text3:        #4a6080;
+  --v3-radius:       14px;
+  --v3-radius-lg:    20px;
+  --v3-radius-xl:    28px;
+  --v3-shadow:       0 4px 24px rgba(0,0,0,0.45);
+  --v3-shadow-glow:  0 0 40px rgba(20,184,166,0.18);
+  --v3-shadow-indigo: 0 0 40px rgba(99,102,241,0.16);
+  --v3-transition:   0.28s cubic-bezier(0.4,0,0.2,1);
+  --v3-transition-fast: 0.15s cubic-bezier(0.4,0,0.2,1);
+  --v3-ease:         cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── 2. BACKGROUND STARS & PARTICLES ───────────────────────────────────── */
+body.apex-pro-v34 {
+  background-color: var(--v3-bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(99,102,241,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 5%,  rgba(20,184,166,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 95%, rgba(56,189,248,0.06) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Animated star field */
+.landing-section::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 8%,  rgba(255,255,255,0.4)  0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 38% 22%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 5%,  rgba(255,255,255,0.5)  0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,0.4)  0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 82% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 6%,  rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 48% 55%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 42%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 38%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5%  75%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 32% 80%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 70%, rgba(255,255,255,0.3)  0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 95% 85%, rgba(255,255,255,0.4) 0%, transparent 100%);
+  animation: starfield-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes starfield-pulse {
+  0%   { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* ── 3. AURORA / AMBIENT GLOW ───────────────────────────────────────────── */
+.luxury-ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  animation: aurora-drift 14s ease-in-out infinite alternate;
+}
+
+.aurora-cyan {
+  width: 700px; height: 400px;
+  top: -100px; left: -100px;
+  background: radial-gradient(ellipse, rgba(20,184,166,0.2) 0%, transparent 70%);
+  animation-duration: 16s;
+}
+
+.aurora-gold {
+  width: 500px; height: 350px;
+  top: 60px; right: -80px;
+  background: radial-gradient(ellipse, rgba(249,115,22,0.12) 0%, transparent 70%);
+  animation-duration: 18s;
+  animation-delay: -5s;
+}
+
+.aurora-violet {
+  width: 600px; height: 300px;
+  bottom: 0; left: 30%;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.14) 0%, transparent 70%);
+  animation-duration: 20s;
+  animation-delay: -8s;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(40px, -30px) scale(1.05); }
+  66%  { transform: translate(-20px, 20px) scale(0.97); }
+  100% { transform: translate(30px, 15px) scale(1.08); }
+}
+
+/* ── 4. NAVIGATION — REDESIGNED ─────────────────────────────────────────── */
+.navbar {
+  background: rgba(2,11,18,0.85) !important;
+  backdrop-filter: blur(20px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.6) !important;
+  border-bottom: 1px solid rgba(99,102,241,0.12) !important;
+  box-shadow: 0 2px 32px rgba(0,0,0,0.5) !important;
+  transition: background var(--v3-transition), box-shadow var(--v3-transition) !important;
+}
+
+.navbar.scrolled {
+  background: rgba(2,11,18,0.97) !important;
+  border-bottom-color: rgba(20,184,166,0.18) !important;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.7) !important;
+}
+
+.nav-logo {
+  position: relative;
+}
+
+.nav-logo .logo-text {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  background: linear-gradient(135deg, #fff 20%, var(--v3-primary) 60%, var(--v3-sky)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.nav-logo .logo-text span {
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-sky)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.nav-link {
+  position: relative;
+  color: rgba(240,244,255,0.7) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  padding: 6px 2px !important;
+  transition: color var(--v3-transition-fast) !important;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--v3-primary);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform var(--v3-transition) !important;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #fff !important;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Nav API & Pricing links */
+.nav-link.nav-link-api::after { background: var(--v3-accent); }
+.nav-link.nav-link-api:hover { color: #a5b4fc !important; }
+
+/* ── 5. HERO SECTION — PREMIUM REDESIGN ────────────────────────────────── */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(80px,12vw,140px) 0 clamp(60px,8vw,100px) !important;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% -20%, rgba(99,102,241,0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(20,184,166,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Animated grid lines in hero */
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 80%);
+  pointer-events: none;
+}
+
+/* Promo pill — redesign */
+.promo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px 6px 10px;
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.28);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  letter-spacing: 0.02em;
+  margin-bottom: 22px !important;
+  animation: pill-glow 3s ease-in-out infinite;
+}
+
+.promo-pill-dot {
+  width: 8px; height: 8px;
+  background: #6366f1;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(99,102,241,0.8);
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pill-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(99,102,241,0); }
+  50%       { box-shadow: 0 0 20px rgba(99,102,241,0.2); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* Hero title */
+.hero-title {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(2.4rem, 6vw, 4.2rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.04em !important;
+  color: #fff !important;
+  margin: 0 0 18px !important;
+}
+
+.hero-title span {
+  display: block;
+  background: linear-gradient(135deg, var(--v3-primary) 0%, var(--v3-sky) 50%, var(--v3-accent) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: gradient-shift 6s ease-in-out infinite alternate;
+  background-size: 200% auto;
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.12rem) !important;
+  color: var(--v3-text2) !important;
+  line-height: 1.7 !important;
+  max-width: 540px;
+  margin-bottom: 32px !important;
+}
+
+/* Hero CTA buttons */
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 36px !important;
+}
+
+/* ── 6. BUTTONS — PREMIUM REDESIGN ─────────────────────────────────────── */
+.btn.btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, var(--v3-primary) 0%, var(--v3-sky) 55%, var(--v3-accent) 100%) !important;
+  background-size: 200% auto !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 12px 26px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(20,184,166,0.35), 0 1px 0 rgba(255,255,255,0.1) inset !important;
+  transition: all var(--v3-transition) !important;
+  cursor: pointer;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+.btn.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 50%);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--v3-transition-fast);
+}
+
+.btn.btn-primary:hover {
+  background-position: right center !important;
+  box-shadow: 0 8px 30px rgba(20,184,166,0.5), 0 1px 0 rgba(255,255,255,0.15) inset !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn.btn-primary:hover::before { opacity: 1; }
+
+.btn.btn-primary:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 12px rgba(20,184,166,0.3) !important;
+}
+
+.btn.btn-secondary {
+  background: rgba(99,102,241,0.08) !important;
+  border: 1px solid rgba(99,102,241,0.3) !important;
+  color: #a5b4fc !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  padding: 12px 26px !important;
+  border-radius: 12px !important;
+  transition: all var(--v3-transition) !important;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+
+.btn.btn-secondary:hover {
+  background: rgba(99,102,241,0.15) !important;
+  border-color: rgba(99,102,241,0.5) !important;
+  color: #c7d2fe !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.2) !important;
+}
+
+/* ── 7. SECTION TITLES & KICKERS ────────────────────────────────────────── */
+.section-kicker {
+  display: inline-block;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.08) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  padding: 4px 12px !important;
+  border-radius: 999px !important;
+  margin-bottom: 14px !important;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(1.7rem, 4vw, 2.6rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+  color: var(--v3-text) !important;
+  margin-bottom: 14px !important;
+}
+
+.section-subtitle {
+  color: var(--v3-text2) !important;
+  font-size: clamp(0.9rem, 2vw, 1.05rem) !important;
+  line-height: 1.65 !important;
+  max-width: 580px;
+  margin-bottom: 40px !important;
+}
+
+/* ── 8. CARDS — GLASSMORPHISM V3 ────────────────────────────────────────── */
+.feature-card,
+.apex-payment-card,
+.apex-trust-card,
+.apex-stat-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: var(--v3-shadow) !important;
+  transition: all var(--v3-transition) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before,
+.apex-payment-card::before,
+.apex-trust-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.feature-card:hover,
+.apex-payment-card:hover,
+.apex-trust-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--v3-border2) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--v3-shadow-glow) !important;
+}
+
+/* Card shine effect on hover */
+.feature-card.premium-tilt:hover::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(20,184,166,0.15), transparent 50%, rgba(99,102,241,0.1));
+  pointer-events: none;
+  animation: card-shimmer 0.6s ease forwards;
+}
+
+@keyframes card-shimmer {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Icon wraps */
+.icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(20,184,166,0.1);
+  border: 1px solid rgba(20,184,166,0.2);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--v3-primary);
+  margin-bottom: 18px !important;
+  transition: all var(--v3-transition);
+}
+
+.feature-card:hover .icon-wrap {
+  background: rgba(20,184,166,0.18);
+  box-shadow: 0 0 20px rgba(20,184,166,0.3);
+  transform: scale(1.1);
+}
+
+/* ── 9. HERO DASHBOARD MOCK ─────────────────────────────────────────────── */
+.glass-dashboard-mock {
+  background: rgba(10,22,40,0.9) !important;
+  border: 1px solid rgba(99,102,241,0.22) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 60px rgba(99,102,241,0.1) !important;
+  backdrop-filter: blur(24px) !important;
+  overflow: hidden;
+  position: relative;
+  animation: mock-float 6s ease-in-out infinite;
+}
+
+@keyframes mock-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+.mock-header {
+  background: rgba(5,12,24,0.8) !important;
+  border-bottom: 1px solid rgba(99,102,241,0.12) !important;
+  padding: 12px 16px !important;
+}
+
+.live-chart-line {
+  stroke: url(#chart-line-grad) !important;
+  stroke-width: 2.5 !important;
+  filter: drop-shadow(0 0 6px rgba(20,184,166,0.6));
+  animation: chart-line-draw 2s ease-in-out forwards;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+}
+
+@keyframes chart-line-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.floating-chip {
+  background: rgba(10,22,40,0.9) !important;
+  border: 1px solid rgba(20,184,166,0.3) !important;
+  color: var(--v3-primary) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 12px rgba(20,184,166,0.15) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.chip-top { animation: chip-float-top 4s ease-in-out infinite; }
+.chip-bottom { animation: chip-float-bottom 5s ease-in-out infinite; }
+
+@keyframes chip-float-top {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  50%       { transform: translate(6px, -8px) rotate(1deg); }
+}
+
+@keyframes chip-float-bottom {
+  0%, 100% { transform: translate(0, 0) rotate(1deg); }
+  50%       { transform: translate(-5px, 8px) rotate(-2deg); }
+}
+
+/* ── 10. HOW IT WORKS ───────────────────────────────────────────────────── */
+.apex-hiw-step {
+  position: relative;
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 32px 28px !important;
+  transition: all var(--v3-transition) !important;
+  overflow: hidden;
+}
+
+.apex-hiw-step::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-sky), var(--v3-accent));
+  opacity: 0;
+  transition: opacity var(--v3-transition);
+}
+
+.apex-hiw-step:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--v3-border2) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), var(--v3-shadow-glow) !important;
+}
+
+.apex-hiw-step:hover::before { opacity: 1; }
+
+.apex-hiw-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(99,102,241,0.12);
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 20px;
+  letter-spacing: -0.06em;
+}
+
+.apex-hiw-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(20,184,166,0.12), rgba(99,102,241,0.08));
+  border: 1px solid rgba(20,184,166,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--v3-primary);
+  transition: all var(--v3-transition);
+}
+
+.apex-hiw-step:hover .apex-hiw-icon {
+  background: rgba(20,184,166,0.18);
+  box-shadow: 0 0 20px rgba(20,184,166,0.25);
+  transform: scale(1.08) rotate(-3deg);
+}
+
+/* ── 11. PLATFORMS STRIP ────────────────────────────────────────────────── */
+.apex-platforms-section {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 !important;
+}
+
+.apex-platform-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px !important;
+  background: rgba(10,22,40,0.5) !important;
+  border: 1px solid rgba(99,102,241,0.1) !important;
+  border-radius: 12px !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-platform-item:hover {
+  background: rgba(20,184,166,0.08) !important;
+  border-color: rgba(20,184,166,0.25) !important;
+  transform: translateY(-3px) !important;
+}
+
+.apex-platform-item img {
+  border-radius: 8px;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.1));
+  transition: filter var(--v3-transition);
+}
+
+.apex-platform-item:hover img {
+  filter: drop-shadow(0 0 10px rgba(20,184,166,0.4));
+}
+
+/* ── 12. STATS SECTION ──────────────────────────────────────────────────── */
+.apex-stats-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(60px,8vw,100px) 0 !important;
+}
+
+.apex-stats-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(20,184,166,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.apex-stat-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid rgba(20,184,166,0.14) !important;
+  border-radius: var(--v3-radius-xl) !important;
+  padding: 32px 28px !important;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(20,184,166,0.15), transparent 40%, rgba(99,102,241,0.1) 100%);
+  opacity: 0;
+  transition: opacity var(--v3-transition);
+}
+
+.apex-stat-card:hover {
+  transform: scale(1.04) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), var(--v3-shadow-glow) !important;
+}
+
+.apex-stat-card:hover::before { opacity: 1; }
+
+.apex-stat-icon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  display: block;
+  animation: stat-icon-bounce 3s ease-in-out infinite;
+}
+
+@keyframes stat-icon-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.apex-stat-count {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(2.2rem, 5vw, 3.2rem) !important;
+  font-weight: 900 !important;
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-sky)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  letter-spacing: -0.04em !important;
+}
+
+.apex-stat-bar {
+  margin-top: 16px !important;
+  height: 4px !important;
+  background: rgba(255,255,255,0.07) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+}
+
+.apex-stat-bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-sky));
+  transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 0 8px rgba(20,184,166,0.5);
+}
+
+/* ── 13. TECHNOLOGY SHOWCASE ────────────────────────────────────────────── */
+.technology-showcase {
+  position: relative;
+}
+
+.technology-console {
+  background: rgba(5,12,24,0.9) !important;
+  border: 1px solid rgba(99,102,241,0.18) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset !important;
+  overflow: hidden;
+}
+
+.technology-panel {
+  background: transparent !important;
+}
+
+.technology-control {
+  border: 1px solid rgba(99,102,241,0.12) !important;
+  border-radius: 10px !important;
+  background: rgba(10,22,40,0.5) !important;
+  color: var(--v3-text2) !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.technology-control.is-active {
+  background: rgba(99,102,241,0.15) !important;
+  border-color: rgba(99,102,241,0.35) !important;
+  color: #a5b4fc !important;
+  box-shadow: 0 0 16px rgba(99,102,241,0.2) !important;
+}
+
+.technology-control:hover:not(.is-active) {
+  background: rgba(20,184,166,0.08) !important;
+  border-color: rgba(20,184,166,0.2) !important;
+  color: var(--v3-primary) !important;
+}
+
+/* ── 14. FAQ ACCORDION ──────────────────────────────────────────────────── */
+.apex-faq-item {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius) !important;
+  overflow: hidden;
+  transition: all var(--v3-transition) !important;
+  margin-bottom: 10px !important;
+}
+
+.apex-faq-item:hover {
+  border-color: rgba(99,102,241,0.28) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+}
+
+.apex-faq-q {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 18px 22px !important;
+  color: var(--v3-text) !important;
+  font-weight: 600 !important;
+  font-size: 0.97rem !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: color var(--v3-transition-fast);
+}
+
+.apex-faq-q:hover { color: var(--v3-primary) !important; }
+
+.apex-faq-q[aria-expanded="true"] {
+  color: var(--v3-primary) !important;
+}
+
+.apex-faq-chevron {
+  flex-shrink: 0;
+  color: var(--v3-text3);
+  transition: transform var(--v3-transition);
+}
+
+.apex-faq-q[aria-expanded="true"] .apex-faq-chevron {
+  transform: rotate(180deg);
+  color: var(--v3-primary);
+}
+
+.apex-faq-a {
+  padding: 0 22px 18px !important;
+  color: var(--v3-text2) !important;
+  line-height: 1.7 !important;
+  font-size: 0.92rem !important;
+  animation: faq-open 0.25s ease;
+}
+
+@keyframes faq-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 15. PAYMENT CARDS ──────────────────────────────────────────────────── */
+.apex-payment-card {
+  padding: 32px 28px !important;
+  text-align: center;
+}
+
+.apex-payment-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(20,184,166,0.12);
+  border: 1px solid rgba(20,184,166,0.25);
+  color: var(--v3-primary);
+  margin-top: 12px;
+}
+
+.apex-payment-badge-blue {
+  background: rgba(56,189,248,0.1) !important;
+  border-color: rgba(56,189,248,0.22) !important;
+  color: #7dd3fc !important;
+}
+
+.apex-payment-badge-gray {
+  background: rgba(99,102,241,0.08) !important;
+  border-color: rgba(99,102,241,0.18) !important;
+  color: #a5b4fc !important;
+}
+
+/* ── 16. TESTIMONIALS ───────────────────────────────────────────────────── */
+.apex-trust-card {
+  padding: 28px 26px !important;
+}
+
+.apex-trust-quote {
+  font-style: italic;
+  color: var(--v3-text2) !important;
+  line-height: 1.7 !important;
+  font-size: 0.95rem !important;
+  margin: 12px 0 20px !important;
+}
+
+.apex-trust-stars {
+  color: #fbbf24 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 2px;
+}
+
+.apex-trust-card-featured {
+  border-color: rgba(251,191,36,0.25) !important;
+  background: linear-gradient(135deg, rgba(251,191,36,0.04), rgba(10,22,40,0.8)) !important;
+}
+
+.apex-trust-featured-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(251,191,36,0.1);
+  border: 1px solid rgba(251,191,36,0.25);
+  color: #fbbf24;
+  margin-bottom: 10px;
+}
+
+.apex-trust-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* ── 17. ORDER FEED TABLE ───────────────────────────────────────────────── */
+.apex-feed-table {
+  border-collapse: separate !important;
+  border-spacing: 0 6px !important;
+  width: 100%;
+}
+
+.apex-feed-table thead th {
+  background: rgba(5,12,24,0.8) !important;
+  color: var(--v3-text3) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  padding: 12px 16px !important;
+}
+
+.apex-feed-table tbody tr {
+  background: var(--v3-glass) !important;
+  border-radius: 10px !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-feed-table tbody tr:hover {
+  background: rgba(99,102,241,0.08) !important;
+  transform: translateX(3px);
+}
+
+.apex-feed-table td {
+  padding: 14px 16px !important;
+  font-size: 0.88rem !important;
+  color: var(--v3-text2) !important;
+}
+
+/* ── 18. GUIDE TABS ─────────────────────────────────────────────────────── */
+.apex-guide-tab {
+  background: rgba(10,22,40,0.6) !important;
+  border: 1px solid var(--v3-border) !important;
+  color: var(--v3-text2) !important;
+  border-radius: 10px !important;
+  padding: 10px 18px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-guide-tab:hover {
+  border-color: rgba(20,184,166,0.28) !important;
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.06) !important;
+}
+
+.apex-guide-tab.active {
+  background: rgba(20,184,166,0.12) !important;
+  border-color: rgba(20,184,166,0.35) !important;
+  color: var(--v3-primary) !important;
+  box-shadow: 0 0 16px rgba(20,184,166,0.15) !important;
+}
+
+.apex-guide-panel {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 28px 32px !important;
+  animation: panel-fade 0.3s ease;
+}
+
+@keyframes panel-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.apex-guide-steps {
+  color: var(--v3-text2) !important;
+  line-height: 1.8 !important;
+  font-size: 0.92rem !important;
+  padding-left: 20px !important;
+}
+
+.apex-guide-steps li { margin-bottom: 10px !important; }
+
+.apex-guide-tip {
+  background: rgba(20,184,166,0.07) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  border-left: 3px solid var(--v3-primary) !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  margin-top: 20px !important;
+  font-size: 0.88rem !important;
+  color: var(--v3-text2) !important;
+}
+
+/* ── 19. FOOTER — REDESIGNED ────────────────────────────────────────────── */
+.footer {
+  background: rgba(2,7,16,0.98) !important;
+  border-top: 1px solid rgba(99,102,241,0.1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--v3-primary), var(--v3-accent), transparent);
+}
+
+.footer-brand { font-size: 1.4rem !important; }
+
+.footer-tagline {
+  color: var(--v3-text2) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.6 !important;
+  max-width: 280px;
+}
+
+.footer-trust-badges span {
+  background: rgba(99,102,241,0.08) !important;
+  border: 1px solid rgba(99,102,241,0.15) !important;
+  border-radius: 6px !important;
+  padding: 3px 10px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: #a5b4fc !important;
+}
+
+.footer-link-col a {
+  color: var(--v3-text2) !important;
+  font-size: 0.88rem !important;
+  transition: color var(--v3-transition-fast) !important;
+}
+
+.footer-link-col a:hover {
+  color: var(--v3-primary) !important;
+  padding-left: 4px !important;
+}
+
+.footer-social-link {
+  color: var(--v3-text3) !important;
+  transition: all var(--v3-transition-fast) !important;
+  padding: 8px !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+}
+
+.footer-social-link:hover {
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.08) !important;
+  border-color: rgba(20,184,166,0.2) !important;
+}
+
+/* ── 20. CTA BANNER ─────────────────────────────────────────────────────── */
+.apex-cta-banner {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(60px,8vw,100px) 0 !important;
+}
+
+.apex-cta-banner-inner {
+  background: linear-gradient(135deg, rgba(10,22,40,0.9), rgba(15,31,54,0.8)) !important;
+  border: 1px solid rgba(99,102,241,0.2) !important;
+  border-radius: 24px !important;
+  padding: clamp(40px,6vw,70px) clamp(30px,5vw,60px) !important;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(99,102,241,0.1) !important;
+}
+
+.apex-cta-banner-inner::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(20,184,166,0.3), transparent 40%, rgba(99,102,241,0.2) 100%);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+}
+
+.apex-cta-main-btn {
+  font-size: 1.05rem !important;
+  padding: 16px 36px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px rgba(20,184,166,0.4) !important;
+  animation: cta-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(20,184,166,0.4); }
+  50%       { box-shadow: 0 8px 48px rgba(20,184,166,0.6); }
+}
+
+/* ── 21. AUTH MODAL ─────────────────────────────────────────────────────── */
+.auth-card {
+  background: rgba(5,12,24,0.97) !important;
+  border: 1px solid rgba(99,102,241,0.2) !important;
+  border-radius: 24px !important;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.03) inset !important;
+  backdrop-filter: blur(40px) !important;
+  /* Do not clip Turnstile iframe on narrow screens */
+  overflow-x: visible !important;
+}
+
+/* Prevent overflow-x: hidden on overlay from clipping Turnstile iframe */
+.auth-modal-overlay:not(.hidden) {
+  overflow-x: clip !important;
+}
+
+/* Captcha / Turnstile container must not clip iframe */
+.captcha-wrap,
+#login-turnstile-wrap,
+#register-turnstile-wrap,
+.cf-turnstile {
+  overflow: visible !important;
+}
+
+/* When auth modal is open, keep sidebar behind it (modal is z-index:9999) */
+body.auth-modal-open .dash-sidebar {
+  z-index: 50 !important;
+}
+
+/* iOS auto-zoom prevention — inputs <16px font-size trigger zoom on focus */
+@media (max-width: 767px) {
+  .auth-form input,
+  .auth-form textarea,
+  .auth-form select {
+    font-size: 16px !important;
+  }
+}
+
+.auth-tab {
+  transition: all var(--v3-transition) !important;
+}
+
+.auth-tab.active {
+  background: rgba(20,184,166,0.12) !important;
+  color: var(--v3-primary) !important;
+  border-bottom: 2px solid var(--v3-primary) !important;
+}
+
+/* ── 22. SERVICES PROMO ─────────────────────────────────────────────────── */
+.filter-pill {
+  background: rgba(10,22,40,0.6) !important;
+  border: 1px solid var(--v3-border) !important;
+  color: var(--v3-text2) !important;
+  border-radius: 999px !important;
+  padding: 8px 18px !important;
+  font-size: 0.83rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all var(--v3-transition) !important;
+}
+
+.filter-pill:hover {
+  border-color: rgba(20,184,166,0.3) !important;
+  color: var(--v3-primary) !important;
+  background: rgba(20,184,166,0.07) !important;
+}
+
+.filter-pill.active {
+  background: rgba(20,184,166,0.14) !important;
+  border-color: rgba(20,184,166,0.38) !important;
+  color: var(--v3-primary) !important;
+  box-shadow: 0 0 14px rgba(20,184,166,0.18) !important;
+}
+
+/* ── 23. DASHBOARD CARDS ────────────────────────────────────────────────── */
+.dashboard-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  backdrop-filter: blur(16px) !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.dashboard-card:hover {
+  border-color: rgba(20,184,166,0.22) !important;
+}
+
+/* ── 24. SIDEBAR — REDESIGN ─────────────────────────────────────────────── */
+.sidebar {
+  background: rgba(2,7,16,0.95) !important;
+  border-right: 1px solid rgba(99,102,241,0.1) !important;
+}
+
+.sidebar-nav-link {
+  border-radius: 10px !important;
+  transition: all var(--v3-transition-fast) !important;
+}
+
+.sidebar-nav-link:hover {
+  background: rgba(20,184,166,0.07) !important;
+  color: var(--v3-primary) !important;
+  padding-left: 26px !important;
+}
+
+.sidebar-nav-link.active {
+  background: rgba(20,184,166,0.12) !important;
+  border-left: 2px solid var(--v3-primary) !important;
+  color: var(--v3-primary) !important;
+}
+
+/* ── 25. FORM INPUTS — REDESIGN ─────────────────────────────────────────── */
+input, select, textarea {
+  transition: border-color var(--v3-transition), box-shadow var(--v3-transition) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(20,184,166,0.4) !important;
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.1) !important;
+  outline: none !important;
+}
+
+/* ── 26. SCROLL PROGRESS ────────────────────────────────────────────────── */
+.apex-scroll-progress {
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-sky), var(--v3-accent)) !important;
+  height: 3px !important;
+  box-shadow: 0 0 10px rgba(20,184,166,0.5) !important;
+}
+
+/* ── 27. BACK TO TOP ────────────────────────────────────────────────────── */
+.apex-back-to-top {
+  background: rgba(10,22,40,0.9) !important;
+  border: 1px solid rgba(20,184,166,0.3) !important;
+  border-radius: 50% !important;
+  width: 46px !important; height: 46px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 12px rgba(20,184,166,0.2) !important;
+  color: var(--v3-primary) !important;
+  transition: all var(--v3-transition) !important;
+}
+
+.apex-back-to-top:hover {
+  background: rgba(20,184,166,0.15) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(20,184,166,0.35) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ── 28. TOAST NOTIFICATIONS ────────────────────────────────────────────── */
+.toast, .apex-toast {
+  background: rgba(5,12,24,0.97) !important;
+  border: 1px solid rgba(99,102,241,0.22) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset !important;
+  backdrop-filter: blur(20px) !important;
+  animation: toast-slide-in 0.3s cubic-bezier(0.16,1,0.3,1) !important;
+}
+
+@keyframes toast-slide-in {
+  from { transform: translateX(100%) scale(0.9); opacity: 0; }
+  to   { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* ── 29. SKELETON LOADING ───────────────────────────────────────────────── */
+.skeleton-card {
+  background: rgba(10,22,40,0.7) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  overflow: hidden;
+}
+
+.skeleton-line {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%) !important;
+  background-size: 400px 100% !important;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite !important;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ── 30. PROMO BANNER ───────────────────────────────────────────────────── */
+.apex-promo-banner {
+  background: linear-gradient(90deg, rgba(99,102,241,0.15) 0%, rgba(5,12,24,0.95) 50%, rgba(99,102,241,0.1) 100%) !important;
+  border-bottom: 1px solid rgba(99,102,241,0.2) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.apex-promo-cta {
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-accent)) !important;
+  box-shadow: 0 2px 12px rgba(20,184,166,0.3) !important;
+  transition: all var(--v3-transition-fast) !important;
+}
+
+.apex-promo-cta:hover {
+  box-shadow: 0 4px 20px rgba(20,184,166,0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── 31. REVEAL ANIMATIONS ──────────────────────────────────────────────── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal-on-scroll.is-visible,
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* On touch/mobile: show immediately — no JS needed, no opacity:0 stuck state */
+@media (pointer: coarse), (max-width: 760px), (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Stagger children */
+.reveal-on-scroll .apex-hiw-step:nth-child(1) { transition-delay: 0s; }
+.reveal-on-scroll .apex-hiw-step:nth-child(2) { transition-delay: 0.1s; }
+.reveal-on-scroll .apex-hiw-step:nth-child(3) { transition-delay: 0.2s; }
+
+.reveal-on-scroll .apex-stat-card:nth-child(1) { transition-delay: 0s; }
+.reveal-on-scroll .apex-stat-card:nth-child(2) { transition-delay: 0.08s; }
+.reveal-on-scroll .apex-stat-card:nth-child(3) { transition-delay: 0.16s; }
+.reveal-on-scroll .apex-stat-card:nth-child(4) { transition-delay: 0.24s; }
+
+.reveal-on-scroll .feature-card:nth-child(1) { transition-delay: 0s; }
+.reveal-on-scroll .feature-card:nth-child(2) { transition-delay: 0.1s; }
+.reveal-on-scroll .feature-card:nth-child(3) { transition-delay: 0.2s; }
+
+/* ── 32. MODE BADGE ─────────────────────────────────────────────────────── */
+.mode-badge {
+  border-radius: 999px !important;
+  padding: 4px 12px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+.mode-badge.live {
+  background: rgba(16,185,129,0.1) !important;
+  border-color: rgba(16,185,129,0.28) !important;
+  color: #34d399 !important;
+}
+
+.mode-badge.demo {
+  background: rgba(245,158,11,0.1) !important;
+  border-color: rgba(245,158,11,0.28) !important;
+  color: #fbbf24 !important;
+}
+
+/* ── 33. NOTIFICATION BELL ──────────────────────────────────────────────── */
+.nav-notification-btn {
+  transition: all var(--v3-transition-fast) !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+}
+
+.nav-notification-btn:hover {
+  background: rgba(20,184,166,0.08) !important;
+  color: var(--v3-primary) !important;
+}
+
+.nav-notification-badge {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  box-shadow: 0 0 8px rgba(239,68,68,0.5) !important;
+}
+
+/* ── 34. HERMES / AI SECTION (NEW) ──────────────────────────────────────── */
+.hermes-ai-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(5,12,24,0.95), rgba(10,22,40,0.9)) !important;
+  border: 1px solid rgba(20,184,166,0.2) !important;
+  border-radius: 24px !important;
+  padding: 40px !important;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4), var(--v3-shadow-glow) !important;
+}
+
+.hermes-ai-card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--v3-primary), var(--v3-accent), transparent);
+  pointer-events: none;
+}
+
+.hermes-command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hermes-command-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(10,22,40,0.6);
+  border: 1px solid rgba(20,184,166,0.1);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--v3-text2);
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  transition: all var(--v3-transition-fast);
+}
+
+.hermes-command-item:hover {
+  background: rgba(20,184,166,0.07);
+  border-color: rgba(20,184,166,0.22);
+  color: var(--v3-text);
+}
+
+.hermes-command-item .cmd-prefix {
+  color: var(--v3-primary);
+  font-weight: 700;
+}
+
+/* ── 35. RESELLER API SECTION (NEW) ─────────────────────────────────────── */
+.apex-api-section {
+  position: relative;
+  padding: clamp(70px,8vw,100px) 0;
+  overflow: hidden;
+}
+
+.apex-api-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(99,102,241,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.apex-api-card {
+  background: rgba(5,12,24,0.95);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 22px;
+  padding: 28px;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+.apex-api-card::before {
+  content: "HTTP";
+  position: absolute;
+  top: 12px; right: 14px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--v3-text3);
+  letter-spacing: 0.1em;
+}
+
+.api-method {
+  color: #86efac;
+  font-weight: 700;
+}
+
+.api-url { color: #93c5fd; }
+.api-key { color: #c4b5fd; }
+.api-value { color: #fca5a5; }
+.api-comment { color: var(--v3-text3); font-style: italic; }
+
+.apex-api-feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  background: rgba(10,22,40,0.5);
+  border: 1px solid rgba(99,102,241,0.1);
+  border-radius: 12px;
+  transition: all var(--v3-transition);
+}
+
+.apex-api-feature:hover {
+  border-color: rgba(99,102,241,0.25);
+  background: rgba(99,102,241,0.06);
+}
+
+.apex-api-feature-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── 36. SECURITY BADGES (NEW) ──────────────────────────────────────────── */
+.security-badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: rgba(10,22,40,0.6);
+  border: 1px solid rgba(16,185,129,0.15);
+  border-radius: 12px;
+  color: var(--v3-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--v3-transition);
+}
+
+.security-badge:hover {
+  border-color: rgba(16,185,129,0.3);
+  background: rgba(16,185,129,0.06);
+  transform: translateX(3px);
+}
+
+.security-badge-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.security-badge-green { border-color: rgba(16,185,129,0.2) !important; }
+.security-badge-blue { border-color: rgba(56,189,248,0.18) !important; }
+.security-badge-indigo { border-color: rgba(99,102,241,0.2) !important; }
+
+/* ── 37. GLOBAL TRANSITIONS ─────────────────────────────────────────────── */
+a { transition: color var(--v3-transition-fast); }
+
+/* Smooth page transitions */
+.main-content {
+  animation: page-enter 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 38. RESPONSIVE FIXES ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(2rem, 8vw, 3rem) !important; }
+  .section-title { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+  .btn.btn-primary, .btn.btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-actions { flex-direction: column; }
+  .apex-api-card { font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .security-badge-grid { grid-template-columns: 1fr 1fr; }
+  .hermes-command-item { font-size: 0.78rem; }
+}
+
+/* ── 39. ADMIN DASHBOARD IMPROVEMENTS ──────────────────────────────────── */
+.admin-stat-card {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 24px !important;
+  transition: all var(--v3-transition) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-stat-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--v3-primary), var(--v3-accent));
+  opacity: 0;
+  transition: opacity var(--v3-transition);
+}
+
+.admin-stat-card:hover::after { opacity: 1; }
+
+.admin-table-row {
+  transition: background var(--v3-transition-fast) !important;
+}
+
+.admin-table-row:hover {
+  background: rgba(99,102,241,0.05) !important;
+}
+
+/* ── 40. MISC UTILITIES ─────────────────────────────────────────────────── */
+.apex-glow-text {
+  text-shadow: 0 0 20px rgba(20,184,166,0.5);
+}
+
+.v3-gradient-text {
+  background: linear-gradient(135deg, var(--v3-primary), var(--v3-sky), var(--v3-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Pulse animation for status indicators */
+.apex-live-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.4);
+  animation: live-pulse 2s cubic-bezier(0,0,0.2,1) infinite;
+}
+
+@keyframes live-pulse {
+  0%  { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+/* ── 41. HERMES ENHANCED BOT BADGE ─────────────────────────────────────── */
+.hermes-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(20,184,166,0.12), rgba(99,102,241,0.1));
+  border: 1px solid rgba(20,184,166,0.25);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--v3-primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── 42. SCROLL REVEAL INTERSECTION OBSERVER FIX ───────────────────────── */
+/* Ensure cards inside section reveal properly */
+.advantages-section .feature-card,
+.apex-stats-section .apex-stat-card,
+.apex-hiw-section .apex-hiw-step {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+
+.advantages-section.is-visible .feature-card,
+.apex-stats-section.is-visible .apex-stat-card,
+.apex-hiw-section.is-visible .apex-hiw-step {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 43. RESPONSIVE GRID FIXES FOR NEW SECTIONS ─────────────────────────── */
+@media (max-width: 900px) {
+  .apex-api-grid,
+  .apex-security-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  .apex-api-card pre {
+    font-size: 0.72rem !important;
+  }
+
+  .security-badge-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .security-badge-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hermes-command-item {
+    font-size: 0.75rem !important;
+  }
+
+  .apex-api-card {
+    padding: 18px !important;
+  }
+
+  .apex-hiw-steps {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── 44. STATS BAR ANIMATION ON SCROLL ─────────────────────────────────── */
+.apex-stat-card.is-visible .apex-stat-bar-fill {
+  width: var(--bar-w, 0) !important;
+}
+
+/* ── 45. HERO TRUST RAIL ────────────────────────────────────────────────── */
+.hero-trust-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.83rem;
+  color: var(--v3-text2);
+  margin-bottom: 28px;
+}
+
+.hero-trust-rail span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-trust-rail span svg {
+  color: var(--v3-primary);
+  flex-shrink: 0;
+}
+
+/* ── 46. DASHBOARD PREVIEW ANALYTICS CARD ──────────────────────────────── */
+.analytics-preview {
+  background: var(--v3-glass) !important;
+  border: 1px solid var(--v3-border) !important;
+  border-radius: var(--v3-radius-lg) !important;
+  padding: 24px !important;
+  box-shadow: var(--v3-shadow) !important;
+}
+
+.analytics-live-dot {
+  background: rgba(16,185,129,0.1) !important;
+  border: 1px solid rgba(16,185,129,0.3) !important;
+  color: #34d399 !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.analytics-live-dot::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16,185,129,0.8);
+  animation: live-pulse 2s infinite;
+  display: inline-block;
+}
+
+.analytics-bars span {
+  background: linear-gradient(0deg, rgba(20,184,166,0.7), rgba(56,189,248,0.5)) !important;
+  border-radius: 4px 4px 0 0 !important;
+}
+
+/* ── 47. LIVE ORDER FEED SECTION ────────────────────────────────────────── */
+.apex-feed-table-wrap {
+  border-radius: 14px !important;
+  overflow: hidden;
+  border: 1px solid var(--v3-border) !important;
+}
+
+/* ── 48. PAYMENT LOGOS ──────────────────────────────────────────────────── */
+.apex-payment-logo img {
+  border-radius: 8px;
+  filter: brightness(1.1) contrast(1.05);
+  transition: filter var(--v3-transition-fast);
+}
+
+.apex-payment-card:hover .apex-payment-logo img {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+/* ── 49. API KEY MANAGEMENT CARD ────────────────────────────────────────── */
+.api-key-management-card {
+  border-color: var(--v3-border2) !important;
+  background: linear-gradient(135deg, var(--v3-glass) 0%, rgba(20,184,166,0.04) 100%) !important;
+}
+
+.api-key-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.api-key-status-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(20,184,166,0.15);
+  color: #14b8a6;
+  border: 1px solid rgba(20,184,166,0.3);
+}
+
+.api-key-status-badge.revoked {
+  background: rgba(239,68,68,0.12);
+  color: #ef4444;
+  border-color: rgba(239,68,68,0.25);
+}
+
+.api-key-desc {
+  font-size: 0.84rem;
+  color: var(--v3-text2);
+  margin: 0 0 1.25rem 0;
+}
+
+.api-key-display-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(2,11,18,0.6);
+  border: 1px solid var(--v3-border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.api-key-field-wrap {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.api-key-code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: #14b8a6;
+  word-break: break-all;
+  letter-spacing: 0.03em;
+}
+
+.api-key-code.masked {
+  letter-spacing: 0.08em;
+  color: var(--v3-text3);
+}
+
+.api-key-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.api-key-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.api-key-meta-item {
+  font-size: 0.77rem;
+  color: var(--v3-text3);
+}
+
+.api-key-danger-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border: 1px solid rgba(20,184,166,0.4);
+  color: #14b8a6;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-outline-primary:hover {
+  background: rgba(20,184,166,0.12);
+  border-color: #14b8a6;
+}
+
+.btn-danger-outline {
+  background: transparent;
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #ef4444;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-danger-outline:hover {
+  background: rgba(239,68,68,0.1);
+  border-color: #ef4444;
+}
+
+/* ── 50. API ACTIONS REFERENCE TABLE ────────────────────────────────────── */
+.api-actions-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--v3-border);
+}
+
+.api-actions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.api-actions-table thead tr {
+  background: rgba(99,102,241,0.1);
+}
+
+.api-actions-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--v3-text2);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--v3-border);
+  white-space: nowrap;
+}
+
+.api-actions-table td {
+  padding: 9px 14px;
+  color: var(--v3-text);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+
+.api-actions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.api-actions-table tbody tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+.api-actions-table td code {
+  background: rgba(20,184,166,0.12);
+  color: #14b8a6;
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+/* ── 51. ACCOUNT PASSWORD STRENGTH ─────────────────────────────────────── */
+#account-password-strength {
+  margin-top: 6px;
+}
+
+/* ── 52. QUICK GUIDE TOOLTIP ────────────────────────────────────────────── */
+.quick-guide-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(99,102,241,0.18);
+  border: 1px solid rgba(99,102,241,0.35);
+  color: #6366f1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 6px;
+}
+
+.quick-guide-tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--v3-surface2);
+  border: 1px solid var(--v3-border);
+  color: var(--v3-text);
+  font-size: 0.75rem;
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 100;
+  max-width: 260px;
+  white-space: normal;
+  text-align: center;
+}
+
+.quick-guide-tip:hover::after {
+  opacity: 1;
+}
+
+/* ── 53. QUICK GUIDE BANNER ─────────────────────────────────────────────── */
+.quick-guide-banner {
+  background: linear-gradient(135deg, rgba(20,184,166,0.07) 0%, rgba(99,102,241,0.07) 100%);
+  border: 1px solid rgba(20,184,166,0.2);
+  border-radius: var(--v3-radius-lg, 18px);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.quick-guide-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.quick-guide-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.quick-guide-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #14b8a6;
+}
+
+.quick-guide-subtitle {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--v3-text2);
+  margin-top: 1px;
+}
+
+.quick-guide-dismiss {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--v3-text3);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.quick-guide-dismiss:hover {
+  background: rgba(239,68,68,0.15);
+  border-color: rgba(239,68,68,0.4);
+  color: #ef4444;
+}
+
+.quick-guide-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.quick-guide-step {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: rgba(2,11,18,0.35);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+}
+
+.qs-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #6366f1);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.qs-step-body strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--v3-text);
+  margin-bottom: 2px;
+}
+
+.qs-step-body span {
+  font-size: 0.77rem;
+  color: var(--v3-text2);
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .quick-guide-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .api-key-display-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ── 54. ADVANTAGES SECTION ENHANCED ────────────────────────────────────── */
+.apex-advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.apex-adv-card {
+  padding: 1.75rem 1.5rem !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.apex-adv-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--v3-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.apex-adv-card:hover::after {
+  opacity: 1;
+}
+
+.apex-adv-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20,184,166,0.12);
+  border: 1px solid rgba(20,184,166,0.2);
+  color: #14b8a6;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+
+.apex-adv-card:hover .apex-adv-icon-wrap {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.apex-adv-icon-wrap.accent {
+  background: rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.22);
+  color: #6366f1;
+}
+
+.apex-adv-icon-wrap.sky {
+  background: rgba(56,189,248,0.1);
+  border-color: rgba(56,189,248,0.2);
+  color: #38bdf8;
+}
+
+.apex-adv-icon-wrap.orange {
+  background: rgba(249,115,22,0.1);
+  border-color: rgba(249,115,22,0.2);
+  color: #f97316;
+}
+
+@media (max-width: 900px) {
+  .apex-advantages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .apex-advantages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 55. TESTIMONIALS SECTION ────────────────────────────────────────────── */
+.apex-testimonials-section {
+  padding: clamp(60px, 8vw, 100px) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.apex-testimonials-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
+}
+
+.apex-testimonials-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.apex-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.apex-testimonial-card {
+  background: var(--v3-glass);
+  border: 1px solid var(--v3-border);
+  border-radius: var(--v3-radius-lg);
+  padding: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s var(--v3-ease), box-shadow 0.35s var(--v3-ease), border-color 0.35s;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.apex-testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  font-size: 6rem;
+  color: rgba(20,184,166,0.07);
+  font-family: Georgia, serif;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.apex-testimonial-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(20,184,166,0.3);
+  box-shadow: 0 16px 48px rgba(20,184,166,0.12);
+}
+
+.apex-testi-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 1rem;
+}
+
+.apex-testi-text {
+  font-size: 0.9rem;
+  color: var(--v3-text2);
+  line-height: 1.65;
+  margin: 0 0 1.25rem 0;
+  font-style: italic;
+}
+
+.apex-testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 1rem;
+}
+
+.apex-testi-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(20,184,166,0.25), rgba(99,102,241,0.25));
+  border: 1px solid rgba(20,184,166,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #14b8a6;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.apex-testi-author strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--v3-text);
+}
+
+.apex-testi-author span {
+  font-size: 0.75rem;
+  color: var(--v3-text3);
+}
+
+@media (max-width: 900px) {
+  .apex-testimonials-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+/* ── 56. CUSTOM SCROLLBAR ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.35); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.6); }
+
+/* ── 57. SMOOTH SCROLL ───────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+/* ── 58. SELECTION HIGHLIGHT ─────────────────────────────────────────────── */
+::selection { background: rgba(20,184,166,0.3); color: #f0f4ff; }
+::-moz-selection { background: rgba(20,184,166,0.3); color: #f0f4ff; }
+
+/* ── 59. NAV LINK ACTIVE STATE ───────────────────────────────────────────── */
+.nav-link.active {
+  color: var(--v3-primary) !important;
+  opacity: 1 !important;
+}
+
+.nav-link.active::after {
+  width: 100% !important;
+  opacity: 1 !important;
+}
+
+/* ── 60. SKIP-TO-CONTENT ─────────────────────────────────────────────────── */
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.6rem 1.2rem;
+  background: var(--v3-primary);
+  color: #020b12;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  transition: top 0.2s;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ── 61. SECTION KICKER ENHANCED ─────────────────────────────────────────── */
+.section-kicker {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v3-primary);
+  padding: 4px 12px;
+  background: rgba(20,184,166,0.1);
+  border: 1px solid rgba(20,184,166,0.2);
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+/* ── 62. LOADING SPINNER PULSE ────────────────────────────────────────────── */
+@keyframes apex-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.apex-v3-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(20,184,166,0.2);
+  border-top-color: #14b8a6;
+  border-radius: 50%;
+  animation: apex-spinner 0.7s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ── 63. TOAST NOTIFICATIONS ─────────────────────────────────────────────── */
+.apex-toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+.apex-toast {
+  background: var(--v3-surface2);
+  border: 1px solid var(--v3-border);
+  color: var(--v3-text);
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  max-width: 320px;
+  pointer-events: auto;
+  animation: toastIn 0.3s ease forwards;
+}
+
+.apex-toast.success { border-color: rgba(20,184,166,0.4); color: #14b8a6; }
+.apex-toast.error   { border-color: rgba(239,68,68,0.4);  color: #ef4444; }
+.apex-toast.warning { border-color: rgba(249,115,22,0.4); color: #f97316; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* ── 64. BUG FIXES ────────────────────────────────────────────────────────── */
+
+/* U1: FAQ answer not clipped by max-height:0 from apex-improvements.css */
+.apex-faq-a:not([hidden]) {
+  max-height: none !important;
+  overflow: visible !important;
+}
+/* Chevron SVG must not be clipped by overflow:hidden on .apex-faq-item */
+.apex-faq-q {
+  overflow: visible !important;
+}
+
+/* U3: Skip-to-content — hide reliably on all screens (no keyboard on mobile) */
+.skip-to-content {
+  top: -9999px !important;
+}
+.skip-to-content:focus {
+  top: 1rem !important;
+}
+@media (max-width: 767px) {
+  .skip-to-content {
+    display: none !important;
+  }
+}
+
+/* U4: Hero title word-wrap — prevent text overflow cutoff on narrow screens */
+@media (max-width: 767px) {
+  .hero-title {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    max-width: 100% !important;
+  }
+  .hero-subtitle {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+}
+
+/* U5: Platform logos strip — reduce fade mask on mobile so first logo isn't cut off */
+@media (max-width: 767px) {
+  .apex-platforms-track {
+    mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%) !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%) !important;
+  }
+}
+
+/* U6: Navbar — improve spacing between hamburger and Log In button on mobile */
+@media (max-width: 767px) {
+  .nav-auth-controls {
+    gap: 0.6rem !important;
+  }
+  .hamburger-toggle {
+    margin-right: 0.25rem !important;
+  }
+}
+
+/* ── 65. DASHBOARD UI/UX OVERHAUL ────────────────────────────────────────── */
+
+/* F1: Floating widgets — professional compact icon-only redesign ---------- */
+
+/* OpenClaw — collapse to clean 52px circular icon button */
+.ai-chat-fab {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  box-shadow: 0 4px 20px rgba(20,184,166,0.4), 0 0 0 2px rgba(20,184,166,0.15) !important;
+}
+.ai-chat-fab .ai-fab-text,
+.ai-chat-fab .ai-fab-vip { display: none !important; }
+.ai-chat-fab .ai-fab-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0 !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+.ai-chat-fab .ai-fab-icon img {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+/* Hermes — compact 52px, cleaner pulse */
+.apexbot-top-fab {
+  width: 52px !important;
+  height: 52px !important;
+  box-shadow: 0 4px 20px rgba(91,69,242,0.4), 0 0 0 2px rgba(139,63,244,0.15) !important;
+}
+.apexbot-robot-icon {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+/* F2: Ticket chat modal — proper flex with scrollable message body -------- */
+.ticket-chat-modal {
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(95vw, 580px) !important;
+  max-width: 580px !important;
+  height: min(88dvh, 640px) !important;
+  max-height: 640px !important;
+  padding: 0 !important;
+  text-align: left !important;
+  overflow: hidden !important;
+}
+.ticket-chat-modal-header {
+  flex-shrink: 0 !important;
+  padding: 14px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: linear-gradient(135deg, rgba(20,184,166,0.10), rgba(56,189,248,0.06)) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+.ticket-chat-modal-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 14px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255,255,255,0.18) transparent !important;
+}
+.ticket-chat-modal-body::-webkit-scrollbar { width: 4px; }
+.ticket-chat-modal-body::-webkit-scrollbar-track { background: transparent; }
+.ticket-chat-modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 4px; }
+.ticket-typing-indicator { flex-shrink: 0 !important; }
+.ticket-reply-form,
+#ticket-reply-form {
+  flex-shrink: 0 !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  padding: 10px 12px !important;
+  margin: 0 !important;
+}
+.ticket-chat-header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+.ticket-chat-header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+.ticket-chat-header-left h3 {
+  font-size: 0.95rem !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.ticket-chat-subject {
+  font-size: 0.76rem !important;
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* F3: Custom dropdown items — prevent long category names from overflowing */
+.custom-dropdown-item .item-left {
+  flex: 1 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+.custom-dropdown-item .item-left > span:not(.badge-recommended) {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  display: block !important;
+  min-width: 0 !important;
+}
+.custom-dropdown-item {
+  min-height: 44px !important;
+}
+
+/* F4: Support contact buttons — proper SVG icon sizing & alignment -------- */
+.support-contact-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  flex-shrink: 0 !important;
+}
+.support-contact-icon svg {
+  display: block !important;
+  pointer-events: none !important;
+}
+.support-contact-button.telegram .support-contact-icon {
+  background: linear-gradient(135deg, #229ed9, #1a86b8) !important;
+  box-shadow: 0 2px 12px rgba(34,158,217,0.35) !important;
+}
+.support-contact-button.whatsapp .support-contact-icon {
+  background: linear-gradient(135deg, #25D366, #128C7E) !important;
+  box-shadow: 0 2px 12px rgba(37,211,102,0.35) !important;
+}
+.support-contact-button {
+  text-decoration: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.support-contact-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* F5: Add funds — controlled payment logo sizes --------------------------- */
+#tab-add-funds .payment-method-logo {
+  height: 26px !important;
+  width: auto !important;
+  max-width: 72px !important;
+  object-fit: contain !important;
+}
+#tab-add-funds .payment-info-title .payment-method-logo {
+  height: 22px !important;
+  max-width: 60px !important;
+}
+
+/* F6: Dashboard general improvements ------------------------------------- */
+
+/* Smoother tab content transitions */
+.dash-tab-content:not(.hidden) {
+  animation: dashTabIn 0.22s cubic-bezier(0.4,0,0.2,1) both !important;
+}
+@keyframes dashTabIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Better card interaction */
+.dashboard-card {
+  transition: box-shadow 0.2s ease !important;
+}
+.dashboard-card:hover {
+  box-shadow: 0 6px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) !important;
+}
+
+/* Table row hover — subtle teal highlight */
+.data-table tbody tr:hover td {
+  background: rgba(20,184,166,0.06) !important;
+}
+
+/* Better button focus rings for accessibility */
+.btn:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--v3-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* Sidebar link active indicator cleanup */
+.sidebar-link.active {
+  position: relative !important;
+}
+
+/* Form input focus glow */
+.dashboard-card input:focus,
+.dashboard-card select:focus,
+.dashboard-card textarea:focus {
+  box-shadow: 0 0 0 2px rgba(20,184,166,0.25) !important;
+  outline: none !important;
+}
+
+/* Status badges — consistent sizing */
+.status-badge {
+  font-size: 0.68rem !important;
+  letter-spacing: 0.04em !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+/* Tab header spacing refinement */
+.tab-header {
+  margin-bottom: 1.5rem !important;
+}
+.tab-header h2 {
+  margin-bottom: 0.35rem !important;
+}
+.tab-header p {
+  color: var(--v3-text2) !important;
+  font-size: 0.9rem !important;
+  margin: 0 !important;
+}
+
+/* Quick amount buttons — better spacing */
+.quick-amounts-group {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin-top: 8px !important;
+}
+.quick-amount-btn {
+  font-size: 0.8rem !important;
+  padding: 5px 10px !important;
+  border-radius: 6px !important;
+  transition: background 0.15s ease, transform 0.1s ease !important;
+}
+.quick-amount-btn:hover {
+  transform: translateY(-1px) !important;
+}
+.quick-amount-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* F7: Mobile improvements ----------------------------------------------- */
+@media (max-width: 767px) {
+  /* Ticket chat modal — full-screen on mobile */
+  .ticket-chat-modal {
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+
+  /* Floating widgets — smaller on mobile so they don't overlap content */
+  .ai-chat-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 10px) !important;
+    right: 14px !important;
+  }
+  .apexbot-top-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 72px) !important;
+    right: 14px !important;
+  }
+  .ai-chat-fab,
+  .apexbot-top-fab {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  /* Support contact panel full-width on mobile */
+  .support-contact-panel {
+    padding: 14px !important;
+  }
+}
+
+/* ── 66. AUTH / MODAL / NAV BUG FIXES (round 2) ──────────────────────────── */
+
+/* #2: Autofill input color — force dark background so autofilled fields match
+   the theme instead of turning white. The inset box-shadow trick is the only
+   reliable way to override the browser's yellow/white autofill background. */
+.auth-form input:-webkit-autofill,
+.auth-form input:-webkit-autofill:hover,
+.auth-form input:-webkit-autofill:focus,
+.auth-form input:-webkit-autofill:active,
+.dashboard-card input:-webkit-autofill,
+.dashboard-card input:-webkit-autofill:hover,
+.dashboard-card input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--auth-input-bg, rgba(0,0,0,0.2)) inset !important;
+  box-shadow: 0 0 0 1000px var(--auth-input-bg, rgba(0,0,0,0.2)) inset !important;
+  -webkit-text-fill-color: var(--text-primary, #f3f4f6) !important;
+  caret-color: var(--text-primary, #f3f4f6) !important;
+  transition: background-color 9999s ease-out 0s !important;
+}
+
+/* #11: Modal headers not clipped — give the auth card breathing room at top */
+.auth-card {
+  padding-top: 1.75rem !important;
+}
+.auth-card .auth-logo,
+.auth-card #auth-title {
+  margin-top: 0 !important;
+}
+
+/* #10 support: smooth focus ring on the autofocused auth input */
+.auth-form input:focus-visible {
+  outline: none !important;
+  border-color: var(--v3-primary) !important;
+  box-shadow: 0 0 0 2px rgba(20,184,166,0.25) !important;
+}
+
+/* MOBILE: nav drawer backdrop — dim the page behind the open drawer.
+   The JS toggles the `hidden` class; this gives it a visible dim layer. */
+.nav-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 11, 18, 0.6);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 99990; /* just below the .nav-menu drawer (99999), above all page content */
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.nav-menu-backdrop.hidden {
+  display: none !important;
+}
+@media (min-width: 992px) {
+  /* Drawer/backdrop are mobile-only — never show on desktop */
+  .nav-menu-backdrop {
+    display: none !important;
+  }
+}
+
+/* #4: Step 2 account summary card — fills the previously sparse step */
+.register-summary-card {
+  background: var(--v3-glass2, rgba(15,31,54,0.88));
+  border: 1px solid var(--v3-border, rgba(99,102,241,0.14));
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: grid;
+  gap: 12px;
+}
+.register-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.register-summary-icon {
+  font-size: 1.1rem;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(20,184,166,0.12);
+  flex-shrink: 0;
+}
+.register-summary-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.register-summary-text small {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--v3-text3, #4a6080);
+}
+.register-summary-text strong {
+  font-size: 0.92rem;
+  color: var(--v3-text, #f0f4ff);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.register-summary-note {
+  font-size: 0.78rem;
+  color: var(--v3-text2, #8ba3c7);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* OpenClaw FAB — enforce compact circular shape over the higher-specificity
+   `.ai-chat-widget.ai-vip-unlocked .ai-chat-fab` rule from style.min.css */
+.ai-chat-widget .ai-chat-fab,
+.ai-chat-widget.ai-vip-unlocked .ai-chat-fab {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  justify-content: center !important;
+}
+.ai-chat-widget.ai-vip-unlocked .ai-chat-fab .ai-fab-text,
+.ai-chat-widget.ai-vip-unlocked .ai-chat-fab .ai-fab-vip {
+  display: none !important;
+}
+
+/* ═══ 67. ROUND 3 BUG FIXES ════════════════════════════════════════════════ */
+
+/* FIX-1: Hide native <select> wrapper when custom dropdown is active.
+   The class was referenced in HTML but never defined — causing double dropdowns. */
+.visually-hidden-select {
+  display: none !important;
+}
+
+/* FIX-2: Hermes suggestions panel — dark glass theme.
+   style.css hard-codes background:#ffffff which conflicts with dark UI. */
+.apexbot-top-panel,
+#apexbot-top-panel {
+  background: rgba(8,18,36,0.97) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+  border: 1px solid rgba(99,102,241,0.18) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(99,102,241,0.08) !important;
+}
+@media (max-width: 767px) {
+  .apexbot-top-panel,
+  #apexbot-top-panel,
+  body.apexbot-top-open #apexbot-top-panel,
+  body.apexbot-top-open .apexbot-top-panel {
+    background: rgba(8,18,36,0.98) !important;
+  }
+}
+.apexbot-top-header h3,
+.apexbot-top-ai        { color: var(--v3-text, #f0f4ff) !important; }
+.apexbot-top-header p  { color: var(--v3-text2, #8ba3c7) !important; }
+.apexbot-top-body      { color: var(--v3-text, #f0f4ff) !important; background: transparent !important; }
+.apexbot-top-footer    { color: var(--v3-text2, #8ba3c7) !important; background: transparent !important; border-top-color: rgba(255,255,255,0.06) !important; }
+/* Suggestion items inside hermes panel */
+.apexbot-top-body .suggestion-item,
+.apexbot-top-body .hermes-service-card,
+.apexbot-top-body .hermes-sugg-item {
+  background: rgba(20,184,166,0.06) !important;
+  border: 1px solid rgba(20,184,166,0.15) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+}
+.apexbot-top-body .suggestion-item:hover,
+.apexbot-top-body .hermes-service-card:hover {
+  background: rgba(20,184,166,0.12) !important;
+}
+/* Hermes loading text */
+.apexbot-top-loading { color: var(--v3-text2, #8ba3c7) !important; }
+/* Platform tab buttons inside panel */
+.apexbot-top-body button,
+.apexbot-top-footer button {
+  color: var(--v3-text, #f0f4ff) !important;
+}
+
+/* FIX-3: Drag handle — show a subtle pill bar instead of word "Move" */
+.assistant-drag-grip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: grab !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0 !important;
+  color: transparent !important;
+  outline: none !important;
+  flex-shrink: 0 !important;
+}
+.assistant-drag-grip::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 2px;
+}
+
+/* FIX-4: Widget stacking — explicit bottom positions so all 3 FABs never overlap.
+   Stack: WhatsApp 20px → OpenClaw 84px → Hermes 152px (each 52px + 12px gap). */
+@media (min-width: 768px) {
+  #messenger-fab,     .messenger-fab     { bottom: 20px  !important; right: 20px !important; }
+  #ai-chat-widget,    .ai-chat-widget    { bottom: 84px  !important; right: 20px !important; }
+  #apexbot-top-widget,.apexbot-top-widget{ bottom: 152px !important; right: 20px !important; }
+}
+@media (max-width: 767px) {
+  /* Mobile nav = 64px safe base; stack each widget 64px apart */
+  #messenger-fab, .messenger-fab {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 12px) !important;
+    right: 14px !important;
+  }
+  #ai-chat-widget, .ai-chat-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 80px) !important;
+    right: 14px !important;
+  }
+  #apexbot-top-widget, .apexbot-top-widget {
+    bottom: calc(var(--mobile-bottom-nav-height, 64px) + 148px) !important;
+    right: 14px !important;
+  }
+}
+
+/* FIX-5: Compare modal — constrained height + scrollable body */
+.compare-modal-card {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: min(88dvh, 660px) !important;
+  overflow: hidden !important;
+}
+.compare-modal-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0 !important;
+}
+.compare-modal-body .scrollable-table-wrap {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 0 !important;
+}
+/* Sticky first column so labels stay readable while scrolling horizontally */
+.compare-table td:first-child,
+.compare-table th:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  background: #0a1628 !important;
+  min-width: 110px !important;
+  font-size: 0.73rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--v3-text2, #8ba3c7) !important;
+}
+.compare-table th {
+  background: rgba(10,22,40,0.95) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+.compare-table th,
+.compare-table td {
+  min-width: 140px !important;
+  font-size: 0.82rem !important;
+}
+.compare-header-cell {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+.compare-header-id   { font-size: 0.72rem !important; color: var(--v3-text2, #8ba3c7) !important; }
+.compare-header-name { font-size: 0.82rem !important; color: var(--v3-text, #f0f4ff) !important; white-space: normal !important; word-break: break-word !important; }
+
+/* FIX-6: Hermes panel inner components — dark theme overrides */
+.apexbot-top-card {
+  background: rgba(20,184,166,0.06) !important;
+  border: 1px solid rgba(20,184,166,0.18) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+}
+.apexbot-top-card:hover {
+  background: rgba(20,184,166,0.12) !important;
+  border-color: rgba(20,184,166,0.35) !important;
+  box-shadow: 0 8px 20px rgba(20,184,166,0.15) !important;
+}
+.apexbot-top-card strong { color: var(--v3-text, #f0f4ff) !important; }
+.apexbot-top-breadcrumb {
+  background: rgba(10,22,40,0.8) !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+  color: var(--v3-text2, #8ba3c7) !important;
+}
+.apexbot-top-breadcrumb button {
+  background: rgba(99,102,241,0.15) !important;
+  color: var(--v3-primary, #14b8a6) !important;
+  border: 1px solid rgba(99,102,241,0.18) !important;
+}
+.apexbot-service-card {
+  background: rgba(10,22,40,0.75) !important;
+  border: 1px solid rgba(99,102,241,0.14) !important;
+  color: var(--v3-text, #f0f4ff) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+.apexbot-rank {
+  background: rgba(99,102,241,0.18) !important;
+  color: var(--v3-primary, #14b8a6) !important;
+}
+.apexbot-top-body h4 { color: var(--v3-text, #f0f4ff) !important; }
+
+/* FIX-7: Services list mobile — push table content left of floating widgets.
+   FABs sit at right:14px with ~52px width (occupy right:14-66px).
+   Viewport already has padding:16px. Adding 72px to the table wrapper makes
+   the Order button column end at ~88px from screen right, clearing FABs by 22px. */
+@media (max-width: 767px) {
+  #tab-services-list .scrollable-table-wrap {
+    padding-right: 72px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* FIX-8: Desktop services table — restore table display.
+   style.min.css has display:block on tbody/tr/td WITHOUT a media query,
+   which breaks column layout at all widths. Reset to proper table values
+   at ≥768px so columns stay in their columns. */
+@media (min-width: 768px) {
+  #services-directory-table { display: table !important; }
+  #services-directory-table thead { display: table-header-group !important; }
+  #services-directory-table tbody { display: table-row-group !important; }
+  #services-directory-table tr { display: table-row !important; }
+  #services-directory-table th,
+  #services-directory-table td { display: table-cell !important; }
+}
+
+/* FIX-9: Search bar — left-pad input so text starts after the magnifier icon */
+#dash-custom-service-search {
+  padding-left: 2.4rem !important;
+}
+
+/* FIX-10: WhatsApp FAB wrapper — relative container so dismiss button can be placed at corner */
+.messenger-fab-wrap {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 9990;
+  display: flex;
+  align-items: flex-start;
+}
+.messenger-fab-wrap.hidden { display: none !important; }
+
+/* Move messenger-fab back to static positioning inside the wrapper */
+.messenger-fab-wrap .messenger-fab {
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* Small ×  dismiss chip shown at top-right corner of the FAB */
+.wa-fab-dismiss {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(15,23,42,0.88);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.messenger-fab-wrap:hover .wa-fab-dismiss { opacity: 1; }
+
+/* FIX-11: Hermes FAB — hide CSS pixel-art robot, style SVG layout */
+.apexbot-robot-icon,
+.apexbot-robot-antenna,
+.apexbot-robot-head,
+.apexbot-robot-eye,
+.apexbot-robot-smile,
+.apexbot-robot-hand,
+.apexbot-top-spark { display: none !important; }
+.apexbot-top-ai-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: currentColor;
+  line-height: 1;
+  margin-top: 1px;
+  display: block;
+}
+.apexbot-top-fab {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1px !important;
+  color: #fff !important;
+}
+
+/* FIX-12: Stop perpetual page-chrome animations */
+.glass-dashboard-mock { animation: none !important; }
+.chip-top, .chip-bottom { animation: none !important; }
+.apex-stat-icon { animation: none !important; }
+.apex-cta-main-btn {
+  animation: none !important;
+  box-shadow: 0 8px 32px rgba(20,184,166,0.35) !important;
+}
+.apex-stat-icon svg { stroke: var(--v3-primary); opacity: 0.85; }
+.receipt-success-badge { display: flex; align-items: center; justify-content: center; }
+.receipt-success-badge svg { stroke: #fff; }
+
+/* FIX-13: Hide WhatsApp pulse ring */
+.messenger-pulse { display: none !important; }
+
+/* ── QA POLISH BATCH 2 ──────────────────────────────────────────────────── */
+
+/* QA-1: Services table — word-wrap in fixed-layout columns (text overlap fix) */
+#services-directory-table td {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+#services-directory-table th {
+  white-space: nowrap !important;
+}
+
+/* QA-2: Add funds — QR image + payment logo sizing */
+#dynamic-qr-img {
+  display: block !important;
+  width: 180px !important;
+  height: 180px !important;
+  max-width: 180px !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  padding: 8px !important;
+}
+.qr-tap-zoom-btn {
+  display: block !important;
+  width: 196px !important;
+  height: 196px !important;
+  margin: 8px auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 2px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+}
+.payment-info-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  font-size: 1rem !important;
+}
+#tab-add-funds .payment-method-logo {
+  height: 24px !important;
+  width: auto !important;
+  max-width: 70px !important;
+  object-fit: contain !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+#tab-add-funds .payment-info-title .payment-method-logo {
+  height: 20px !important;
+  max-width: 56px !important;
+}
+
+/* QA-3: Ticket chat modal — iOS touch scroll + short-screen support */
+.ticket-chat-modal-body {
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+  touch-action: pan-y !important;
+  scroll-behavior: smooth !important;
+}
+.ticket-chat-overlay {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+.ticket-chat-overlay.hidden { display: none !important; }
+@media (max-height: 640px) {
+  .ticket-chat-modal {
+    height: calc(100dvh - 20px) !important;
+    max-height: calc(100dvh - 20px) !important;
+  }
+}
+/* Fallback: ensure ticket-chat-modal body is always constrained to scroll area */
+.ticket-chat-modal {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* QA-4: Support contact panel — professional elevated card look */
+.support-contact-panel {
+  margin-top: 14px !important;
+  padding: 16px !important;
+  gap: 10px !important;
+  border-radius: 14px !important;
+  background: rgba(20,184,166,0.05) !important;
+  border: 1px solid rgba(20,184,166,0.18) !important;
+}
+.support-contact-heading {
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  margin-bottom: 2px !important;
+}
+.support-contact-heading strong {
+  font-size: 0.95rem !important;
+  color: var(--v3-text) !important;
+  display: block !important;
+  margin-bottom: 2px !important;
+}
+.support-contact-button {
+  background: rgba(255,255,255,0.04) !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  min-height: 64px !important;
+}
+.support-contact-button.telegram { border-color: rgba(34,158,217,0.3) !important; }
+.support-contact-button.whatsapp { border-color: rgba(37,211,102,0.3) !important; }
+.support-contact-button > span:last-child strong {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  color: var(--v3-text) !important;
+}
+.support-contact-button > span:last-child small {
+  font-size: 0.76rem !important;
+  color: var(--v3-text2) !important;
+}
+
+/* QA-5: Support lane card icon wrapper — consistent box for SVG icons */
+.support-lane-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.07) !important;
+  flex-shrink: 0 !important;
+}
+.support-lane-icon svg { display: block !important; }
+.support-lane-card.active .support-lane-icon { background: rgba(20,184,166,0.18) !important; }
+.support-lane-card.active .support-lane-icon svg { stroke: var(--v3-primary) !important; }
+
+/* QA-6: Responsive - preserve motion on capable devices, reduce on low-end */
+@media (prefers-reduced-motion: reduce) {
+  .aurora { animation: none !important; }
+  .landing-section::before { animation: none !important; }
+  .dash-tab-content:not(.hidden) { animation: none !important; }
+}
+
+/* QA-7: Ticket chat header avatar — replace emoji with icon box */
+.ticket-chat-header-avatar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(56,189,248,0.15)) !important;
+  border: 1px solid rgba(20,184,166,0.25) !important;
+  font-size: 1rem !important;
+}
+
+/* QA-8: Affiliates warning box — reduce alarmist styling */
+.affiliates-warning-box {
+  font-size: 0.82rem !important;
+  line-height: 1.6 !important;
+  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  margin-bottom: 1.25rem !important;
+}
+
+/* QA-9: Emoji in h3 Support Guidelines — inline icon sizing */
+#tab-support-tickets .dashboard-card h3 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* QA-10: Table scroll hint visibility on touch devices */
+.table-scroll-hint {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  .table-scroll-hint {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 0.74rem !important;
+    color: var(--v3-text2) !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   QA POLISH BATCH 3 — Site-wide professional consistency pass
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* P3-1: SVG icons (landing) — align + color-code by section.
+   These containers used to hold emoji; now they hold inline SVGs. */
+.security-badge-icon svg,
+.apex-api-feature-icon svg,
+.dropdown-item-btn .item-icon svg {
+  display: block !important;
+}
+.security-badge-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+}
+.security-badge-green .security-badge-icon  { color: #34d399 !important; background: rgba(16,185,129,0.10) !important; }
+.security-badge-blue .security-badge-icon   { color: #38bdf8 !important; background: rgba(56,189,248,0.10) !important; }
+.security-badge-indigo .security-badge-icon { color: #818cf8 !important; background: rgba(99,102,241,0.10) !important; }
+.apex-api-feature-icon { color: #818cf8 !important; }
+
+/* P3-2: FAQ WhatsApp button — center icon + label cleanly */
+.faq-whatsapp-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.faq-whatsapp-btn svg { color: #25D366 !important; flex-shrink: 0 !important; }
+
+/* P3-3: Tone down the perpetual cyan icon glow — was the main "unprofessional
+   glow" look. Keep a subtle hover sheen only; remove the always-on box-shadow. */
+.dropdown-item-btn .item-icon,
+.platform-tab .platform-icon,
+.trigger-icon-wrapper,
+.pill-icon,
+.title-icon {
+  box-shadow: none !important;
+}
+.sidebar-link:hover .icon,
+.top-tab-btn:hover .tab-icon,
+.bottom-nav-item:hover .nav-icon,
+.dropdown-item-btn:hover .item-icon,
+.platform-tab:hover .platform-icon {
+  box-shadow: 0 0 14px rgba(20,184,166,0.18) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* P3-4: GLOBAL text-overflow safety — no overlapping text in any
+   card/badge/pill/cell regardless of content length. */
+.dashboard-card h2,
+.dashboard-card h3,
+.dashboard-card h4,
+.tab-header h2,
+.tab-header p,
+.security-badge span,
+.support-lane-copy strong,
+.support-lane-copy small,
+.metric-label,
+.stat-label-sm,
+.metric-label-sm {
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  min-width: 0 !important;
+}
+
+/* P3-5: Consistent section heading rhythm on the landing page */
+.section-title { letter-spacing: -0.02em !important; }
+.section-subtitle { line-height: 1.6 !important; }
+
+/* P3-6: Buttons with icon + text — vertical centering everywhere */
+.btn svg { vertical-align: middle !important; }
+
+/* P3-7: Payment method tabs — equal sizing, no logo overflow */
+#payment-method-tabs .platform-tab {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 52px !important;
+}
+
+/* P3-8: Quick-amount buttons — even grid, no wrap jitter */
+.quick-amounts-group {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+}
+.quick-amount-btn { width: 100% !important; }
+
+/* P3-9: Affiliates stat values — prevent currency symbol cramping */
+.stat-value-lg { white-space: nowrap !important; }
+
+/* P3-10: Reduce motion on low-end / accessibility — already partly handled,
+   extend to all decorative transforms. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   QA POLISH BATCH 4 — live QA report fixes
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* QA4-1 (CRITICAL): AI Recommendation cards — price + Launch button overlap.
+   In narrow 2-col cards the price column collapsed to ~26px and the nowrap
+   price overflowed into the button. Stack them so each gets full width. */
+.ai-suggest-price-row,
+.order-ai-recommendation-panel .ai-suggest-price-row {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  grid-template-columns: none !important;
+}
+.ai-suggest-rate,
+.order-ai-recommendation-panel .ai-suggest-rate {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+}
+.ai-suggest-action-btn,
+.order-ai-recommendation-panel .ai-suggest-action-btn {
+  width: 100% !important;
+  min-width: 0 !important;
+  text-align: center !important;
+}
+
+/* QA4-3: Platform selector — let tabs WRAP so none are clipped/hidden.
+   Was overflow-x:auto + nowrap + hidden scrollbar = TikTok cut off, no hint. */
+.platform-tabs {
+  flex-wrap: wrap !important;
+  overflow-x: visible !important;
+}
+.platform-tabs .platform-tab {
+  flex: 1 1 84px !important;
+}
+
+/* QA4-4: Hide the fixed Flash-Sale promo banner for logged-in users so it no
+   longer double-stacks with the dashboard nav (it's a visitor marketing bar). */
+body.is-authenticated .apex-promo-banner {
+  display: none !important;
+  transform: translateY(-100%) !important;
+}
+
+/* QA4-5: Service "Description" used a monospace/code font, clashing with the
+   rest of the UI. Match the body font while keeping the callout box. */
+.details-desc-section .desc-text {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+  color: var(--text-secondary, #8ba3c7) !important;
+  font-size: 0.85rem !important;
+}
+
+/* QA4-6: OpenClaw FAB — force a clean ROUND button at all sizes.
+   codex-ui-v2.css uses the #id selector (higher specificity) to make it a wide
+   160px pill, so we must also use #id here (loads later) to win. */
+#ai-chat-fab {
+  width: 56px !important;
+  height: 56px !important;
+  max-width: 56px !important;
+  min-width: 56px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+#ai-chat-fab .ai-fab-text,
+#ai-chat-fab .ai-fab-vip { display: none !important; }
+#ai-chat-fab .ai-fab-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 0 !important;
+  box-shadow: none !important;
+}
+#ai-chat-fab .ai-fab-icon img {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+#ai-chat-fab .ai-unread-badge {
+  position: absolute !important;
+  top: -2px !important;
+  right: -2px !important;
+  margin: 0 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   QA POLISH BATCH 5 — mobile hero horizontal-overflow fix (verified via render)
+   The hero content was wider than the viewport on phones: title clipped,
+   dashboard mock and CTA buttons cut off at the right edge. Root causes:
+   grid/flex children missing min-width:0, and CTA buttons forced to 200px each.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  .hero-grid { min-width: 0 !important; }
+  .hero-grid > * { min-width: 0 !important; max-width: 100% !important; }
+  .hero-text-content { min-width: 0 !important; max-width: 100% !important; }
+  .hero-title { overflow-wrap: anywhere !important; word-break: break-word !important; }
+  .hero-graphic-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .glass-dashboard-mock {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    transform: none !important;
+  }
+  /* CTA buttons: stack full-width instead of forcing 200px each (caused overflow) */
+  .hero-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .hero-actions .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+  }
+  /* General safety: no section child may exceed the viewport width */
+  .hero-section, .hero-section * { max-width: 100% !important; }
+}

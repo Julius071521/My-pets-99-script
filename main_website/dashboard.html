@@ -1,0 +1,1734 @@
+    <section class="dashboard-section hidden" id="dashboard-page-view">
+
+      <!-- Sidebar Mobile Backdrop -->
+      <div class="sidebar-backdrop hidden" id="sidebar-backdrop"></div>
+      
+      <div class="dashboard-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="dash-sidebar">
+          <div class="sidebar-user-card" id="sidebar-user-card">
+            <div class="avatar" id="sidebar-avatar-btn">⚡</div>
+            <div class="info" id="sidebar-info-btn">
+              <div class="username" id="sidebar-username">SMM Entrepreneur</div>
+              <div class="account-balance-row">
+                <span class="account-balance" id="sidebar-balance-value">₱0.00</span>
+                <button class="refresh-bal-btn" id="refresh-balance-btn" title="Refresh Balance">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Tooltip for balance breakdown -->
+            <div class="balance-tooltip" id="sidebar-balance-tooltip">
+              <div class="tooltip-header">Balance Overview</div>
+              <div class="tooltip-row">
+                <span>Available:</span>
+                <strong id="tooltip-balance-val">₱0.00</strong>
+              </div>
+              <div class="tooltip-row">
+                <span>Total Spent:</span>
+                <strong id="tooltip-spent-val">₱0.00</strong>
+              </div>
+              <div class="tooltip-row">
+                <span>Status:</span>
+                <span class="tooltip-vip-badge">PRO</span>
+              </div>
+            </div>
+
+            <!-- Profile Dropdown for Sidebar -->
+            <div class="sidebar-profile-dropdown hidden" id="sidebar-profile-dropdown">
+              <button class="sidebar-dropdown-item" id="sd-item-profile">
+                <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg></span> My Profile
+              </button>
+              <button class="sidebar-dropdown-item" id="sd-item-funds">
+                <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></span> Add Funds
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="sidebar-dropdown-item text-danger" id="sd-item-logout">
+                <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span> Log Out
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-admin-banner hidden" id="sidebar-admin-banner" aria-label="Admin quick access">
+            <button class="sidebar-link sidebar-link-admin" data-tab="admin-panel" id="sidebar-tab-admin-top" type="button">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+              <span>Admin Control Panel</span>
+            </button>
+          </div>
+
+          <nav class="sidebar-links">
+            <button class="sidebar-link active" data-tab="new-order" id="sidebar-tab-new-order">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></span>
+              <span>New Order Desk</span>
+            </button>
+            <button class="sidebar-link" data-tab="add-funds" id="sidebar-tab-add-funds">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></span>
+              <span>Add Funds Desk</span>
+            </button>
+            <button class="sidebar-link" data-tab="services-list" id="sidebar-tab-services">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></span>
+              <span>Services Directory</span>
+            </button>
+            <button class="sidebar-link" data-tab="order-history" id="sidebar-tab-history">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></span>
+              <span>Order History</span>
+            </button>
+            <button class="sidebar-link" data-tab="support-tickets" id="sidebar-tab-support-tickets">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+              <span>Support Desk</span>
+            </button>
+            <button class="sidebar-link" data-tab="developer-api" id="sidebar-tab-api">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+              <span>Developer API</span>
+            </button>
+            <button class="sidebar-link hidden" data-tab="settings" id="sidebar-tab-settings">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.05 1.39 1.2H21a2 2 0 1 1 0 4h-.09c-.62.15-1.13.6-1.39 1.2z"></path></svg></span>
+              <span>Proxy Settings</span>
+            </button>
+            <button class="sidebar-link" data-tab="popular-services" id="sidebar-tab-popular">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1.5-3S8 6.5 8 5.5 9 4 10 4s2 1 2 2.5"></path><path d="M12 21c4.97 0 9-3.58 9-8 0-1.34-.36-2.6-1-3.73"></path></svg></span>
+              <span>Popular Services</span>
+            </button>
+</nav>
+        </aside>
+
+        <!-- Main Dashboard Viewport -->
+        <div class="dash-viewport" id="dash-viewport-container">
+          <!-- Pull to Refresh Indicator -->
+          <div id="pull-to-refresh-indicator" class="pull-refresh-indicator">
+            <div class="pull-refresh-spinner"></div>
+            <span class="pull-refresh-text">Pull down to refresh...</span>
+          </div>
+          
+          <!-- Maintenance Mode Banner -->
+          <div class="maintenance-banner hidden" id="maintenance-banner">
+            <span class="maintenance-icon" aria-hidden="true">⚠️</span>
+            <div class="maintenance-body">
+              <strong class="maintenance-title">System Maintenance Active</strong>
+              <span class="maintenance-desc">Our SMM automated campaign desk is currently undergoing scheduled backend upgrades. Placing orders is temporarily paused.</span>
+            </div>
+          </div>
+          
+          <!-- PREMIUM GLOSSY DASHBOARD HEADER: TABS + SERVICE SEARCH -->
+          <div class="dash-premium-header bg-glass">
+
+            
+            <div class="dash-top-tabs">
+              <div class="tab-slider-indicator"></div>
+              <button class="top-tab-btn active" data-dash-tab="new-order">
+                <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></span>
+                <span>New Order</span>
+              </button>
+              <button class="top-tab-btn" data-dash-tab="add-funds">
+                <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></span>
+              <span>Add Funds</span>
+              </button>
+            </div>
+            <div class="dash-top-search">
+              <div class="search-input-wrapper">
+                <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+                <input type="text" id="dash-custom-service-search" placeholder="Search for a service...">
+              </div>
+              <div class="dash-search-autocomplete hidden" id="search-autocomplete-menu"></div>
+            </div>
+          </div>
+          
+          <!-- TAB 1: NEW ORDER -->
+          <div class="dash-tab-content active" id="tab-new-order">
+            <div class="tab-header">
+              <h2>New Campaign Order</h2>
+              <p>Configure and launch a high-quality SMM campaign instantly.</p>
+            </div>
+
+            <!-- Quick Guide Banner -->
+            <div class="quick-guide-banner" id="quick-guide-banner" role="region" aria-label="Quick Start Guide">
+              <div class="quick-guide-header">
+                <div class="quick-guide-icon" aria-hidden="true">⚡</div>
+                <div>
+                  <strong class="quick-guide-title">Quick Start Guide</strong>
+                  <span class="quick-guide-subtitle">Place your first order in 4 easy steps</span>
+                </div>
+                <button class="quick-guide-dismiss" id="btn-dismiss-quick-guide" aria-label="Dismiss guide" title="Dismiss">✕</button>
+              </div>
+              <div class="quick-guide-steps">
+                <div class="quick-guide-step">
+                  <div class="qs-step-num">1</div>
+                  <div class="qs-step-body">
+                    <strong>Add Funds</strong>
+                    <span>Go to "Add Funds" tab → choose GCash, Maya, or BPI → submit payment proof.</span>
+                  </div>
+                </div>
+                <div class="quick-guide-step">
+                  <div class="qs-step-num">2</div>
+                  <div class="qs-step-body">
+                    <strong>Select Platform</strong>
+                    <span>Pick social platform (Instagram, TikTok, YouTube, etc.) from the dropdown below.</span>
+                  </div>
+                </div>
+                <div class="quick-guide-step">
+                  <div class="qs-step-num">3</div>
+                  <div class="qs-step-body">
+                    <strong>Choose Service</strong>
+                    <span>Select a service type (Followers, Likes, Views…) and set the quantity.</span>
+                  </div>
+                </div>
+                <div class="quick-guide-step">
+                  <div class="qs-step-num">4</div>
+                  <div class="qs-step-body">
+                    <strong>Submit &amp; Track</strong>
+                    <span>Paste your profile/post URL, click "Place Order", then track in "Order History".</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-card bg-glass user-dashboard-summary-card mob-wallet-card">
+              <div class="user-summary-main mob-wallet-head">
+                <div class="mob-wallet-balance">
+                  <span class="summary-label">Available Balance</span>
+                  <strong id="user-summary-balance">₱0.00</strong>
+                </div>
+                <button type="button" class="btn btn-primary mob-wallet-cta" id="user-summary-quick-order-btn">Quick Order</button>
+              </div>
+              <button type="button" class="mob-stats-toggle" id="mob-stats-toggle" aria-expanded="false" aria-controls="user-summary-grid">
+                <span class="mob-stats-toggle-label">Order stats</span>
+                <span class="mob-stats-toggle-icon" aria-hidden="true">▼</span>
+              </button>
+              <div class="user-summary-grid mob-stats-panel" id="user-summary-grid">
+                <div class="mob-stat-chip"><span>Pending</span><strong id="summary-pending-orders">0</strong></div>
+                <div class="mob-stat-chip"><span>Processing</span><strong id="summary-processing-orders">0</strong></div>
+                <div class="mob-stat-chip"><span>Completed</span><strong id="summary-completed-orders">0</strong></div>
+                <div class="mob-stat-chip"><span>Failed</span><strong id="summary-failed-orders">0</strong></div>
+              </div>
+              <div class="user-summary-footer mob-promo-panel">
+                <div class="mob-promo-copy">
+                  <strong class="mob-promo-title">Latest update</strong>
+                  <p id="summary-announcement">Your orders and receipts are saved automatically so you can track every campaign.</p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm mob-promo-support" id="summary-support-btn">Get help</button>
+              </div>
+            </div>
+
+            <div class="support-policy-stack">
+              <details class="support-policy-panel">
+                <summary><span>AI Support System (24/7 Automated)</span></summary>
+                <div class="support-policy-body">
+                  <p>Order AI Support provides instant automated assistance for order-related concerns.</p>
+                  <div class="support-policy-grid">
+                    <div><strong>Speed Up</strong><span>Fulfillment acceleration request when available.</span></div>
+                    <div><strong>Refill Requests</strong><span>Automatic refill initiation when the service supports it.</span></div>
+                    <div><strong>Cancellations</strong><span>Cancellation request when the order is eligible.</span></div>
+                    <div><strong>Status Updates</strong><span>Real-time order status lookup when system data is available.</span></div>
+                  </div>
+                  <div class="support-policy-note">AI Support communicates with the Fulfillment System for faster resolution. Available 24/7 for immediate assistance.</div>
+                </div>
+              </details>
+              <details class="support-policy-panel">
+                <summary><span>Order Processing Requirements</span></summary>
+                <div class="support-policy-body">
+                  <div class="support-policy-warning">
+                    <strong>Before Opening a Ticket</strong>
+                    <p>Orders must be at least 24 hours old before raising processing concerns. Tickets for younger orders may not be reviewed unless the issue is payment-related or clearly incorrect.</p>
+                  </div>
+                  <p>Services have different processing speeds depending on platform load, system availability, and order volume. The 24-hour window allows natural order completion before escalation.</p>
+                </div>
+              </details>
+              <details class="support-policy-panel">
+                <summary><span>Human Support & Admin Escalation Policy</span></summary>
+                <div class="support-policy-body">
+                  <p>Human Support typically responds within 0-24 hours for payments, discounts, and complex concerns.</p>
+                  <div class="support-policy-warning is-human">
+                    <strong>Escalation to Admin</strong>
+                    <p>Only escalate if support has not resolved the issue within 48 hours. Admin intervention is reserved for unresolved cases only.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="order-desk-grid">
+              
+              <!-- Order Entry Card -->
+              <div class="dashboard-card form-card">
+                <form id="smm-order-form">
+                  <!-- STEP 1: SELECT SERVICE -->
+                  <div class="form-step-group">
+                    <div class="step-header">
+                      <div class="step-badge">1</div>
+                      <div class="step-title-wrap">
+                        <h4 class="step-title">Select Service Package</h4>
+                        <p class="step-subtitle">Choose the platform and specific boosting category</p>
+                      </div>
+                    </div>
+
+                    <!-- Social Platforms Selector -->
+                    <div class="platform-tabs-container">
+                      <span class="section-label">Select Social Platform</span>
+                      <div class="platform-tabs" id="order-platform-tabs">
+                        <div class="platform-tab active" data-platform="all">
+                          <span class="platform-icon">🌐</span>
+                          <span class="platform-name">All</span>
+                        </div>
+                        <div class="platform-tab" data-platform="facebook">
+                          <img src="/images/facebook.png" alt="Facebook" class="platform-logo">
+                          <span class="platform-name">Facebook</span>
+                        </div>
+                        <div class="platform-tab" data-platform="instagram">
+                          <img src="/images/instagram.png" alt="Instagram" class="platform-logo">
+                          <span class="platform-name">Instagram</span>
+                        </div>
+                        <div class="platform-tab" data-platform="tiktok">
+                          <img src="/images/tiktok.png" alt="TikTok" class="platform-logo">
+                          <span class="platform-name">TikTok</span>
+                        </div>
+                        <div class="platform-tab" data-platform="youtube">
+                          <img src="/images/youtube.png" alt="YouTube" class="platform-logo">
+                          <span class="platform-name">YouTube</span>
+                        </div>
+                        <div class="platform-tab" data-platform="x">
+                          <img src="/images/x.png" alt="X" class="platform-logo">
+                          <span class="platform-name">X (Twitter)</span>
+                        </div>
+                        <div class="platform-tab" data-platform="telegram">
+                          <img src="/images/telegram.png" alt="Telegram" class="platform-logo">
+                          <span class="platform-name">Telegram</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Category Select -->
+                    <div class="form-group">
+                      <label for="order-category">Service Category</label>
+                      <div class="select-wrapper visually-hidden-select">
+                        <select id="order-category" required>
+                          <option value="" disabled selected>Select Category...</option>
+                          <!-- Populated dynamically -->
+                        </select>
+                      </div>
+                      
+                      <!-- Premium Custom Dropdown -->
+                      <div class="custom-dropdown" id="category-custom-dropdown">
+                        <div class="custom-dropdown-trigger" id="category-dropdown-trigger">
+                          <div class="trigger-inner">
+                            <span class="trigger-icon-wrapper" id="category-trigger-icon">🌐</span>
+                            <span class="trigger-text">Select Category...</span>
+                          </div>
+                          <span class="trigger-arrow">▼</span>
+                        </div>
+                        <div class="custom-dropdown-menu hidden" id="category-dropdown-menu">
+                          <!-- Options populated dynamically -->
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Service Select -->
+                    <div class="form-group">
+                      <label for="order-service">Service Package</label>
+                      <div class="select-wrapper visually-hidden-select">
+                        <select id="order-service" required disabled>
+                          <option value="" disabled selected>Select service package...</option>
+                        </select>
+                      </div>
+                      
+                      <!-- Premium Custom Dropdown for Service Package -->
+                      <div class="custom-dropdown disabled" id="package-custom-dropdown">
+                        <div class="custom-dropdown-trigger" id="package-dropdown-trigger">
+                          <div class="trigger-inner">
+                            <span class="trigger-icon-wrapper" id="package-trigger-icon">📦</span>
+                            <span class="trigger-text">Select service package...</span>
+                          </div>
+                          <span class="trigger-arrow">▼</span>
+                        </div>
+                        <div class="custom-dropdown-menu hidden" id="package-dropdown-menu">
+                          <!-- Options populated dynamically -->
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Dynamic Service Specs Card -->
+                    <div class="service-specs-box hidden" id="service-specs">
+                      <div class="spec-grid">
+                        <div class="spec-cell">
+                          <span class="label">Rate per 1k</span>
+                          <span class="value" id="spec-rate">₱0.00</span>
+                        </div>
+                        <div class="spec-cell">
+                          <span class="label">Min Order</span>
+                          <span class="value" id="spec-min">0</span>
+                        </div>
+                        <div class="spec-cell">
+                          <span class="label">Max Order</span>
+                          <span class="value" id="spec-max">0</span>
+                        </div>
+                      </div>
+                      <div class="spec-desc-box">
+                        <strong>Type:</strong> <span id="spec-type">Default</span>
+                      </div>
+                    </div>
+
+                    <div class="order-ai-recommendation-panel ai-smart-intelligence-card" id="ai-smart-intelligence-card">
+                      <div class="order-ai-panel-header">
+                        <div class="order-ai-title-row">
+                          <span class="ai-pulse-brain" aria-hidden="true">AI</span>
+                          <div class="order-ai-title-copy">
+                            <h3>Apex AI Recommendations</h3>
+                            <p class="order-ai-subtitle-desktop">Smart package suggestions based on platform, budget, and campaign goal.</p>
+                            <p class="order-ai-subtitle-mobile">Pick a goal and budget — we match the best packages.</p>
+                          </div>
+                        </div>
+                        <div class="ai-status-indicator" aria-live="polite">
+                          <span></span>
+                          <strong>Agent Ready</strong>
+                        </div>
+                      </div>
+
+                      <div class="ai-goal-finder" id="ai-goal-finder">
+                        <div class="ai-goal-field">
+                          <label for="ai-goal-select">Campaign goal</label>
+                          <select id="ai-goal-select">
+                            <option value="growth">Balanced growth</option>
+                            <option value="views">More views / reach</option>
+                            <option value="followers">Followers / subscribers</option>
+                            <option value="likes">Likes / reactions</option>
+                            <option value="comments">Comments / engagement</option>
+                            <option value="budget">Cheapest safe option</option>
+                          </select>
+                        </div>
+                        <div class="ai-goal-field">
+                          <label for="ai-budget-input">Budget (PHP)</label>
+                          <input type="number" id="ai-budget-input" min="0" step="1" placeholder="Optional max spend">
+                        </div>
+                        <button type="button" class="btn btn-primary ai-goal-submit-btn" id="ai-goal-find-btn">Find matches</button>
+                      </div>
+                      <div class="ai-goal-results hidden" id="ai-goal-results" aria-live="polite"></div>
+
+                      <div class="ai-suggestions-grid" id="ai-suggestions-grid">
+                        <!-- Dynamically populated in app.js -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- STEP 2: CAMPAIGN CONFIGURATION -->
+                  <div class="form-step-group">
+                    <div class="step-header">
+                      <div class="step-badge">2</div>
+                      <div class="step-title-wrap">
+                        <h4 class="step-title">Configure Order</h4>
+                        <p class="step-subtitle">Provide target link and desired quantity</p>
+                      </div>
+                    </div>
+
+                    <!-- Link Field -->
+                    <div class="form-group">
+                      <label for="order-url">Target URL / Link</label>
+                      <input type="url" id="order-url" placeholder="https://instagram.com/profile or video link" required disabled>
+                      <small class="form-tip">Must be publicly accessible. Do not use private links.</small>
+                      <small class="form-tip text-danger hidden" id="url-validation-warning">⚠️ This link does not match the selected platform. Please check your link.</small>
+                    </div>
+
+                    <!-- Custom Comments Field -->
+                    <div class="form-group hidden" id="custom-comments-group">
+                      <label for="order-comments">Comments</label>
+                      <textarea id="order-comments" rows="5" placeholder="1 comment per line" disabled></textarea>
+                      <small class="form-tip" id="comments-count-tip">Each non-empty line counts as 1 comment.</small>
+                    </div>
+
+                    <!-- Quantity Field -->
+                    <div class="form-group">
+                      <label for="order-quantity">Quantity</label>
+                      <input type="number" id="order-quantity" placeholder="Enter amount to deliver" required disabled min="1">
+                      <small class="form-tip" id="quantity-limits-tip">Input limits will reflect selected service limits.</small>
+                    </div>
+                  </div>
+
+                  <!-- STEP 3: COST & LAUNCH -->
+                  <div class="form-step-group">
+                    <div class="step-header">
+                      <div class="step-badge">3</div>
+                      <div class="step-title-wrap">
+                        <h4 class="step-title">Launch Campaign</h4>
+                        <p class="step-subtitle">Verify AI estimation and launch order</p>
+                      </div>
+                    </div>
+
+                    <!-- ApexBoost AI™ Predictor Panel -->
+                    <div class="dashboard-card bg-glass hidden ai-predictor-card" id="ai-predictor-card">
+                      <div class="ai-pred-header">
+                        <span class="ai-pred-icon" aria-hidden="true">🧠</span>
+                        <strong class="ai-pred-title">ApexBoost AI™ Speed &amp; Success Predictor</strong>
+                      </div>
+                      <div class="ai-pred-grid">
+                        <div class="ai-pred-cell">
+                          <span class="ai-pred-label">⚡ Estimated Delivery</span>
+                          <strong id="ai-pred-delivery" class="ai-pred-value">Checking...</strong>
+                        </div>
+                        <div class="ai-pred-cell">
+                          <span class="ai-pred-label">🟢 Channel Stability</span>
+                          <strong id="ai-pred-stability" class="ai-pred-value success">Checking...</strong>
+                        </div>
+                      </div>
+                      <div class="ai-pred-note">
+                        <span class="badge-recommended">Live Data</span>
+                        <span>Predictions become available after service data has loaded successfully.</span>
+                      </div>
+                    </div>
+
+                    <div class="ai-order-guard-card hidden" id="ai-order-guard-card" aria-live="polite">
+                      <div class="ai-order-guard-head">
+                        <div>
+                          <strong>AI Order Guard</strong>
+                          <span id="ai-order-guard-summary">Select a service, target link, and quantity to scan risk.</span>
+                        </div>
+                        <span class="ai-order-guard-score" id="ai-order-guard-score">--</span>
+                      </div>
+                      <div class="ai-order-guard-list" id="ai-order-guard-list"></div>
+                    </div>
+
+                    <!-- Promo Code Block -->
+                    <div class="coupon-apply-box" id="coupon-apply-box">
+                      <div class="coupon-box-header">
+                        <div>
+                          <strong>Promo Code</strong>
+                          <span>Apply active discount codes before launching.</span>
+                        </div>
+                      </div>
+                      <div class="coupon-input-row">
+                        <input type="text" id="order-coupon-code" placeholder="e.g. APEXBIDA" autocomplete="off" spellcheck="false">
+                        <button type="button" class="btn btn-secondary btn-sm" id="apply-coupon-btn">Apply</button>
+                        <button type="button" class="btn btn-secondary btn-sm hidden" id="remove-coupon-btn">Remove</button>
+                      </div>
+                      <small class="form-tip coupon-status-text" id="coupon-status-text">Select a service and quantity first, then apply a promo code.</small>
+                    </div>
+
+                    <!-- Cost Output Block -->
+                    <div class="cost-summary-box">
+                      <div class="cost-row">
+                        <span>Service Rate:</span>
+                        <span id="calc-rate-per-1k">₱0.00</span>
+                      </div>
+                      <div class="cost-row hidden" id="coupon-original-row">
+                        <span>Subtotal:</span>
+                        <span id="coupon-original-amount">PHP 0.00</span>
+                      </div>
+                      <div class="cost-row hidden" id="coupon-discount-row">
+                        <span>Promo Discount:</span>
+                        <span id="coupon-discount-amount">-PHP 0.00</span>
+                      </div>
+                      <div class="cost-row highlight">
+                        <span>Total Charge:</span>
+                        <span id="calc-total-charge">₱0.00</span>
+                      </div>
+                    </div>
+
+                    <div class="pre-submit-order-notice" id="pre-submit-order-notice" aria-live="polite">
+                      <div class="notice-icon">!</div>
+                      <div>
+                        <strong>Before you submit your order</strong>
+                        <p class="delivery-estimate-line">
+                          Estimated delivery:
+                          <span class="delivery-speed-badge muted" id="pre-submit-speed-badge" hidden aria-hidden="true">—</span>
+                          <span id="pre-submit-service-time">Select a service package first.</span>
+                        </p>
+                        <ul>
+                          <li><strong>Refund protection:</strong> if an order fails or is not delivered, you can request a refund back to your wallet through a support ticket — our team reviews every failed order.</li>
+                          <li>Test with a small order first before bulk ordering to confirm the service matches your target link.</li>
+                          <li>Once submitted, cancellation requests may take 24-48 hours and are not always guaranteed, depending on system status.</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary btn-block" id="submit-order-btn" disabled>
+                      <span>Launch Campaign</span>
+                    </button>
+                  </div>
+                </form>
+
+                <!-- Feedback Toast/Message area -->
+                <div class="order-status-alert hidden" id="order-form-alert"></div>
+              </div>
+
+              <!-- Premium Dynamic Service Details & Platform Update Panel -->
+              <div class="order-info-panel" id="order-details-side-panel">
+                <!-- Spec Details Container -->
+                <div class="dashboard-card bg-glass service-details-card">
+                  <div class="details-glow"></div>
+                  <div class="details-platform-glow" id="details-platform-glow"></div>
+                  <h3 class="details-title">
+                    <span class="title-icon">📊</span> Service details
+                  </h3>
+                  
+                  <div class="details-divider"></div>
+                  
+                  <div class="details-specs-pills">
+                    <!-- Example Link -->
+                    <div class="detail-pill-row">
+                      <div class="pill-label-wrap">
+                        <span class="pill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+                        <span class="pill-label">Example Link</span>
+                      </div>
+                      <span class="pill-value" id="details-example-link"><span class="premium-url-badge placeholder-badge">example.com</span></span>
+                    </div>
+
+                    <!-- Minimum -->
+                    <div class="detail-pill-row">
+                      <div class="pill-label-wrap">
+                        <span class="pill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span>
+                        <span class="pill-label">Minimum</span>
+                      </div>
+                      <span class="pill-value highlight-green" id="details-minimum-val">10</span>
+                    </div>
+
+                    <!-- Maximum -->
+                    <div class="detail-pill-row">
+                      <div class="pill-label-wrap">
+                        <span class="pill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>
+                        <span class="pill-label">Maximum</span>
+                      </div>
+                      <span class="pill-value highlight-cyan" id="details-maximum-val">1,000,000</span>
+                    </div>
+                    
+                    <!-- Average Time -->
+                    <div class="detail-pill-row">
+                      <div class="pill-label-wrap">
+                        <span class="pill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                        <span class="pill-label">Average Time</span>
+                      </div>
+                      <span class="pill-value highlight-amber" id="details-avg-time-val">388 hours and 33 minutes</span>
+                    </div>
+                  </div>
+                  
+                  <div class="details-divider"></div>
+                  
+                  <div class="details-desc-section">
+                    <h4 class="desc-heading">Description</h4>
+                    <p class="desc-text" id="details-description-val">Select a premium boosting service package to view real-time delivery rules, speed details, and platform instructions.</p>
+                  </div>
+
+                  <div class="details-rules-section">
+                    <h4 class="desc-heading">Follow Rules</h4>
+                    <div class="details-rules-list" id="details-rules-val">
+                      <span class="rule-chip muted">Select a service to view service rules.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Service Update Card -->
+                <div class="dashboard-card bg-glass service-update-card">
+                  <h3 class="details-title accent">Service Update</h3>
+                  <div class="update-scroll-area">
+                    <div class="update-item">
+                      <span class="update-badge new">NEW</span>
+                      <div class="update-info">
+                        <span class="update-date">May 23, 2026</span>
+                        <p class="update-text">Facebook Hidden Followers [Lifetime Refill] speed upgraded to 50K/Day. Fast start enabled.</p>
+                      </div>
+                    </div>
+                    <div class="update-item">
+                      <span class="update-badge maintenance">UPG</span>
+                      <div class="update-info">
+                        <span class="update-date">May 21, 2026</span>
+                        <p class="update-text">TikTok Views [Organic Retention] is currently processing with 99.8% stability algorithm. Instantly safe.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dashboard-card bg-glass service-update-card">
+                  <h3 class="details-title accent">
+                <span class="title-icon">📣</span> Promo Updates
+                  </h3>
+                  <div class="update-scroll-area" id="promo-updates-list">
+                    <div class="update-item">
+                      <span class="update-badge new">INFO</span>
+                      <div class="update-info">
+                        <span class="update-date">Today</span>
+                        <p class="update-text">No promo update posted yet. Watch this space for active codes and campaign banners.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- TAB 2: SERVICES DIRECTORY -->
+          <div class="dash-tab-content hidden" id="tab-services-list">
+            <div class="tab-header">
+              <h2>Services Catalog & Pricing</h2>
+              <p>Search packages, tap <strong>Compare</strong> on two or more services, then hit the green <strong>Compare</strong> button in the dock below.</p>
+            </div>
+
+            <!-- Social Platforms Filter Selector -->
+            <div class="platform-tabs-container directory-selector">
+              <span class="section-label">Filter Services by Platform</span>
+              <div class="platform-tabs" id="directory-platform-tabs">
+                <div class="platform-tab active" data-platform="all">
+                  <span class="platform-icon">🌐</span>
+                  <span class="platform-name">All Platforms</span>
+                </div>
+                <div class="platform-tab" data-platform="facebook">
+                  <img src="/images/facebook.png" alt="Facebook" class="platform-logo">
+                  <span class="platform-name">Facebook</span>
+                </div>
+                <div class="platform-tab" data-platform="instagram">
+                  <img src="/images/instagram.png" alt="Instagram" class="platform-logo">
+                  <span class="platform-name">Instagram</span>
+                </div>
+                <div class="platform-tab" data-platform="tiktok">
+                  <img src="/images/tiktok.png" alt="TikTok" class="platform-logo">
+                  <span class="platform-name">TikTok</span>
+                </div>
+                <div class="platform-tab" data-platform="youtube">
+                  <img src="/images/youtube.png" alt="YouTube" class="platform-logo">
+                  <span class="platform-name">YouTube</span>
+                </div>
+                <div class="platform-tab" data-platform="x">
+                  <img src="/images/x.png" alt="X" class="platform-logo">
+                  <span class="platform-name">X (Twitter)</span>
+                </div>
+                <div class="platform-tab" data-platform="telegram">
+                  <img src="/images/telegram.png" alt="Telegram" class="platform-logo">
+                  <span class="platform-name">Telegram</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-actions-container">
+              <input type="text" class="search-input" id="services-search-input" placeholder="Search by name, platform or category...">
+              
+              <div class="select-wrapper sm-select visually-hidden-select">
+                <select id="services-cat-filter">
+                  <option value="all">All Categories</option>
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+
+              <!-- Premium Custom Dropdown for Directory Category Filter -->
+              <div class="custom-dropdown directory-cat-dropdown" id="directory-cat-custom-dropdown">
+                <div class="custom-dropdown-trigger" id="directory-cat-dropdown-trigger">
+                  <div class="trigger-inner">
+                            <span class="trigger-icon-wrapper" id="directory-cat-trigger-icon">🌐</span>
+                    <span class="trigger-text">All Categories</span>
+                  </div>
+                  <span class="trigger-arrow">▼</span>
+                </div>
+                <div class="custom-dropdown-menu hidden scrollable" id="directory-cat-dropdown-menu">
+                  <!-- Options populated dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-card table-card">
+              <div class="scrollable-table-wrap">
+                <table class="data-table" id="services-directory-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Category</th>
+                      <th>Service</th>
+                      <th>Rate/1K</th>
+                      <th>Min</th>
+                      <th>Max</th>
+                      <th>AI Analysis</th>
+                      <th>Compare</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="services-table-body">
+                    <!-- Dynamically populated -->
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Directory Pagination -->
+              <div id="directory-pagination" class="directory-pagination"></div>
+            </div>
+          </div>
+
+          <!-- TAB 3: ORDER HISTORY -->
+          <div class="dash-tab-content hidden" id="tab-order-history">
+            <div class="tab-header-flex">
+              <div class="tab-header">
+                <h2>Campaign History & Status</h2>
+                <p>Monitor your active campaigns, view receipts, and trigger refills.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="refresh-history-btn">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                <span>Sync Statuses</span>
+              </button>
+            </div>
+
+            <!-- Campaign Analytics Card -->
+            <div class="dashboard-card bg-glass campaign-analytics-card" id="campaign-analytics-card">
+              <h3 class="analytics-card-title">
+                <span>Campaign Spend &amp; Order Analytics</span>
+              </h3>
+              <div class="analytics-metrics-row">
+                <div class="analytic-metric-card">
+                  <span class="metric-label">Total Campaigns Launched</span>
+                  <strong id="analytics-total-orders">0</strong>
+                </div>
+                <div class="analytic-metric-card">
+                  <span class="metric-label">Total Invested</span>
+                  <strong id="analytics-total-spent" class="metric-value accent">₱0.00</strong>
+                </div>
+                <div class="analytic-metric-card">
+                  <span class="metric-label">Active Campaigns</span>
+                  <strong id="analytics-active-orders" class="metric-value success">0</strong>
+                </div>
+              </div>
+              <div class="analytics-chart-wrap">
+                <svg id="campaign-analytics-svg" viewBox="0 0 600 180" class="analytics-svg">
+                  <!-- Dynamic SVG elements will be drawn by JS -->
+                </svg>
+              </div>
+            </div>
+
+            <div class="table-actions-container">
+              <input type="text" class="search-input" id="orders-search-input" placeholder="Filter by Order ID or URL...">
+              
+              <div class="filters-pills-row" id="orders-status-filters">
+                <button class="filter-pill active" data-status="all">All</button>
+                <button class="filter-pill" data-status="pending">Pending</button>
+                <button class="filter-pill" data-status="in progress">In Progress</button>
+                <button class="filter-pill" data-status="completed">Completed</button>
+                <button class="filter-pill" data-status="partial">Partial</button>
+              </div>
+            </div>
+
+            <!-- Error message if status refresh fails -->
+            <div class="order-status-alert hidden" id="history-alert"></div>
+
+            <div class="dashboard-card table-card">
+              <span class="table-scroll-hint">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7M5 12h14m0 0l-7 7m7-7l-7-7"/></svg>
+                Swipe left/right to view details ↔
+              </span>
+              <div class="scrollable-table-wrap">
+                <table class="data-table" id="orders-history-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Service Description</th>
+                      <th>Target Link</th>
+                      <th>Qty</th>
+                      <th>Cost</th>
+                      <th>Status</th>
+                      <th>Remaining</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-table-body">
+                    <!-- Placed orders appear here -->
+                    <tr class="order-empty-row">
+                      <td colspan="9" class="order-empty-state">
+                        <div class="deposit-empty-icon" aria-hidden="true">🚀</div>
+                        <p class="deposit-empty-title">No campaigns yet</p>
+                        <p class="deposit-empty-desc">Select a service package in the New Order tab to launch your first boosting campaign.</p>
+                        <button type="button" class="btn btn-primary btn-sm" id="order-empty-cta">Launch an order</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- PAGINATION CONTROLS PANEL -->
+              <div id="history-pagination" class="table-pagination-panel">
+                <span class="pagination-info text-muted">Showing 0-0 of 0 campaigns</span>
+                <div class="pagination-buttons">
+                  <button id="btn-history-prev" class="btn btn-secondary btn-sm">← Prev</button>
+                  <button id="btn-history-next" class="btn btn-secondary btn-sm">Next →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: DEVELOPER API -->
+          <div class="dash-tab-content hidden" id="tab-developer-api">
+            <div class="tab-header">
+              <h2>Developer API Integration</h2>
+              <p>Resell our services easily! Connect your panels directly to our API.</p>
+            </div>
+
+            <!-- API Key Management Card -->
+            <div class="dashboard-card api-key-management-card">
+              <div class="api-key-card-header">
+                <h3>Your API Key</h3>
+                <span class="api-key-status-badge" id="api-key-status-badge">Active</span>
+              </div>
+              <p class="api-key-desc">Your secret key authenticates all API requests. Keep it private — never share it publicly or commit it to source code.</p>
+
+              <div class="api-key-display-row">
+                <div class="api-key-field-wrap">
+                  <code id="developer-api-key-display" class="api-key-code masked">apx_••••••••••••••••••••••••••••••••</code>
+                </div>
+                <div class="api-key-actions">
+                  <button class="btn btn-secondary btn-sm" id="btn-toggle-api-key" type="button" aria-pressed="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    Reveal
+                  </button>
+                  <button class="btn btn-secondary btn-sm" id="btn-copy-api-key" type="button">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                  </button>
+                </div>
+              </div>
+
+              <div class="api-key-meta" id="api-key-meta">
+                <span id="api-key-created-label" class="api-key-meta-item">Created: —</span>
+                <span id="api-key-last-used-label" class="api-key-meta-item">Last used: —</span>
+              </div>
+
+              <div class="api-key-danger-row">
+                <button class="btn btn-outline-primary btn-sm" id="btn-generate-api-key" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  Regenerate Key
+                </button>
+                <button class="btn btn-danger-outline btn-sm" id="btn-revoke-api-key" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                  Revoke Key
+                </button>
+              </div>
+              <div class="order-status-alert hidden" id="api-key-alert"></div>
+            </div>
+
+            <div class="dashboard-card">
+              <h3>API Connection Details</h3>
+              <div class="api-details-grid">
+                <div class="detail-row">
+                  <strong>HTTP Method:</strong>
+                  <code>POST</code>
+                </div>
+                <div class="detail-row">
+                  <strong>API Endpoint URL:</strong>
+                  <code id="api-endpoint-display">https://apexsmmboosting.com/api/v2</code>
+                </div>
+                <div class="detail-row">
+                  <strong>Authentication:</strong>
+                  <code>JSON body field <em>key</em></code>
+                </div>
+                <div class="detail-row">
+                  <strong>Response Format:</strong>
+                  <code>JSON</code>
+                </div>
+                <div class="detail-row">
+                  <strong>Rate Limit:</strong>
+                  <code>300 req / min</code>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-card">
+              <h3>Code Samples</h3>
+
+              <div class="tabs-subnav">
+                <button class="subtab-btn active" data-subtab="curl">cURL</button>
+                <button class="subtab-btn" data-subtab="nodejs">Node.js</button>
+                <button class="subtab-btn" data-subtab="python">Python</button>
+              </div>
+
+              <!-- Code Box 1: cURL -->
+              <div class="code-box-wrapper subtab-content" id="subtab-curl">
+                <pre><code>curl -X POST https://apexsmmboosting.com/api/v2 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "add",
+    "service": 101,
+    "url": "https://instagram.com/my_page",
+    "quantity": 1000,
+    "mode": "demo"
+  }'</code></pre>
+              </div>
+
+              <!-- Code Box 2: Node -->
+              <div class="code-box-wrapper subtab-content hidden" id="subtab-nodejs">
+                <pre><code>fetch('https://apexsmmboosting.com/api/v2', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    action: 'add',
+    service: 101,
+    url: 'https://instagram.com/my_page',
+    quantity: 1000,
+    mode: 'demo'
+  })
+})
+.then(res => res.json())
+.then(data => console.log(data));
+</code></pre>
+              </div>
+
+              <!-- Code Box 3: Python -->
+              <div class="code-box-wrapper subtab-content hidden" id="subtab-python">
+                <pre><code>import requests
+
+payload = {
+    "action": "add",
+    "service": 101,
+    "url": "https://instagram.com/my_page",
+    "quantity": 1000,
+    "mode": "demo"
+}
+
+response = requests.post("https://apexsmmboosting.com/api/v2", json=payload)
+print(response.json())</code></pre>
+              </div>
+            </div>
+
+            <!-- Supported Actions Reference -->
+            <div class="dashboard-card">
+              <h3>Supported API Actions</h3>
+              <div class="api-actions-table-wrap">
+                <table class="api-actions-table">
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th>Required Fields</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><code>add</code></td><td>key, service, link, quantity</td><td>Place a new order</td></tr>
+                    <tr><td><code>status</code></td><td>key, order</td><td>Get single order status</td></tr>
+                    <tr><td><code>multiStatus</code></td><td>key, orders</td><td>Bulk order status check</td></tr>
+                    <tr><td><code>services</code></td><td>key</td><td>List all available services</td></tr>
+                    <tr><td><code>balance</code></td><td>key</td><td>Get account balance</td></tr>
+                    <tr><td><code>refill</code></td><td>key, order</td><td>Request order refill</td></tr>
+                    <tr><td><code>cancel</code></td><td>key, orders</td><td>Cancel pending orders</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: PROXY SETTINGS -->
+          <div class="dash-tab-content hidden" id="tab-settings">
+            <div class="tab-header">
+              <h2>Proxy Configuration & Server Status</h2>
+              <p>Configure credentials and coordinate live link connections.</p>
+            </div>
+
+            <div class="dashboard-card">
+              <h3>Proxy Status Panel</h3>
+              <div class="settings-status-box" id="settings-status-alert">
+                <div class="status-indicator-row">
+                  <span class="indicator-dot loading" id="server-status-dot"></span>
+                  <strong id="server-status-title">Checking connection...</strong>
+                </div>
+                <p id="server-status-desc">Validating backend configuration...</p>
+              </div>
+
+              <form id="proxy-mode-settings-form">
+                <div class="form-group">
+                  <label>Current Dashboard Operating Mode</label>
+                  
+                  <div class="radio-card-group">
+                    <label class="radio-card active" id="radio-mode-demo-label">
+                      <input type="radio" name="operating-mode" value="demo" id="radio-mode-demo" checked>
+                      <div class="radio-card-content">
+                        <span class="radio-icon">🎮</span>
+                        <div class="radio-text">
+                          <strong>Protected Preview Mode</strong>
+                          <span>Runs completely offline using locally simulated data, orders, and speeds. Ideal for testing UI and mechanics.</span>
+                        </div>
+                      </div>
+                    </label>
+
+                    <label class="radio-card disabled" id="radio-mode-live-label">
+                      <input type="radio" name="operating-mode" value="live" id="radio-mode-live" disabled>
+                      <div class="radio-card-content">
+                        <span class="radio-icon">⚡</span>
+                        <div class="radio-text">
+                          <strong>Live System Integration</strong>
+                          <span>Live service connectivity is handled securely on the server side.</span>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="save-settings-btn" disabled>Save Mode Configuration</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="dashboard-card card-caution">
+              <h3>Security &amp; Deployment Information</h3>
+              <p>Protected deployment and fulfillment configuration details are intentionally hidden from public users.</p>
+              <ol class="setup-ol">
+                <li>Public API consumers only need the published endpoint and their access key.</li>
+                <li>Server credentials are managed privately by the site owner.</li>
+                <li>Contact the owner for protected integration setup details.</li>
+              </ol>
+              <p class="text-sm text-muted mt-2">Internal fulfillment and deployment credentials are intentionally excluded from customer-facing UI.</p>
+            </div>
+          </div>
+
+          <!-- TAB 6: POPULAR SERVICES -->
+          <div class="dash-tab-content hidden" id="tab-popular-services">
+            <div class="tab-header">
+              <h2>Popular Services</h2>
+              <p>Your most ordered services and their real-time delivery statistics.</p>
+            </div>
+            <div id="popular-services-grid" class="popular-services-grid">
+              <div class="services-loading-state">
+                <div class="spinner"></div>
+                <p>Loading your order statistics...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 7: ADMIN CONTROL PANEL -->
+          <div class="dash-tab-content hidden" id="tab-admin-panel">
+            <div id="admin-panel-dynamic-content">
+              <!-- Loaded dynamically from secure server endpoint -->
+            </div>
+          </div>
+          
+          <!-- TAB 8: ACCOUNT SETTINGS -->
+          <div class="dash-tab-content hidden" id="tab-account">
+            <div class="tab-header">
+              <h2>Account Settings</h2>
+              <p>Update your password and secure your boosting desk.</p>
+            </div>
+            
+            <div class="dashboard-card form-card account-settings-card">
+              <h3>Security Settings</h3>
+              <form id="change-password-form">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" id="account-username-display" readonly class="readonly-field">
+                </div>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="account-email-display" readonly class="readonly-field">
+                </div>
+                <div class="form-group">
+                  <label for="change-password-current">Current Password</label>
+                  <input type="password" id="change-password-current" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                  <label for="change-password-new">New Password</label>
+                  <input type="password" id="change-password-new" placeholder="••••••••" required autocomplete="new-password">
+                  <div id="account-password-strength" class="password-strength-meter" data-level="weak" aria-live="polite">
+                    <span class="password-strength-bar" aria-hidden="true"></span>
+                    <span class="password-strength-label">Use at least 8 characters.</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="change-password-confirm">Confirm New Password</label>
+                  <input type="password" id="change-password-confirm" placeholder="••••••••" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="change-password-btn">
+                  <span>Save Password Changes</span>
+                </button>
+              </form>
+              <div class="order-status-alert hidden" id="change-password-alert"></div>
+            </div>
+          </div>
+
+          <!-- TAB 9: ADD FUNDS -->
+          <div class="dash-tab-content hidden" id="tab-add-funds">
+            <div class="tab-header">
+              <h2>Add Funds</h2>
+              <p>Top up your Philippine Peso balance to place real boosting orders.</p>
+            </div>
+            
+            <div class="order-desk-grid">
+              <div class="dashboard-card form-card">
+                <h3>Select Payment Method</h3>
+                
+                <div class="platform-tabs" id="payment-method-tabs">
+                  <div class="platform-tab active" data-method="gcash">
+                    <img src="/images/gcash-logo.png" class="payment-method-logo" alt="GCash">
+                    <span class="platform-name">GCash</span>
+                  </div>
+                  <div class="platform-tab" data-method="paymaya">
+                    <img src="/images/maya-logo.png" class="payment-method-logo" alt="Maya">
+                    <span class="platform-name">PayMaya</span>
+                  </div>
+                  <div class="platform-tab" data-method="bpi">
+                    <span class="payment-logo-fallback bpi-logo" aria-hidden="true">BPI</span>
+                    <span class="platform-name">BPI Bank</span>
+                  </div>
+                </div>
+                
+                <!-- GCash Form Details -->
+                <div id="payment-details-gcash" class="payment-method-details hidden">
+                  <div class="payment-info-box gcash-box">
+                    <h4 class="payment-info-title gcash-title">
+                      <img src="/images/gcash-logo.png" class="payment-method-logo" alt="GCash"> GCash Express Manual Transfer
+                    </h4>
+                    <p class="payment-info-desc">
+                      Start a protected deposit request to reveal your GCash payment instructions.<br>
+                      <strong>Account Number:</strong> <span id="reveal-gcash-number" class="reveal-value">Hidden until secure flow begins.</span><br>
+                      <strong>Account Name:</strong> <span id="reveal-gcash-name" class="reveal-value">Hidden until secure flow begins.</span>
+                    </p>
+                  </div>
+                </div>
+                
+                <!-- PayMaya Form Details -->
+                <div id="payment-details-paymaya" class="payment-method-details hidden">
+                  <div class="payment-info-box maya-box">
+                    <h4 class="payment-info-title maya-title">
+                      <img src="/images/maya-logo.png" class="payment-method-logo" alt="Maya"> Maya Instant Manual Transfer
+                    </h4>
+                    <p class="payment-info-desc">
+                      Start a protected deposit request to reveal your Maya payment instructions.<br>
+                      <strong>Account Number:</strong> <span id="reveal-paymaya-number" class="reveal-value">Hidden until secure flow begins.</span><br>
+                      <strong>Account Name:</strong> <span id="reveal-paymaya-name" class="reveal-value">Hidden until secure flow begins.</span>
+                    </p>
+                  </div>
+                </div>
+                
+                <!-- BPI Form Details -->
+                <div id="payment-details-bpi" class="payment-method-details hidden">
+                  <div class="payment-info-box bpi-box">
+                    <h4 class="payment-info-title bpi-title">
+                      <span class="payment-logo-fallback bpi-logo" aria-hidden="true">BPI</span> BPI Bank Manual Deposit / Transfer
+                    </h4>
+                    <p class="payment-info-desc">
+                      Start a protected deposit request to reveal your BPI payment instructions.<br>
+                      <strong>Account Number:</strong> <span id="reveal-bpi-number" class="reveal-value">Hidden until secure flow begins.</span><br>
+                      <strong>Account Name:</strong> <span id="reveal-bpi-name" class="reveal-value">Hidden until secure flow begins.</span><br>
+                      <strong>Account Type:</strong> <span id="reveal-bpi-type" class="reveal-value">Hidden until secure flow begins.</span>
+                    </p>
+                  </div>
+                </div>
+                
+                <form id="add-funds-submission-form">
+                  <div class="form-group">
+                    <label for="funds-amount">Amount to Deposit (₱ PHP)</label>
+                    <input type="number" id="funds-amount" placeholder="Enter amount (e.g. 500)" required min="50">
+                    <div class="quick-amounts-group">
+                      <button type="button" class="quick-amount-btn" data-amount="50">₱50</button>
+                      <button type="button" class="quick-amount-btn" data-amount="100">₱100</button>
+                      <button type="button" class="quick-amount-btn" data-amount="250">₱250</button>
+                      <button type="button" class="quick-amount-btn" data-amount="500">₱500</button>
+                      <button type="button" class="quick-amount-btn" data-amount="1000">₱1,000</button>
+                      <button type="button" class="quick-amount-btn" data-amount="5000">₱5,000</button>
+                    </div>
+                    <small class="form-tip">Minimum deposit is ₱50.00.</small>
+                  </div>
+                  
+                  <button type="button" class="btn btn-primary btn-block" id="btn-start-deposit">
+                    <span>Reveal Payment Instructions</span>
+                  </button>
+
+                  <div id="payment-proof-submission-wrapper" class="hidden">
+                    <div class="form-group">
+                      <label for="funds-reference">Transaction Reference ID / Number</label>
+                      <input type="text" id="funds-reference" placeholder="GCash / Maya / BPI reference no." required>
+                      <small class="form-tip" id="ref-field-tip">Please enter the exact Reference ID to verify your payment.</small>
+                      <small class="form-tip text-danger hidden" id="ref-validation-warning">⚠️ Reference ID must be a 13-digit number (GCash format)</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block" id="btn-submit-deposit">
+                      <span>Submit Payment Proof</span>
+                    </button>
+                  </div>
+                </form>
+                
+                <div class="order-status-alert hidden" id="funds-form-alert"></div>
+              </div>
+              
+              <div class="order-info-panel">
+                <!-- Dynamic QR Code Payment Generator Card -->
+                <div class="dashboard-card bg-glass hidden qr-payment-card" id="dynamic-qr-card">
+                  <h3 class="qr-card-title">Dynamic Payment QR Code</h3>
+                  <p class="qr-card-desc">Scan this QR code using your selected payment app to send your exact payment amount.</p>
+                  <button type="button" class="qr-tap-zoom-btn" id="dynamic-qr-tap" aria-label="Tap to enlarge payment QR code">
+                    <img id="dynamic-qr-img" src="/images/apexboost-logo.svg" alt="Payment QR Code">
+                  </button>
+                  <p class="qr-tap-hint">Tap QR to enlarge for easier scanning</p>
+                  <div class="qr-amount-display">Amount: <span class="qr-amount-value">₱<span id="dynamic-qr-amount">0.00</span></span></div>
+                  <div class="qr-protection-note">Account details are protected until your deposit flow begins.</div>
+                </div>
+
+                <div class="dashboard-card bg-glass">
+                  <h3>Important Info</h3>
+                  <ul class="guide-list">
+                    <li>
+                      <strong>Fast Verification:</strong> Deposits are checked and verified manually by administrators. This typically takes 5 to 30 minutes.
+                    </li>
+                    <li>
+                      <strong>100% Secure:</strong> Your details are sent directly to the administrators through private logging endpoints for verification.
+                    </li>
+                    <li>
+                      <strong>Zero Hidden Fees:</strong> What you send is exactly what gets loaded into your dashboard balance.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Manual Deposits History Table -->
+            <div class="dashboard-card deposits-history-card" id="user-deposits-history-card">
+              <h3 class="card-title-primary">
+                <span class="title-icon">📜</span> Recent Deposits History
+              </h3>
+              <p class="card-subtitle">List of your manual GCash, Maya, and BPI deposit submissions and their verification status.</p>
+              
+              <span class="table-scroll-hint">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7M5 12h14m0 0l-7 7m7-7l-7-7"/></svg>
+                Swipe left/right to view details ↔
+              </span>
+              <div class="scrollable-table-wrap">
+                <table class="data-table" id="user-deposits-table">
+                  <thead>
+                    <tr>
+                      <th>Ref ID</th>
+                      <th>Payment Method</th>
+                      <th>Amount</th>
+                      <th>Reference ID</th>
+                      <th>Status</th>
+                      <th>Submit Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="user-deposits-history-tbody">
+                    <tr class="deposit-empty-row">
+                      <td colspan="6" class="deposit-empty-state">
+                        <div class="deposit-empty-icon" aria-hidden="true">💳</div>
+                        <p class="deposit-empty-title">No deposit submissions yet</p>
+                        <p class="deposit-empty-desc">Send a GCash, Maya, or BPI payment, then submit your proof using the form above.</p>
+                        <button type="button" class="btn btn-primary btn-sm" id="deposit-empty-cta">Submit a deposit</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 12: SUPPORT TICKETS -->
+          <div class="dash-tab-content hidden" id="tab-support-tickets">
+            <div class="tab-header support-tab-header">
+              <span class="support-tab-badge">24/7 Support</span>
+              <h2>Support Desk</h2>
+              <p>Use automated ticket routing for order concerns, or contact the ApexBoost owner directly through Telegram or WhatsApp for human support.</p>
+            </div>
+            
+            <div class="order-desk-grid support-desk-layout">
+              <!-- Create Ticket Form -->
+              <div class="dashboard-card form-card support-desk-card">
+                <div class="support-desk-head">
+                  <div>
+                    <span class="support-desk-kicker">Ticket routing</span>
+                    <h3>Submit a Support Ticket</h3>
+                  </div>
+                  <span class="support-desk-status">24/7 intake</span>
+                </div>
+                <form id="support-ticket-form">
+                  <p class="support-lane-heading">Choose your support lane</p>
+                  <div class="support-lane-grid" id="support-lane-grid" role="radiogroup" aria-label="Support lane">
+                    <button type="button" class="support-lane-card active" data-lane="ai" data-subject="Order Issue" data-request="Status Update">
+                      <span class="support-lane-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      </span>
+                      <span class="support-lane-radio"></span>
+                      <span class="support-lane-copy">
+                        <strong>Order AI Support</strong>
+                        <small>Refill, cancel, speed up, and status checks for eligible orders.</small>
+                      </span>
+                    </button>
+                    <button type="button" class="support-lane-card" data-lane="fake-complete" data-subject="Order Issue" data-request="Fake Complete">
+                      <span class="support-lane-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      </span>
+                      <span class="support-lane-radio"></span>
+                      <span class="support-lane-copy">
+                        <strong>False Completion</strong>
+                        <small>Requires before and after screenshot proof for review.</small>
+                      </span>
+                    </button>
+                    <button type="button" class="support-lane-card" data-lane="human" data-subject="Payment Concern" data-request="Human Support">
+                      <span class="support-lane-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                      </span>
+                      <span class="support-lane-radio"></span>
+                      <span class="support-lane-copy">
+                        <strong>Human Support</strong>
+                        <small>Contact the ApexBoost owner directly through Telegram or WhatsApp.</small>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="support-lane-alert hidden" id="support-lane-alert" aria-hidden="true"></div>
+                  <details class="support-lane-policy hidden" id="support-lane-policy" aria-live="polite"></details>
+                  <!-- Custom Select for Subject -->
+                  <div class="form-group">
+                    <label for="ticket-subject">Subject</label>
+                    <div class="custom-dropdown" id="ticket-subject-custom-dropdown">
+                      <div class="custom-dropdown-trigger" id="ticket-subject-dropdown-trigger">
+                        <div class="trigger-inner">
+                            <span class="trigger-icon-wrapper" id="ticket-subject-trigger-icon">📁</span>
+                          <span class="trigger-text">Select Subject...</span>
+                        </div>
+                        <span class="trigger-arrow">▼</span>
+                      </div>
+                      <div class="custom-dropdown-menu hidden" id="ticket-subject-dropdown-menu">
+                        <div class="custom-dropdown-item" data-value="Order Issue">
+                          <span>📦 Order Issue</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Payment Concern">
+                          <span>💳 Payment Concern</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="API Concern">
+                          <span>🔌 API Concern</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="General Inquiry">
+                          <span>💬 General Inquiry</span>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="hidden" id="ticket-subject" required>
+                  </div>
+
+                  <!-- Order ID Input (Conditional or Helper) -->
+                  <div class="form-group">
+                    <label for="ticket-order-id">Order ID</label>
+                    <input type="text" id="ticket-order-id" placeholder="e.g. 847199">
+                    <small class="form-tip" id="ticket-order-helper">For multiple orders, separate IDs using commas.</small>
+                  </div>
+
+                  <!-- Custom Select for Request Type -->
+                  <div class="form-group">
+                    <label for="ticket-request-type">Request Type</label>
+                    <div class="custom-dropdown" id="ticket-request-custom-dropdown">
+                      <div class="custom-dropdown-trigger" id="ticket-request-dropdown-trigger">
+                        <div class="trigger-inner">
+                            <span class="trigger-icon-wrapper" id="ticket-request-trigger-icon">⚙️</span>
+                          <span class="trigger-text">Select Request Type...</span>
+                        </div>
+                        <span class="trigger-arrow">▼</span>
+                      </div>
+                      <div class="custom-dropdown-menu hidden" id="ticket-request-dropdown-menu">
+                        <div class="custom-dropdown-item" data-value="Status Update">
+                          <span>ℹ️ Status Update</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Refill">
+                          <span>🔄 Refill</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Fake Complete">
+                          <span>⚠️ False Completion (Undelivered)</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Human Support">
+                          <span>🧑‍💻 Human Support</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Cancel">
+                          <span>🛑 Cancel</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Speed Up">
+                          <span>⚡ Speed Up</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Restart">
+                          <span>🔄 Restart</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Not Started">
+                          <span>⏳ Not Started</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Mark as Completed">
+                          <span>✔️ Mark as Completed</span>
+                        </div>
+                        <div class="custom-dropdown-item" data-value="Others">
+                          <span>💡 Others</span>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="hidden" id="ticket-request-type" required>
+                  </div>
+
+                  <!-- Message Area -->
+                  <div class="form-group">
+                    <label for="ticket-message">Your Message</label>
+                    <textarea id="ticket-message" rows="5" placeholder="Explain your concern in detail..." required></textarea>
+                  </div>
+
+                  <div class="support-contact-panel hidden" id="support-contact-panel">
+                    <div class="support-contact-heading">
+                      <strong>Direct Human Support</strong>
+                      <span>Message the ApexBoost owner using either official contact below.</span>
+                    </div>
+                    <a class="support-contact-button telegram" href="https://t.me/Apexsmmboosting" target="_blank" rel="noopener">
+                      <span class="support-contact-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+                      </span>
+                      <span><small>Telegram</small><strong>@Apexsmmboosting</strong></span>
+                    </a>
+                    <a class="support-contact-button whatsapp" href="https://api.whatsapp.com/message/TMTHZKDCALHKN1?autoload=1&amp;app_absent=0" target="_blank" rel="noopener">
+                      <span class="support-contact-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                      </span>
+                      <span><small>WhatsApp Business</small><strong>Open official WhatsApp chat</strong></span>
+                    </a>
+                  </div>
+
+                  <!-- Screenshot Upload Attachment (Max 10MB limit) -->
+                  <div class="form-group">
+                    <label for="ticket-attachment">Upload Screenshot / Proof (Max 10MB)</label>
+                    <div class="file-upload-wrapper">
+                      <input type="file" id="ticket-attachment" accept="image/*,application/pdf" class="sr-only">
+                      <button type="button" class="btn btn-secondary btn-sm" id="btn-ticket-file-trigger">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:4px"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                        Attach File
+                      </button>
+                      <span id="ticket-file-name" class="file-name-display">No file chosen</span>
+                    </div>
+                    <div id="ticket-file-preview" class="file-preview-box hidden">
+                      <!-- Populated via Javascript -->
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block" id="btn-submit-ticket">
+                    <span>Submit Support Ticket</span>
+                  </button>
+                </form>
+                
+                <div class="order-status-alert hidden" id="ticket-form-alert"></div>
+              </div>
+
+              <!-- Ticket guidelines sidebar -->
+              <div class="order-info-panel">
+                <div class="dashboard-card bg-glass">
+                  <h3>Support Guidelines</h3>
+                  <ul class="guide-list">
+                    <li>
+                      <strong>Detailed Descriptions:</strong> Provide clear screenshots and specify Order IDs so our moderators can diagnose the issue within seconds.
+                    </li>
+                    <li>
+                      <strong>10MB Limit:</strong> Attachments must be images or PDFs smaller than 10MB.
+                    </li>
+                    <li>
+                      <strong>One-Time AI Updates:</strong> ApexBoost AI instantly evaluates every new ticket to guarantee a high-quality review.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Ticket History Monitor -->
+            <div class="dashboard-card tickets-history-card">
+              <h3>Ticket History &amp; Status Monitor</h3>
+              <span class="table-scroll-hint">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7M5 12h14m0 0l-7 7m7-7l-7-7"/></svg>
+                Swipe left/right to view details ↔
+              </span>
+              <div class="scrollable-table-wrap">
+                <table class="data-table" id="tickets-history-table">
+                  <thead>
+                    <tr>
+                      <th>Ticket ID</th>
+                      <th>Date</th>
+                      <th>Subject</th>
+                      <th>Request Type</th>
+                      <th>Order ID</th>
+                      <th>Status</th>
+                      <th>Chat Transcript &amp; Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tickets-table-body">
+                    <tr>
+                      <td colspan="7" class="text-center py-4 text-muted">No tickets submitted yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- PREMIUM LIVE SUPPORT CHAT MODAL -->
+          <div class="custom-alert-overlay hidden ticket-chat-overlay" id="ticket-chat-overlay">
+            <div class="receipt-card ticket-chat-modal" id="ticket-chat-modal">
+              
+              <!-- Modal Header -->
+              <div class="ticket-chat-modal-header">
+                <div class="ticket-chat-header-left">
+                  <div class="ticket-chat-header-avatar">🎫</div>
+                  <div>
+                    <h3 id="chat-ticket-id">Ticket #TC-1001</h3>
+                    <span class="ticket-chat-subject" id="chat-ticket-subject">Order Issue · Speed Up</span>
+                  </div>
+                </div>
+                <div class="ticket-chat-header-right">
+                  <span class="status-badge" id="chat-ticket-status-badge">PENDING</span>
+                  <button type="button" class="ai-chat-close" id="btn-close-ticket-chat" aria-label="Close ticket chat">✕</button>
+                </div>
+              </div>
+              
+              <!-- Messages Container -->
+              <div class="ticket-chat-modal-body" id="ticket-chat-messages-container">
+                <!-- Populated dynamically via Javascript -->
+              </div>
+              
+              <!-- Attachment Preview Box -->
+              <div id="chat-attachment-preview-area" class="hidden chat-attachment-preview">
+                <!-- Dynamically renders attachment if there is one -->
+              </div>
+
+              <!-- Typing Indicator -->
+              <div class="ticket-typing-indicator hidden" id="ticket-typing-indicator">
+                <div class="typing-dot typing-dot--1"></div>
+                <div class="typing-dot typing-dot--2"></div>
+                <div class="typing-dot typing-dot--3"></div>
+                <span class="typing-label">ApexBoost AI is checking delivery states...</span>
+              </div>
+              
+              <!-- Modal Footer - Send Reply Form -->
+              <form id="ticket-reply-form" class="ticket-reply-form">
+                <div class="ticket-reply-row">
+                  <!-- Custom Screenshot Input inside Chat -->
+                  <label for="chat-reply-attachment" class="chat-attach-btn" title="Attach Screenshot">
+                    <span aria-hidden="true">📎</span>
+                    <input type="file" id="chat-reply-attachment" accept="image/*,application/pdf" class="sr-only">
+                  </label>
+                  
+                  <input type="text" id="ticket-reply-message" placeholder="Type a message or response to support..." required class="ticket-reply-input">
+                  
+                  <button type="submit" class="btn btn-primary ticket-send-btn" aria-label="Send message">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  </button>
+                </div>
+                <div id="chat-attachment-filename-tip" class="text-sm text-muted hidden chat-filename-tip">No file chosen</div>
+              </form>
+
+            </div>
+          </div>
+
+          <!-- TAB 10: AFFILIATES -->
+          <div class="dash-tab-content hidden" id="tab-affiliates">
+            <div class="tab-header">
+              <h2>Affiliates Program</h2>
+              <p>Refer users to ApexBoost SMM Panel and earn 3% commission on every deposit they make!</p>
+            </div>
+            
+            <div class="affiliates-warning-box">
+              🛑Warning: If we somehow understand that you are taking referral bonus by creating two to three or more accounts yourself and spending on our website using your referral account, then we will not pay you the referral bonus payment if we want. (Authority)
+            </div>
+            
+            <div class="order-desk-grid affiliates-grid">
+              
+              <div class="dashboard-card">
+                <h3>Your Referral Details</h3>
+                <div class="affiliates-details-stack">
+                  <div class="form-group">
+                    <label>Referral Link</label>
+                    <div class="ref-link-row">
+                      <input type="text" id="affiliates-ref-link" value="https://apexsmmboosting.com/?ref=your-code" readonly class="ref-link-input">
+                      <button class="btn btn-secondary btn-sm" id="btn-copy-ref-link">Copy</button>
+                    </div>
+                  </div>
+                  
+                  <div class="affiliates-stats-row">
+                    <div>
+                      <span class="stat-label-sm">Commission Rate</span>
+                      <div class="stat-value-lg">3%</div>
+                    </div>
+                    <div>
+                      <span class="stat-label-sm">Minimum Payout</span>
+                      <div class="stat-value-lg">$ 5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="dashboard-card">
+                <h3>Affiliates Statistics</h3>
+                <div class="affiliates-metrics-grid">
+                  <div class="affiliates-metric-card">
+                    <div class="metric-label-sm">Total visits</div>
+                    <div class="metric-value-lg accent">0</div>
+                  </div>
+                  <div class="affiliates-metric-card">
+                    <div class="metric-label-sm">Unpaid referrals</div>
+                    <div class="metric-value-lg warning">0</div>
+                  </div>
+                  <div class="affiliates-metric-card">
+                    <div class="metric-label-sm">Paid referrals</div>
+                    <div class="metric-value-lg success">0</div>
+                  </div>
+                  <div class="affiliates-metric-card">
+                    <div class="metric-label-sm">Conversion rate</div>
+                    <div class="metric-value-lg">0%</div>
+                  </div>
+                  <div class="affiliates-metric-card">
+                    <div class="metric-label-sm">Total earnings</div>
+                    <div class="metric-value-lg success">$ 0</div>
+                  </div>
+                  <div class="affiliates-metric-card">
+                    <div class="metric-label-sm">Unpaid earnings</div>
+                    <div class="metric-value-lg warning">$ 0</div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+          <!-- TAB 11: TERMS & CONDITIONS -->
+          <div class="dash-tab-content hidden" id="tab-terms-conditions">
+            <div class="tab-header">
+              <h2>📄 Terms & Conditions</h2>
+              <p>Please read our terms of service before using our social boosting services.</p>
+            </div>
+            
+            <div class="dashboard-card terms-card">
+              <div>
+                <h3 class="terms-heading">1. General Agreement</h3>
+                <p class="terms-body">By placing an order with ApexBoost, you automatically accept all the terms of service listed below, whether you read them or not. We reserve the right to change these terms without prior notice.</p>
+              </div>
+              
+              <div>
+                <h3 class="terms-heading">2. Boosting Services</h3>
+                <p class="terms-body">ApexBoost services are strictly intended for promotional purposes to boost the online appearance of your social profiles. We do not guarantee active interactions or engagement from referred accounts. All delivery counts are estimations, and refilling is only guaranteed if specified in the service package guidelines.</p>
+              </div>
+              
+              <div>
+                <h3 class="terms-heading">3. Refund Policy</h3>
+                <p class="terms-body">No refunds will be issued to your raw payment method. After a manual deposit has been verified and allocated to your dashboard balance, it cannot be reversed. If you create fraud disputes, we reserve the right to ban your account and suspend all active campaigns.</p>
+              </div>
+              
+              <div>
+                <h3 class="terms-heading">4. Account Guidelines</h3>
+                <p class="terms-body">Do not submit duplicate or conflicting campaigns for the same target link until the first order is completely finished. Doing so will result in overlapping delivery, incorrect counts, and potential loss of credits without refunds.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- First-visit dashboard coach marks -->
+    <div class="dashboard-coach-overlay hidden" id="dashboard-coach-overlay" aria-hidden="true">
+      <div class="dashboard-coach-backdrop" id="dashboard-coach-backdrop"></div>
+      <div class="dashboard-coach-spotlight hidden" id="dashboard-coach-spotlight" aria-hidden="true"></div>
+      <div class="dashboard-coach-card" id="dashboard-coach-card" role="dialog" aria-modal="true" aria-labelledby="dashboard-coach-title">
+        <p class="dashboard-coach-kicker">Quick Start Guide</p>
+        <h3 id="dashboard-coach-title">Step 1: Gumawa ng Order</h3>
+        <p id="dashboard-coach-desc">Select a platform, category, and service package here to launch a campaign.</p>
+        <div class="dashboard-coach-steps" id="dashboard-coach-steps" aria-hidden="true">
+          <span class="coach-step-dot active"></span>
+          <span class="coach-step-dot"></span>
+          <span class="coach-step-dot"></span>
+          <span class="coach-step-dot"></span>
+        </div>
+        <div class="dashboard-coach-actions">
+          <button type="button" class="btn btn-secondary btn-sm" id="dashboard-coach-skip">Skip</button>
+          <button type="button" class="btn btn-primary btn-sm" id="dashboard-coach-next">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment QR zoom lightbox -->
+    <div class="qr-zoom-overlay hidden" id="qr-zoom-overlay" role="dialog" aria-modal="true" aria-label="Enlarged payment QR code">
+      <button type="button" class="qr-zoom-close" id="qr-zoom-close" aria-label="Close enlarged QR code">&times;</button>
+      <div class="qr-zoom-card">
+        <img id="qr-zoom-img" src="" alt="Enlarged payment QR code">
+        <p class="qr-zoom-caption" id="qr-zoom-caption">Tap outside to close</p>
+      </div>
+    </div>

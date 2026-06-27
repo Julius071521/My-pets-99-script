@@ -1,0 +1,908 @@
+/* ==========================================================================
+   ApexBoost — codex-ui-v2.css  |  v20260622-qa6-fixed
+   Comprehensive QA Fix: Spacing, Turnstile, Google Auth, Mobile Layout
+   ========================================================================== */
+
+/* ── DESIGN TOKENS ──────────────────────────────────────────────────────── */
+:root {
+  --ui-bg:              #06111f;
+  --ui-bg-deep:         #030a12;
+  --ui-surface:         #0b1a2a;
+  --ui-surface-raised:  #102238;
+  --ui-border:          rgba(148,163,184,.14);
+  --ui-border-strong:   rgba(14,165,233,.3);
+  --ui-text:            #f8fafc;
+  --ui-muted:           #9fb0c3;
+  --ui-accent:          #0ea5e9;
+  --ui-accent-alt:      #14b8a6;
+  --ui-accent-strong:   #0284c7;
+  --ui-danger:          #f87171;
+  --ui-radius:          14px;
+  --ui-shadow:          0 18px 50px rgba(0,0,0,.28);
+  --navbar-h:           72px;
+}
+
+/* ── GLOBAL RESET ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: hidden; scroll-behavior: smooth; }
+body.apex-pro-v34 {
+  background: var(--ui-bg) !important;
+  color: var(--ui-text);
+  overflow-x: hidden;
+}
+body.apex-pro-v34::before { display: none !important; }
+
+/* ── CONTAINERS ─────────────────────────────────────────────────────────── */
+.container,
+.nav-container {
+  width: min(1180px, calc(100% - 40px)) !important;
+  margin-inline: auto !important;
+}
+
+/* ── FIX: Remove ONLY decorative noise; restore auth elements ───────────── */
+/* OLD BUG: .btn-google-auth and .auth-divider were hidden. NOW FIXED.        */
+.luxury-ambient,
+.hero-noise,
+.floating-chip,
+.promo-pill,
+.apex-scroll-progress {
+  display: none !important;
+}
+
+/* RESTORE: Google Auth button and divider */
+.btn-google-auth { display: flex !important; }
+.auth-divider {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  color: var(--ui-muted) !important;
+  font-size: 0.8rem !important;
+  margin: 16px 0 !important;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '' !important;
+  flex: 1 !important;
+  height: 1px !important;
+  background: var(--ui-border) !important;
+  display: block !important;
+}
+
+/* ── NAVBAR ─────────────────────────────────────────────────────────────── */
+.navbar,
+#main-nav {
+  min-height: var(--navbar-h) !important;
+  height: var(--navbar-h) !important;
+  background: rgba(6,17,31,.96) !important;
+  border-bottom: 1px solid var(--ui-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+.nav-container {
+  min-height: var(--navbar-h) !important;
+  height: var(--navbar-h) !important;
+  gap: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.nav-logo { flex: 0 0 auto !important; }
+.nav-menu { gap: 24px !important; }
+.nav-link {
+  color: var(--ui-muted) !important;
+  font-size: .9rem !important;
+  font-weight: 600 !important;
+  transition: color .2s !important;
+  text-decoration: none !important;
+}
+.nav-link:hover, .nav-link.active { color: var(--ui-text) !important; }
+.nav-actions { margin-left: auto !important; }
+
+/* ── BUTTONS ─────────────────────────────────────────────────────────────── */
+.btn {
+  min-height: 44px !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: background .2s, transform .18s, box-shadow .2s !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+  text-decoration: none !important;
+}
+.btn:active { transform: scale(.97) !important; }
+.btn-primary {
+  background: var(--ui-accent) !important;
+  border-color: var(--ui-accent) !important;
+  color: #fff !important;
+}
+.btn-primary:hover {
+  background: var(--ui-accent-strong) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(14,165,233,.3) !important;
+}
+.btn-secondary {
+  background: transparent !important;
+  border: 1px solid var(--ui-border) !important;
+  color: var(--ui-text) !important;
+}
+.btn-secondary:hover {
+  border-color: var(--ui-border-strong) !important;
+  background: rgba(14,165,233,.05) !important;
+}
+.btn-block { width: 100% !important; }
+
+.btn-google-auth {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid var(--ui-border) !important;
+  color: var(--ui-text) !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-height: 44px !important;
+}
+.btn-google-auth:hover {
+  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(255,255,255,.15) !important;
+}
+
+/* ── HERO SECTION ───────────────────────────────────────────────────────── */
+.hero-section {
+  min-height: 720px !important;
+  padding: 120px 0 80px !important;
+  background: linear-gradient(180deg, var(--ui-bg-deep), var(--ui-bg)) !important;
+  overflow: hidden !important;
+}
+.hero-grid {
+  width: min(1180px, calc(100% - 40px)) !important;
+  margin: 0 auto !important;
+  gap: clamp(40px,6vw,88px) !important;
+  align-items: center !important;
+}
+.hero-title {
+  margin: 0 0 20px !important;
+  font-size: clamp(2.6rem,5vw,4.6rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.04em !important;
+}
+.hero-title span {
+  color: #22bff3 !important;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.hero-subtitle {
+  color: var(--ui-muted) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+.hero-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin-top: 28px !important;
+}
+.hero-trust-rail { margin-top: 20px !important; color: var(--ui-muted) !important; }
+.hero-stats {
+  gap: 10px !important;
+  margin-top: 28px !important;
+}
+.stat-item {
+  padding: 16px !important;
+  background: rgba(11,26,42,.6) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+.glass-dashboard-mock {
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--ui-border-strong) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--ui-shadow) !important;
+  transform: none !important;
+}
+
+/* ── SECTIONS SPACING ───────────────────────────────────────────────────── */
+.section-title { color: var(--ui-text) !important; letter-spacing: -.03em !important; line-height: 1.12 !important; }
+.section-subtitle { color: var(--ui-muted) !important; line-height: 1.65 !important; }
+.apex-hiw-section, .features-section, .services-section, .pricing-section,
+.faq-section, .testimonials-section, .apex-platforms-section,
+.apex-payment-section, .apex-feed-section, .apex-guide-section,
+.apex-trust-section, .advantages-section, .dashboard-preview-section,
+.services-promo-section { padding-block: 80px !important; }
+
+/* Cards */
+.apex-hiw-step, .feature-card, .service-card, .pricing-card,
+.testimonial-card, .dashboard-card, .stat-card, .apex-trust-card {
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: var(--ui-radius) !important;
+  box-shadow: none !important;
+  transition: transform .25s, border-color .25s !important;
+}
+.apex-hiw-step:hover, .feature-card:hover, .service-card:hover, .apex-trust-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--ui-border-strong) !important;
+}
+
+/* ── DASHBOARD SHELL ────────────────────────────────────────────────────── */
+#dashboard-page-view { background: var(--ui-bg) !important; padding-top: 72px !important; }
+.dashboard-layout, .dashboard-container { gap: 0 !important; }
+.dashboard-sidebar, .sidebar {
+  background: #071321 !important;
+  border-right: 1px solid var(--ui-border) !important;
+  box-shadow: none !important;
+}
+.sidebar-item, .sidebar-link {
+  min-height: 42px !important;
+  border-radius: 10px !important;
+  padding-inline: 14px !important;
+  color: var(--ui-muted) !important;
+  font-size: .88rem !important;
+  font-weight: 600 !important;
+  transition: background .15s, color .15s !important;
+}
+.sidebar-item:hover, .sidebar-link:hover { background: rgba(14,165,233,.06) !important; color: var(--ui-text) !important; }
+.sidebar-item.active, .sidebar-link.active {
+  background: rgba(14,165,233,.1) !important;
+  color: var(--ui-accent) !important;
+  border-left: 2px solid var(--ui-accent) !important;
+}
+.dash-main, .dashboard-main, .main-content { background: var(--ui-bg) !important; padding: 24px !important; }
+
+/* ── AUTH MODAL ─────────────────────────────────────────────────────────── */
+.auth-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99997 !important;
+  background: rgba(0,0,0,.65) !important;
+  backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+.auth-modal-overlay.hidden { display: none !important; }
+
+.auth-card {
+  background: #0a1626 !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: 20px !important;
+  padding: 32px !important;
+  width: 100% !important;
+  max-width: 460px !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,.7) !important;
+  position: relative !important;
+  max-height: 90dvh !important;
+  overflow-y: auto !important;
+}
+
+.auth-tabs {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  background: rgba(255,255,255,.04) !important;
+  border-radius: 10px !important;
+  padding: 3px !important;
+  margin-bottom: 24px !important;
+  gap: 2px !important;
+}
+.auth-tab-btn {
+  padding: 9px 12px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: .88rem !important;
+  color: var(--ui-muted) !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background .15s, color .15s !important;
+}
+.auth-tab-btn.active {
+  background: var(--ui-surface-raised) !important;
+  color: var(--ui-text) !important;
+}
+
+.auth-form .form-group { margin-bottom: 16px !important; }
+.auth-form label {
+  display: block !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  color: var(--ui-muted) !important;
+  margin-bottom: 6px !important;
+}
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+  width: 100% !important;
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: 10px !important;
+  padding: 11px 14px !important;
+  font-size: 0.92rem !important;
+  color: var(--ui-text) !important;
+  outline: none !important;
+  transition: border-color .2s, box-shadow .2s !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none !important;
+}
+.auth-form input:focus {
+  border-color: var(--ui-accent) !important;
+  box-shadow: 0 0 0 3px rgba(14,165,233,.12) !important;
+}
+
+/* ── TURNSTILE / CAPTCHA FIX ────────────────────────────────────────────── */
+.captcha-wrap,
+#login-turnstile-wrap,
+#register-turnstile-wrap {
+  min-height: 68px !important;
+  margin: 14px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+.cf-turnstile {
+  display: block !important;
+  min-height: 65px !important;
+  width: 100% !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.captcha-status {
+  font-size: 0.73rem !important;
+  color: var(--ui-muted) !important;
+  text-align: center !important;
+  margin: 6px 0 0 !important;
+}
+
+/* ── REVEAL-ON-SCROLL ───────────────────────────────────────────────────── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+}
+.reveal-on-scroll.revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ── FORMS GENERAL ──────────────────────────────────────────────────────── */
+.form-group { margin-bottom: 16px !important; }
+.label-row-flex {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 6px !important;
+}
+.label-row-flex label { margin-bottom: 0 !important; }
+.forgot-pass-link {
+  font-size: 0.78rem !important;
+  color: var(--ui-accent) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+}
+
+/* ── MOBILE RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .hamburger-toggle, #hamburger-toggle {
+    display: flex !important;
+    order: 3 !important;
+    width: 40px !important; height: 40px !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,.05) !important;
+    border: 1px solid var(--ui-border) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 4.5px !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+  }
+  .hamburger-bar {
+    display: block !important;
+    width: 17px !important; height: 1.8px !important;
+    background: rgba(255,255,255,.82) !important;
+    border-radius: 2px !important;
+    pointer-events: none !important;
+  }
+  .nav-menu {
+    position: fixed !important;
+    top: 0 !important; left: -100% !important;
+    width: 280px !important; height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 80px 12px 32px !important;
+    z-index: 99999 !important;
+    background: rgba(6,17,31,.99) !important;
+    backdrop-filter: blur(20px) !important;
+    border-right: 1px solid var(--ui-border) !important;
+    gap: 2px !important;
+    overflow-y: auto !important;
+    animation: none !important;
+    transition: left .3s cubic-bezier(.4,0,.2,1), box-shadow .3s ease !important;
+  }
+  .nav-menu.mobile-active {
+    left: 0 !important;
+    box-shadow: 8px 0 40px rgba(0,0,0,.7) !important;
+  }
+  .nav-menu .nav-link {
+    padding: 13px 16px !important;
+    border-radius: 10px !important;
+    font-size: .95rem !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+  .nav-menu .special-dash, .nav-menu #nav-dashboard-trigger {
+    background: linear-gradient(135deg,#0d9488,#0ea5e9) !important;
+    color: #fff !important; justify-content: center !important;
+    margin-top: 8px !important; border-radius: 12px !important;
+  }
+  .hero-section { padding: 100px 0 60px !important; min-height: unset !important; }
+  .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .hero-title { font-size: clamp(2rem,7vw,3rem) !important; }
+  .hero-actions { flex-direction: column !important; }
+  .hero-actions .btn { width: 100% !important; }
+  .apex-hiw-section, .advantages-section, .apex-platforms-section,
+  .apex-payment-section, .apex-trust-section { padding-block: 52px !important; }
+  .auth-card { padding: 24px 20px !important; border-radius: 16px !important; }
+}
+
+@media (max-width: 640px) {
+  .container, .nav-container { width: calc(100% - 28px) !important; }
+  .auth-card { max-height: 95dvh !important; padding: 20px 16px !important; }
+}
+
+/* ── FLOATING WIDGET DOCK ───────────────────────────────────────────────── */
+@media (min-width: 768px) {
+  #messenger-fab, .messenger-fab { right: 20px !important; bottom: 20px !important; }
+  #ai-chat-widget, .ai-chat-widget { right: 20px !important; bottom: 82px !important; }
+  #apexbot-top-widget, .apexbot-top-widget { right: 20px !important; bottom: 150px !important; }
+}
+@media (max-width: 767px) {
+  #messenger-fab, .messenger-fab {
+    right: 14px !important;
+    bottom: max(78px, calc(68px + env(safe-area-inset-bottom,0px) + 10px)) !important;
+    width: 50px !important; height: 50px !important;
+  }
+  #ai-chat-widget, .ai-chat-widget {
+    right: 14px !important;
+    bottom: max(138px, calc(68px + env(safe-area-inset-bottom,0px) + 70px)) !important;
+  }
+  #apexbot-top-widget, .apexbot-top-widget {
+    right: 14px !important;
+    bottom: max(200px, calc(68px + env(safe-area-inset-bottom,0px) + 132px)) !important;
+  }
+  body.nav-open #messenger-fab, body.nav-open .messenger-fab,
+  body.nav-open #ai-chat-widget, body.nav-open .ai-chat-widget,
+  body.nav-open #apexbot-top-widget, body.nav-open .apexbot-top-widget {
+    opacity: 0 !important; pointer-events: none !important;
+  }
+}
+
+/* ── FOCUS ───────────────────────────────────────────────────────────────── */
+:focus-visible { outline: 2px solid rgba(14,165,233,.6) !important; outline-offset: 2px !important; }
+button:focus:not(:focus-visible), input:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none !important; }
+
+/* ── FOOTER ─────────────────────────────────────────────────────────────── */
+.footer { background: rgba(3,10,18,.98) !important; border-top: 1px solid var(--ui-border) !important; }
+
+/* =========================================================================
+   PATCH v20260622-qa7 — Additional fixes from deep audit
+   ========================================================================= */
+
+/* ── FIX: technology-showcase — RESTORE (was wrongly hidden in old codex) ─ */
+/* It is NOT in our hidden list above, but explicitly ensure it's visible.   */
+.technology-showcase {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ── FIX: Hero grid — desktop columns safe, no mobile overflow ────────────
+   OLD BUG: minmax(480px, 1.08fr) caused horizontal overflow on < 768px.
+   We remove the 480px floor so mobile collapses to single column correctly. */
+@media (min-width: 992px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
+    gap: clamp(48px, 6vw, 88px) !important;
+  }
+}
+@media (max-width: 991px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    padding-inline: 0 !important;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 7vw, 2.8rem) !important;
+    text-align: center !important;
+    max-width: 100% !important;
+    margin: 0 0 16px !important;
+  }
+  .hero-subtitle { text-align: center !important; max-width: 100% !important; }
+  .hero-actions { justify-content: center !important; }
+  .hero-trust-rail { text-align: center !important; justify-content: center !important; flex-wrap: wrap !important; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+  .hero-graphic-container { order: -1 !important; max-width: 360px !important; margin: 0 auto !important; }
+  .glass-dashboard-mock { max-height: 280px !important; overflow: hidden !important; }
+}
+
+/* ── FIX: Hero top padding — 148px is too much, reduce to 110px ───────────
+   The promo banner is ~40px + navbar is 72px = 112px total fixed headers.
+   110px top padding gives a clean visual breath below the navbar.          */
+.hero-section {
+  padding: 110px 0 80px !important;
+  min-height: 680px !important;
+}
+@media (max-width: 991px) {
+  .hero-section { padding: 96px 0 60px !important; min-height: unset !important; }
+}
+@media (max-width: 640px) {
+  .hero-section { padding: 88px 0 52px !important; }
+}
+
+/* ── FIX: Hero stats reveal — inline fade-in fallback ─────────────────────
+   .stat-item.reveal-on-scroll items are ALREADY IN VIEWPORT on page load.
+   The IntersectionObserver may not trigger fast enough.
+   Add a CSS @keyframes fallback that fires after 600ms regardless.          */
+@keyframes statReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-stats .stat-item.reveal-on-scroll:nth-child(1) {
+  animation: statReveal 0.55s cubic-bezier(.16,1,.3,1) 0.3s both;
+}
+.hero-stats .stat-item.reveal-on-scroll:nth-child(2) {
+  animation: statReveal 0.55s cubic-bezier(.16,1,.3,1) 0.45s both;
+}
+.hero-stats .stat-item.reveal-on-scroll:nth-child(3) {
+  animation: statReveal 0.55s cubic-bezier(.16,1,.3,1) 0.6s both;
+}
+/* Sync: once observer fires .revealed, keep it visible */
+.hero-stats .stat-item.reveal-on-scroll.revealed {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ── FIX: All 11 missing landing sections — consistent 80px spacing ───────
+   Audit found only .apex-hiw-section and .features-section had padding set. */
+.apex-platforms-section,
+.advantages-section,
+.dashboard-preview-section,
+.services-promo-section,
+.apex-payment-section,
+.apex-feed-section,
+.apex-guide-section,
+.apex-trust-section,
+.apex-cta-banner,
+.technology-showcase {
+  padding-block: 80px !important;
+}
+
+/* Section inner containers — max-width + centered */
+.apex-platforms-inner,
+.advantages-inner,
+.apex-payment-inner,
+.apex-feed-inner,
+.apex-guide-inner,
+.apex-trust-inner,
+.apex-cta-banner-inner,
+.technology-showcase-heading {
+  max-width: 1180px !important;
+  margin-inline: auto !important;
+  padding-inline: clamp(16px, 4vw, 40px) !important;
+}
+
+/* Mobile: reduce section padding */
+@media (max-width: 767px) {
+  .apex-platforms-section,
+  .advantages-section,
+  .dashboard-preview-section,
+  .services-promo-section,
+  .apex-payment-section,
+  .apex-feed-section,
+  .apex-guide-section,
+  .apex-trust-section,
+  .apex-cta-banner,
+  .apex-hiw-section,
+  .features-section,
+  .technology-showcase {
+    padding-block: 52px !important;
+  }
+}
+
+/* ── FIX: Dashboard padding-top — 92px was too much (72px navbar height) ── */
+#dashboard-page-view {
+  padding-top: 72px !important;
+}
+/* When promo banner is active, add extra offset */
+body.apex-promo-open #dashboard-page-view {
+  padding-top: 112px !important; /* 72px navbar + 40px banner */
+}
+
+/* ── FIX: Section headers consistent rhythm ────────────────────────────── */
+.section-header,
+.apex-section-header,
+[class*="-section"] > .section-title,
+[class*="-section"] > .section-subtitle {
+  text-align: center !important;
+  margin-inline: auto !important;
+}
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.6rem) !important;
+  margin-bottom: 12px !important;
+}
+.section-subtitle {
+  font-size: 1rem !important;
+  max-width: 580px !important;
+  margin-inline: auto !important;
+  margin-bottom: 48px !important;
+}
+
+/* ── FIX: Cards — consistent gap in grids ──────────────────────────────── */
+.apex-hiw-grid,
+.apex-platforms-grid,
+.apex-payment-grid,
+.apex-trust-grid,
+[class*="-grid"],
+[class*="-cards"] {
+  gap: 20px !important;
+}
+@media (max-width: 640px) {
+  [class*="-grid"],
+  [class*="-cards"] { gap: 14px !important; }
+}
+
+/* ── FIX: Promo banner body padding — stop body.apex-promo-open conflicts ─ */
+/* Only JS should shift the navbar via style.top — CSS padding causes double */
+body.apex-promo-open {
+  padding-top: 0 !important; /* Let JS handle it */
+}
+
+/* ── FIX: Footer — premium consistent styling ─────────────────────────── */
+.footer {
+  background: rgba(3,10,18,.98) !important;
+  border-top: 1px solid var(--ui-border) !important;
+  padding-block: 60px 32px !important;
+}
+.footer-grid,
+.footer-container {
+  max-width: 1180px !important;
+  margin-inline: auto !important;
+  padding-inline: clamp(16px, 4vw, 40px) !important;
+  gap: 40px !important;
+}
+.footer-bottom {
+  border-top: 1px solid var(--ui-border) !important;
+  padding-top: 20px !important;
+  margin-top: 40px !important;
+}
+@media (max-width: 640px) {
+  .footer { padding-block: 40px 24px !important; }
+}
+
+/* ── FIX: Mobile nav — hamburger correct position and drawer ───────────── */
+@media (max-width: 991px) {
+  /* Nav-container: hamburger RIGHT by default (order:3 from style.min.css) */
+  .nav-container {
+    padding-inline: 14px !important;
+  }
+  /* Body lock when drawer open */
+  body.nav-open { overflow: hidden !important; }
+  body.nav-open::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,.5) !important;
+    z-index: 99998 !important;
+    backdrop-filter: blur(3px) !important;
+    animation: apexFadeIn .25s ease forwards !important;
+  }
+  @keyframes apexFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+/* ── FIX: Auth form — complete consistent spacing ─────────────────────── */
+.auth-form-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+}
+.auth-form-header h2 {
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 6px !important;
+  color: var(--ui-text) !important;
+}
+.auth-form-header p {
+  font-size: 0.88rem !important;
+  color: var(--ui-muted) !important;
+}
+.auth-form .btn-block { margin-top: 8px !important; }
+
+/* ── FIX: Global input consistency ─────────────────────────────────────── */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: 10px !important;
+  color: var(--ui-text) !important;
+  padding: 11px 14px !important;
+  font-size: 0.92rem !important;
+  outline: none !important;
+  transition: border-color .2s, box-shadow .2s !important;
+  width: 100% !important;
+  -webkit-appearance: none !important;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--ui-accent) !important;
+  box-shadow: 0 0 0 3px rgba(14,165,233,.12) !important;
+}
+input::placeholder { color: rgba(159,176,195,.45) !important; }
+
+/* ── FIX: Table/scrollable wrappers ─────────────────────────────────────── */
+[class*="table-wrap"],
+[class*="table-scroll"],
+.orders-table-wrap {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  border-radius: 12px !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255,255,255,.1) transparent !important;
+}
+
+/* ── FIX: OpenClaw/AI chip — compact on all screens ────────────────────── */
+#ai-chat-fab,
+.ai-chat-fab {
+  max-width: 160px !important;
+  height: 44px !important;
+  border-radius: 14px !important;
+  font-size: 0.73rem !important;
+  gap: 6px !important;
+  padding: 0 14px 0 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+@media (max-width: 767px) {
+  #ai-chat-fab,
+  .ai-chat-fab {
+    width: 50px !important;
+    height: 50px !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    border-radius: 16px !important;
+    max-width: 50px !important;
+    justify-content: center !important;
+  }
+}
+
+/* QA8: live regression fixes. Keep app features visible and user-positionable. */
+body.is-authenticated[data-current-view="dashboard"] #messenger-fab:not(.hidden),
+body.is-authenticated[data-current-view="dashboard"] #apexbot-top-widget:not(.hidden):not(.apexbot-dismissed),
+body.is-authenticated.openclaw-vip-enabled[data-current-view="dashboard"] #ai-chat-widget:not(.hidden) {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  position: fixed !important;
+}
+#ai-chat-widget.fab-user-positioned,
+#apexbot-top-widget.fab-user-positioned,
+#messenger-fab.fab-user-positioned,
+body.is-authenticated[data-current-view="dashboard"] #ai-chat-widget.fab-user-positioned,
+body.is-authenticated[data-current-view="dashboard"] #apexbot-top-widget.fab-user-positioned,
+body.is-authenticated[data-current-view="dashboard"] #messenger-fab.fab-user-positioned {
+  right: auto !important;
+  bottom: auto !important;
+  left: var(--fab-user-left) !important;
+  top: var(--fab-user-top) !important;
+  transform: none !important;
+  touch-action: none !important;
+}
+#ai-chat-fab, #apexbot-top-fab, #messenger-fab { cursor: grab !important; touch-action: none !important; }
+body.fab-drag-active #ai-chat-fab,
+body.fab-drag-active #apexbot-top-fab,
+body.fab-drag-active #messenger-fab { cursor: grabbing !important; }
+body.auth-modal-open #messenger-fab,
+body.auth-modal-open #apexbot-top-widget,
+body.auth-modal-open #ai-chat-widget,
+body.sidebar-open #messenger-fab,
+body.sidebar-open #apexbot-top-widget,
+body.sidebar-open #ai-chat-widget {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Account card hierarchy: readable against the sidebar instead of black-on-black. */
+.dash-sidebar .sidebar-user-card {
+  display: grid !important;
+  grid-template-columns: 48px minmax(0,1fr) !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 14px !important;
+  padding: 14px !important;
+  border: 1px solid rgba(56,189,248,.26) !important;
+  border-radius: 14px !important;
+  background: linear-gradient(145deg,#10273a,#0b1d2d) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.04),0 12px 30px rgba(0,0,0,.22) !important;
+}
+.dash-sidebar .sidebar-user-card .avatar { width:48px !important;height:48px !important;margin:0 !important;background-color:#123955 !important;background-size:cover !important;background-position:center !important;background-repeat:no-repeat !important;border:1px solid rgba(56,189,248,.38) !important;box-shadow:none !important; }
+.dash-sidebar .sidebar-user-card .info { min-width:0 !important;text-align:left !important; }
+.dash-sidebar .sidebar-user-card .username { margin:0 0 6px !important;color:#f8fafc !important;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important; }
+.dash-sidebar .sidebar-user-card .account-balance-row { display:flex !important;align-items:center !important;justify-content:space-between !important;gap:8px !important;margin:0 !important;padding:5px 8px !important;border:1px solid rgba(45,212,191,.2) !important;border-radius:9px !important;background:rgba(45,212,191,.09) !important; }
+.dash-sidebar .sidebar-user-card .account-balance { color:#5eead4 !important;font-size:.82rem !important;font-weight:800 !important;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important; }
+
+/* Screen Reader Only Utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Direct support contact presentation. */
+.support-contact-panel { display:grid;gap:12px;margin-top:16px;padding:18px;border:1px solid rgba(14,165,233,.3);border-radius:14px;background:rgba(14,165,233,.07); }
+.support-contact-panel.hidden,#btn-submit-ticket.hidden { display:none !important; }
+.support-contact-heading { display:grid;gap:4px; }
+.support-contact-heading span,.support-contact-note,.support-contact-button small { color:var(--ui-muted);font-size:.82rem;line-height:1.5; }
+.support-contact-button { display:grid !important;grid-template-columns:42px minmax(0,1fr) !important;align-items:center !important;gap:12px !important;min-height:62px !important;padding:10px 14px !important;border:1px solid var(--ui-border) !important;border-radius:11px !important;background:#071321 !important;color:var(--ui-text) !important; }
+.support-contact-button > span:last-child { display:grid;gap:2px;min-width:0; }
+.support-contact-icon { display:grid;place-items:center;width:42px;height:42px;border-radius:10px;font-size:.72rem;font-weight:800; }
+.support-contact-button.telegram .support-contact-icon { background:#229ed9; }
+.support-contact-button.whatsapp .support-contact-icon { background:#16a34a; }
+
+/* Desktop service actions must stay in the first viewport. */
+@media (min-width:768px) {
+  #services-directory-table { min-width:100% !important;width:100% !important;table-layout:fixed !important; }
+  #services-directory-table th,#services-directory-table td { padding:12px 8px !important;vertical-align:top !important; }
+  #services-directory-table th:nth-child(1),#services-directory-table td:nth-child(1){width:6% !important}
+  #services-directory-table th:nth-child(2),#services-directory-table td:nth-child(2){width:15% !important}
+  #services-directory-table th:nth-child(3),#services-directory-table td:nth-child(3){width:27% !important}
+  #services-directory-table th:nth-child(4),#services-directory-table td:nth-child(4){width:9% !important}
+  #services-directory-table th:nth-child(5),#services-directory-table td:nth-child(5){width:6% !important}
+  #services-directory-table th:nth-child(6),#services-directory-table td:nth-child(6){width:7% !important}
+  #services-directory-table th:nth-child(7),#services-directory-table td:nth-child(7),#services-directory-table th:nth-child(8),#services-directory-table td:nth-child(8),#services-directory-table th:nth-child(9),#services-directory-table td:nth-child(9){width:10% !important}
+  #services-directory-table .service-order-id-badge{display:none !important}
+  #services-directory-table .compare-toggle-btn,#services-directory-table .select-cat-service-btn{width:100% !important;min-width:0 !important;padding-inline:5px !important}
+  .admin-subnav-wrapper{overflow-x:visible !important}.admin-subnav-tabs{flex-wrap:wrap !important;width:100% !important;min-width:0 !important}
+}
+
+@media (max-width:767px) {
+  #services-directory-table,#services-directory-table tbody,#services-directory-table tr,#services-directory-table td{min-width:0 !important;width:100% !important;max-width:100% !important}
+  #services-directory-table tr.premium-svc-row{display:grid !important;grid-template-columns:minmax(0,1fr) minmax(96px,.55fr) !important}
+  #services-directory-table td[data-label="Service"],#services-directory-table td[data-label="Category"],#services-directory-table td[data-label="Country"]{grid-column:1/-1 !important}
+  #services-directory-table .compare-toggle-btn,#services-directory-table .select-cat-service-btn{width:100% !important;min-width:0 !important}
+  #orders-history-table{min-width:0 !important;width:100% !important}#orders-history-table thead{display:none !important}
+  #orders-history-table tbody,#orders-history-table tr,#orders-history-table td{display:block !important;width:100% !important;min-width:0 !important;max-width:100% !important}
+  #orders-history-table tbody tr:not(.order-empty-row){margin:0 0 14px !important;padding:12px !important;border:1px solid var(--ui-border) !important;border-radius:12px !important;background:#0b1d2d !important}
+  #orders-history-table tbody tr:not(.order-empty-row) td{display:grid !important;grid-template-columns:minmax(88px,.42fr) minmax(0,1fr) !important;gap:10px !important;padding:9px 2px !important;border-bottom:1px solid var(--ui-border) !important;white-space:normal !important;overflow-wrap:anywhere !important}
+  #orders-history-table tbody tr:not(.order-empty-row) td::before{content:attr(data-label);color:var(--ui-muted);font-size:.68rem;font-weight:800;text-transform:uppercase}
+  #orders-history-table .btn-refill-trigger{width:100% !important}
+  #orders-status-filters{width:100% !important;overflow-x:auto !important;flex-wrap:nowrap !important;padding-bottom:4px !important}#orders-status-filters .filter-pill{flex:0 0 auto !important}
+  body[data-active-tab="support-tickets"] #tab-support-tickets{padding-bottom:160px !important}
+}

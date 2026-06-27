@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logging in with Google...</title>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; background: #080b10;">
+        <div style="border: 4px solid rgba(255,255,255,0.1); border-top-color: #0d9488; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+        <p style="font-size: 1.1rem; font-weight: 500; margin: 0;">Securing session details...</p>
+    </div>
+    
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script>
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get('token');
+            const userStr = params.get('user');
+
+            if (token && userStr) {
+                // Save session credentials
+                localStorage.setItem('apexboost_token', token);
+                localStorage.setItem('apexboost_user', userStr);
+                
+                // Let the main page know it should redirect
+                if (window.opener && !window.opener.closed) {
+                    window.opener.location.href = '/dashboard';
+                } else {
+                    window.location.href = '/dashboard';
+                }
+            } else {
+                console.error("Missing token or user payload from authorization provider callback.");
+            }
+        } catch (err) {
+            console.error("Popup storage access error:", err);
+        } finally {
+            window.close();
+        }
+    </script>
+</body>
+</html>
