@@ -6459,7 +6459,7 @@ print("Demo Response:", response.json())`;
       alert: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
     };
 
-    // 1. Define General Public Globally Trending Services
+    // 1. Curated featured services (static showcase; live pricing confirmed at order time)
     const trendingServices = [
       {
         id: 16604,
@@ -6471,7 +6471,7 @@ print("Demo Response:", response.json())`;
         time: "~1-2 hours completion",
         badge: "Recommended",
         badgeClass: "ai-fast",
-        rank: "Globally #1 Trending"
+        rank: "Featured Service"
       },
       {
         id: 16606,
@@ -6483,7 +6483,7 @@ print("Demo Response:", response.json())`;
         time: "Instant delivery",
         badge: "Stable",
         badgeClass: "ai-sale",
-        rank: "Globally #2 Trending"
+        rank: "Featured Service"
       },
       {
         id: 16614,
@@ -6495,7 +6495,7 @@ print("Demo Response:", response.json())`;
         time: "~15-30 mins completion",
         badge: "Fast",
         badgeClass: "ai-fast",
-        rank: "Globally #3 Trending"
+        rank: "Featured Service"
       },
       {
         id: 16598,
@@ -6507,7 +6507,7 @@ print("Demo Response:", response.json())`;
         time: "~30-60 mins completion",
         badge: "Stable",
         badgeClass: "ai-sale",
-        rank: "Globally #4 Trending"
+        rank: "Featured Service"
       }
     ];
 
@@ -6516,9 +6516,9 @@ print("Demo Response:", response.json())`;
     let htmlContent = `
       <div class="trending-section" style="margin-bottom: 30px;">
         <h3 style="color: var(--primary); margin-top: 0; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 8px;">
-          ${POP_ICONS.flame} Globally Trending SMM Services
+          ${POP_ICONS.flame} Featured Services
         </h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Real-time trending services across the reseller network. High safety, lightning speed, and maximum stability.</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Hand-picked services known for fast, stable delivery. Live availability and final pricing are confirmed in New Order.</p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
           ${trendingServices.map((svc, i) => `
             <div class="popular-svc-card" style="position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(20, 184, 166, 0.15);">
