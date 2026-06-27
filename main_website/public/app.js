@@ -4915,7 +4915,7 @@ print("Demo Response:", response.json())`;
         <div class="ai-banner-content">
           <span class="ai-banner-icon">🧠</span>
           <div class="ai-banner-text">
-            <h4>DeepSeek AI™ Smart Service Monitoring</h4>
+            <h4>ApexBoost AI™ Smart Service Monitoring</h4>
             <p>ApexBot AI evaluates live SMM channels, speeds, and wholesale rates. The statuses below are automatically calculated and continuously monitored.</p>
           </div>
         </div>
@@ -7549,7 +7549,7 @@ print("Demo Response:", response.json())`;
             return;
           }
 
-          showPremiumToast("Support Ticket Submitted", "🎉 Your ticket concern has been successfully registered! DeepSeek AI and our team are reviewing it.", "success");
+          showPremiumToast("Support Ticket Submitted", "Your ticket concern has been successfully registered! ApexBoost AI and our team are reviewing it.", "success");
           
           // Clear forms
           ticketForm.reset();
@@ -7883,12 +7883,12 @@ print("Demo Response:", response.json())`;
         senderName = 'Admin Support';
         roleBadge = '<span class="status-badge done" style="font-size: 0.6rem; padding: 1px 4px; margin-left: 6px;">STAFF</span>';
         bubbleContent = line.replace('[ADMIN REPLY]:', '').trim();
-      } else if (line.startsWith('[DeepSeek AI Support]:')) {
+      } else if (line.startsWith('[ApexBoost AI Support]:') || line.startsWith('[DeepSeek AI Support]:')) {
         row.classList.add('ai-row');
         avatar = '🤖';
-        senderName = 'DeepSeek SMM AI';
+        senderName = 'ApexBoost AI';
         roleBadge = '<span class="status-badge new" style="font-size: 0.6rem; padding: 1px 4px; margin-left: 6px; background: rgba(20, 184, 166, 0.12); color: #14b8a6; border-color: rgba(20, 184, 166, 0.25);">AI ASSISTANT</span>';
-        bubbleContent = line.replace('[DeepSeek AI Support]:', '').trim();
+        bubbleContent = line.replace(/\[(ApexBoost|DeepSeek) AI Support\]:/, '').trim();
       } else {
         row.classList.add('user-row');
         avatar = '👤';
@@ -8103,7 +8103,7 @@ print("Demo Response:", response.json())`;
         else if (stat === 'closed' || stat === 'rejected') badgeClass = 'rejected';
 
         // Split messages to isolate original user description
-        const cleanMsg = ticket.message.split('\n\n[ADMIN REPLY]')[0].split('\n\n[DeepSeek AI Support]')[0];
+        const cleanMsg = ticket.message.split('\n\n[ADMIN REPLY]')[0].split('\n\n[ApexBoost AI Support]')[0].split('\n\n[DeepSeek AI Support]')[0];
 
         // Attachment link html
         let attachmentHtml = '<span class="text-muted">None</span>';
@@ -8184,7 +8184,7 @@ print("Demo Response:", response.json())`;
 
               showPremiumToast(
                 "Ticket Updated",
-                `Ticket #${tId} has been successfully updated to status: "${act}" and DeepSeek AI notification has been sent!`,
+                `Ticket #${tId} has been successfully updated to status: "${act}" and ApexBoost AI notification has been sent!`,
                 "success"
               );
 

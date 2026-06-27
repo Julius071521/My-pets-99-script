@@ -49,8 +49,8 @@ const checkEnvSecrets = () => {
     'DB_USER', 
     'DB_NAME', 
     'EMAIL_PASS', 
-    'RKD_API_KEY', 
-    'DEEPSEEK_API_KEY',
+    'RKD_API_KEY',
+    'AI_API_KEY',
     'JWT_SECRET',
     'SESSION_SECRET'
   ];
@@ -2229,10 +2229,20 @@ const RKD_API_KEY = PROVIDER_API_KEY;
 const API_URL = PROVIDER_API_URL;
 // USD to PHP exchange rate
 const USD_TO_PHP_RATE = parseFloat(process.env.USD_TO_PHP_RATE || '60.2898');
-// DeepSeek AI Chat Key
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || '';
-const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
-const DEEPSEEK_URL = (process.env.DEEPSEEK_URL || 'https://api.deepseek.com/chat/completions').trim();
+// ── AI Assistant provider (OpenAI-compatible router) ────────────────────────
+// Replaces the former DeepSeek integration. Any OpenAI-compatible Chat
+// Completions endpoint works (agentrouter, OpenAI, etc.). Configure via .env:
+//   AI_API_KEY, AI_MODEL, AI_BASE_URL
+const AI_API_KEY  = (process.env.AI_API_KEY  || process.env.DEEPSEEK_API_KEY || '').trim();
+const AI_MODEL    = (process.env.AI_MODEL    || process.env.DEEPSEEK_MODEL   || 'gpt-4o').trim();
+const AI_BASE_URL = (process.env.AI_BASE_URL || 'https://agentrouter.org/v1').trim().replace(/\/+$/, '');
+const AI_CHAT_URL = (process.env.AI_CHAT_URL || `${AI_BASE_URL}/chat/completions`).trim();
+
+// Backward-compatible aliases — all existing call sites keep working unchanged
+// while routing to the new provider. (DeepSeek is fully removed.)
+const DEEPSEEK_API_KEY = AI_API_KEY;
+const DEEPSEEK_MODEL   = AI_MODEL;
+const DEEPSEEK_URL     = AI_CHAT_URL;
 const OPENCLAW_AGENT_ENABLED = String(process.env.OPENCLAW_AGENT_ENABLED || '').trim()
   ? String(process.env.OPENCLAW_AGENT_ENABLED).toLowerCase() === 'true'
   : false;
@@ -6096,7 +6106,8 @@ function buildCustomerReportStatusLine(orderInfo, forwardResult = {}) {
 async function callDeepSeekMessages(messages, options = {}) {
   if (!DEEPSEEK_API_KEY) return null;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), options.timeoutMs || 8500);
+  // 15s default: GPT-class models are slower to first token than deepseek-chat.
+  const timeout = setTimeout(() => controller.abort(), options.timeoutMs || 15000);
   try {
     const response = await safeFetch(DEEPSEEK_URL, {
       method: 'POST',
@@ -6582,7 +6593,7 @@ function sanitizeTicketCustomerReply(text = '', status = '') {
     .replace(/\[Report Status\]:?/gi, '')
     .replace(/\[Provider Routing\]:?/gi, '')
     .replace(/\[Hermes Agent\]:?/gi, '')
-    .replace(/\[DeepSeek AI Support\]:?/gi, '')
+    .replace(/\[(ApexBoost|DeepSeek) AI Support\]:?/gi, '')
     .replace(/\bSubject:\s*/gi, '')
     .replace(/\bDear\s+[^,\n]+,\s*/gi, '')
     .replace(/\bWarm regards,?\s*/gi, '')
@@ -8601,7 +8612,7 @@ function formatHermesUnavailable(action, tool = 'UNAVAILABLE', reason = 'UNAVAIL
   return 'UNAVAILABLE';
 }
 
-const HERMES_SECRET_REQUEST_PATTERN = /\b(db_password|database password|api key|api keys|telegram token|bot token|jwt_secret|jwt secret|session_secret|session secret|smtp password|email password|email_pass|oauth secret|private key|encryption key|secret key|turnstile_secret_key|cloudflare_turnstile_secret_key|cloudflare_api_token|deepseek_api_key|rkd_api_key|smmworld_api_key)\b/i;
+const HERMES_SECRET_REQUEST_PATTERN = /\b(db_password|database password|api key|api keys|telegram token|bot token|jwt_secret|jwt secret|session_secret|session secret|smtp password|email password|email_pass|oauth secret|private key|encryption key|secret key|turnstile_secret_key|cloudflare_turnstile_secret_key|cloudflare_api_token|ai_api_key|ai api key|openai_api_key|agentrouter|deepseek_api_key|rkd_api_key|smmworld_api_key)\b/i;
 
 function normalizeHermesArgKey(key = '') {
   const normalized = String(key || '').trim().toLowerCase().replace(/-/g, '_');
@@ -15366,7 +15377,7 @@ app.post('/api/demo/reset-balance', requireAuth, async (req, res) => {
 
 
 // =============================================================
-// AI CHAT ASSISTANT (DeepSeek)
+// AI CHAT ASSISTANT (ApexBoost AI — OpenAI-compatible provider)
 // =============================================================
 
 const AI_SYSTEM_PROMPT = `You are Hermes, the friendly and expert AI assistant for ApexBoost — a premium Social Media Marketing (SMM) panel based in the Philippines.
@@ -15942,7 +15953,7 @@ app.post('/api/ai/chat', async (req, res) => {
     const dynamicSystemPrompt = `${AI_SYSTEM_PROMPT}\n${APEXBOT_SITE_BEHAVIOR_PROMPT}\n${APEXBOT_SECURITY_GUARDRAILS}\n\nCurrent ApexBoost Announcements and Promo Updates:\n${postedUpdatesSnippet}\n\n${smmContext}\n\nUser Memory:\n${memorySnippet || '- No prior memory yet.'}\n\nInstructions to AI:\nAlways mention specific Service IDs and exact PHP prices when available. Never say a service is free or \u20b10.00. If a computed price looks zero, say pricing is being refreshed and ask the user to select the service in New Order for the final charge. Stay inside ApexBoost. Do not invent promo codes, account data, provider status, or updates that are not in context.`;
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8500);
+    const timeout = setTimeout(() => controller.abort(), 15000);
     const response = await safeFetch(DEEPSEEK_URL, {
       method: 'POST',
       signal: controller.signal,
@@ -15977,7 +15988,7 @@ app.post('/api/ai/chat', async (req, res) => {
         console.warn("ApexBot memory save skipped:", memoryErr.message);
       }
     }
-    return res.json({ reply, chat_id: chatId, source: 'deepseek' });
+    return res.json({ reply, chat_id: chatId, source: 'ai' });
   } catch (err) {
     console.error("AI chat error:", err.message);
     if (isOpenClawConfigured()) {
@@ -17189,7 +17200,7 @@ ApexBoost SMM Support System`;
   }
 
   // Save the AI response directly into the ticket message so the user can see it in their ticket history panel!
-  const finalMessageWithAI = `${useDb ? targetTicket.message : targetTicket.message}\n\n[DeepSeek AI Support]:\n${aiResponse}`;
+  const finalMessageWithAI = `${useDb ? targetTicket.message : targetTicket.message}\n\n[ApexBoost AI Support]:\n${aiResponse}`;
   
   if (useDb && dbPool) {
     try {

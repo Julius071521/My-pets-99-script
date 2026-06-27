@@ -153,7 +153,7 @@ runWhenReady(() => {
 });
 
 // ==========================================================================
-// AI CHAT WIDGET — ApexBot powered by DeepSeek
+// AI CHAT WIDGET — ApexBot powered by ApexBoost AI
 // ==========================================================================
 (function() {
   const widget    = document.getElementById('ai-chat-widget');
