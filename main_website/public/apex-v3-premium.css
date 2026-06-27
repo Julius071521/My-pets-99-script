@@ -3578,3 +3578,41 @@ body.is-authenticated .apex-promo-banner {
   right: -2px !important;
   margin: 0 !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   QA POLISH BATCH 5 — mobile hero horizontal-overflow fix (verified via render)
+   The hero content was wider than the viewport on phones: title clipped,
+   dashboard mock and CTA buttons cut off at the right edge. Root causes:
+   grid/flex children missing min-width:0, and CTA buttons forced to 200px each.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  .hero-grid { min-width: 0 !important; }
+  .hero-grid > * { min-width: 0 !important; max-width: 100% !important; }
+  .hero-text-content { min-width: 0 !important; max-width: 100% !important; }
+  .hero-title { overflow-wrap: anywhere !important; word-break: break-word !important; }
+  .hero-graphic-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .glass-dashboard-mock {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    transform: none !important;
+  }
+  /* CTA buttons: stack full-width instead of forcing 200px each (caused overflow) */
+  .hero-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .hero-actions .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+  }
+  /* General safety: no section child may exceed the viewport width */
+  .hero-section, .hero-section * { max-width: 100% !important; }
+}
